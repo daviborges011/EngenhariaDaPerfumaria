@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Criar conta | A Engenharia da Perfumaria</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+  <main class="pagina">
+
+    <section class="capa">
+      <div class="frasco" aria-hidden="true">
+        <div class="tampa"></div>
+        <div class="gargalo"></div>
+        <div class="vidro"><div class="liquido"></div></div>
+      </div>
+      <h1>A Engenharia da Perfumaria</h1>
+      <p class="subtitulo">Minha história através das fragrâncias</p>
+    </section>
+
+    <section class="acesso">
+      <div class="caixa">
+        <h2>Criar conta</h2>
+        <form id="form-cadastro" action="#" method="post">
+          <p class="chamada">Crie sua conta para receber uma saudação com o seu nome.</p>
+
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="given-name" required>
+
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" autocomplete="new-password" minlength="8" required>
+          <small>Use pelo menos 8 caracteres.</small>
+
+          <label for="confirma">Confirmar senha</label>
+          <input type="password" id="confirma" name="confirma" autocomplete="new-password" minlength="8" required>
+
+          <button type="submit">Criar conta</button>
+        </form>
+        <p class="troca">Já tem conta? <a href="login.html">Entrar</a></p>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

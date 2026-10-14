@@ -1,0 +1,258 @@
+/* ===== Cores e fontes (mude aqui e o site inteiro muda) ===== */
+:root {
+  --fundo: #0B1325;          /* fundo principal */
+  --fundo-card: #1E293B;     /* cards, caixa do formulário, dashboards */
+  --texto: #F8FAF8;          /* textos e leitura */
+  --texto-suave: #E2E8F0;    /* textos secundários */
+  --ouro: #C5A059;           /* destaques, títulos, botões */
+  --ouro-vivo: #D4AF37;      /* hover e brilho */
+  --borda: rgba(197, 160, 89, 0.35);
+  --borda-forte: rgba(197, 160, 89, 0.7);
+
+  --fonte-titulo: "Bodoni Moda", Georgia, serif;
+  --fonte-texto: "Figtree", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  font-family: var(--fonte-texto);
+  background: var(--fundo);
+  color: var(--texto);
+  line-height: 1.5;
+  color-scheme: dark;
+}
+
+/* ===== Layout em duas colunas ===== */
+.pagina {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ===== Lado esquerdo: capa ===== */
+.capa {
+  position: relative;
+  background: linear-gradient(160deg, #1E293B 0%, #16203a 55%, #0B1325 100%);
+  border-right: 1px solid var(--borda-forte);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  gap: 1.25rem;
+  overflow: hidden;
+}
+
+/* Brilho dourado suave atrás do frasco */
+.capa::before {
+  content: "";
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  width: 380px;
+  height: 380px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.22), transparent 65%);
+  pointer-events: none;
+}
+
+.capa > * { position: relative; }
+
+.capa h1 {
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.1;
+  max-width: 14ch;
+}
+
+.subtitulo {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ouro);
+  max-width: 28ch;
+}
+
+/* ===== Frasco de perfume feito só com CSS ===== */
+.frasco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tampa {
+  width: 40px;
+  height: 32px;
+  background: linear-gradient(90deg, #8f7338, var(--ouro), var(--ouro-vivo), var(--ouro), #8f7338);
+  border-radius: 5px 5px 2px 2px;
+}
+
+.gargalo {
+  width: 22px;
+  height: 14px;
+  background: rgba(248, 250, 248, 0.3);
+}
+
+.vidro {
+  position: relative;
+  width: 120px;
+  height: 140px;
+  border: 2px solid var(--borda-forte);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+/* Reflexo de luz no vidro */
+.vidro::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 10px;
+  height: 70%;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
+}
+
+/* O "líquido" sobe uma vez quando a página abre */
+.liquido {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 68%;
+  background: linear-gradient(to bottom, var(--ouro-vivo), #8f7338);
+  animation: encher 1.6s ease-out;
+}
+
+@keyframes encher {
+  from { height: 0; }
+  to   { height: 68%; }
+}
+
+/* ===== Lado direito: acesso ===== */
+.acesso {
+  background: var(--fundo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.caixa {
+  width: 100%;
+  max-width: 400px;
+  background: var(--fundo-card);
+  border: 1px solid var(--borda-forte);
+  border-radius: 14px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+}
+
+.caixa h2 {
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--ouro);
+  margin-bottom: 0.4rem;
+}
+
+/* ===== Formulários ===== */
+form { display: flex; flex-direction: column; }
+
+.chamada {
+  color: var(--texto-suave);
+  margin-bottom: 1.25rem;
+}
+
+form label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--texto-suave);
+  margin: 0.75rem 0 0.3rem;
+}
+
+form input {
+  font: inherit;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--fundo);
+  color: var(--texto);
+  transition: border-color 0.2s;
+}
+
+form input:hover { border-color: var(--borda-forte); }
+
+form input:focus {
+  outline: 2px solid var(--ouro);
+  outline-offset: 1px;
+  border-color: var(--ouro);
+}
+
+/* Evita o fundo branco do preenchimento automático do navegador */
+form input:-webkit-autofill {
+  -webkit-text-fill-color: var(--texto);
+  box-shadow: 0 0 0 100px var(--fundo) inset;
+}
+
+small {
+  color: var(--texto-suave);
+  opacity: 0.75;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  padding: 0.85rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ouro);
+  color: var(--fundo);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover { background: var(--ouro-vivo); }
+button:focus-visible { outline: 2px solid var(--texto); outline-offset: 2px; }
+
+/* ===== Link para a outra página ===== */
+.troca {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.troca a {
+  color: var(--ouro);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.troca a:hover { color: var(--ouro-vivo); }
+.troca a:focus-visible { outline: 2px solid var(--ouro); outline-offset: 2px; }
+
+/* ===== Celular: as colunas viram uma sobre a outra ===== */
+@media (max-width: 800px) {
+  .pagina { grid-template-columns: 1fr; }
+  .capa {
+    padding: 2rem 1.5rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--borda-forte);
+  }
+  .frasco { transform: scale(0.7); margin: -1rem 0; }
+}
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .liquido { animation: none; }
+}
