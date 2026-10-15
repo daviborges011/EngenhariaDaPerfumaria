@@ -49,28 +49,24 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Domínio do Código & Aprendizado:**
   * Compreensão sobre a separação de escopo entre produto comercial x experiência narrativa.
 
----
-
-### 📝 Registro #002 — Telas de Login e Cadastro (HTML/CSS)
+### 📝 Registro #002 — Telas de login e cadastro (HTML/CSS)
 * **Data:** 14/10/2026
-* **Objetivo:** Criar as telas de login e cadastro do site, em páginas separadas, com a paleta azul noite e dourado e sem aparência de produto comercial.
-* **Prompt Enviado:**
-  > *"Monte o HTML e o CSS da tela de login e cadastro do meu site pessoal 'A Engenharia da Perfumaria'. Quero as duas telas em arquivos separados (login.html e cadastro.html), usando o mesmo style.css. Use a paleta: fundo azul escuro (#0B1325), cards em #1E293B, textos off-white e detalhes em dourado envelhecido (#C5A059). Corrija o CSS para que os lados da tela se diferenciem."*
-* **O que mudou / Ajustes Realizados:**
-  * A IA fez primeiro as duas telas no mesmo arquivo (abas com CSS). Pedi a separação em `login.html` e `cadastro.html`, ligadas por links.
-  * Troquei a paleta original pela minha. Isso deixou variáveis antigas no CSS (`--ameixa`, `--papel`), que corrigi para as novas.
-  * Ajustei o contraste, porque o fundo e os cartões estavam parecidos: borda dourada, sombra e campos mais escuros que o cartão.
-* **Domínio do Código & Aprendizado:**
-  * Entendi como funcionam as variáveis CSS (`:root` e `var()`) e por que, ao mudar o nome delas, preciso atualizar todos os lugares que as usam.
-  * Entendi o layout em duas colunas com `display: grid` e como o `@media` adapta para celular.
-  * O frasco é feito só com `div`s e CSS, e o líquido usa `@keyframes` para animar.
-  * Os formulários ainda estão com `action="#"`. A ligação com a API (web-data-viz) será o próximo registro.
+* **Pediu:** HTML e CSS da tela de login e cadastro do site pessoal "A Engenharia da Perfumaria", com a paleta azul noite (#0B1325, #1E293B) e dourado (#C5A059), sem cara de produto comercial.
+* **Usou:** o layout em duas colunas (capa com o título à esquerda e formulário à direita), o frasco de perfume feito só com CSS, os formulários com validação do próprio HTML e as variáveis de cor no `:root`.
+* **Mudou:** separei login e cadastro em `login.html` e `cadastro.html`, ligados por links. Troquei a paleta original pela minha, corrigi as variáveis antigas que sobraram no CSS e ajustei o contraste entre o fundo, a capa e o cartão do formulário.
+* **Domínio do código:** [escreva com suas palavras: o que é `var()`, o que o `grid` faz, como o `@media` adapta para celular].
 
----
+### 📝 Registro #003 — Logo
+* **Data:** 14/10/2026
+* **Pediu:** uma logo dourada e azul para o site.
+* **Usou:** [qual das três propostas você escolheu: brasão, selo ou horizontal].
+* **Mudou:** não gostei da primeira versão, então pedi um frasco mais elaborado e outras ideias. A IA gerou três propostas em SVG.
 
-
-
----
+### 📝 Registro #004 — Documentação do projeto
+* **Data:** 14/10/2026
+* **Pediu:** uma documentação no estilo do modelo do professor, com a história do perfume, a minha história (primeiro perfume, o Malbec Clássico, em 2021, dado pela minha mãe), a coleção de mais de 15 perfumes e a importância do perfume para a imagem pessoal.
+* **Usou:** a estrutura de seções (Contexto, Objetivo, Justificativa, Escopo, Materiais e Métodos, Próximos Passos, Agradecimentos e Referências) e os textos da história e da imagem pessoal.
+* **Mudou:** acrescentei as respostas das cinco perguntas do desafio (interesse, valores, dificuldades, superações e gratidão) em uma nova seção. Os trechos marcados com [confirmar] precisam ser conferidos ou removidos.
 
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
 
