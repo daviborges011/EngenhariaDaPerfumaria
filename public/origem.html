@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Origem — A Engenharia da Perfumaria</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <a class="marca" href="origem.html">A Engenharia <small>da Perfumaria</small></a>
+      <nav>
+        <a class="ativo" href="origem.html">01. A Origem</a>
+        <a href="trajetoria.html">02. Minha trajetória</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="capa origem">
+        <p class="capitulo">Capítulo 01</p>
+        <p class="subtitulo">Antes de ser uma fragrância, o perfume foi ritual.</p>
+        <h1>A Origem</h1>
+        <p class="introducao">Uma história construída entre fumaça, flores e ciência — dos primeiros rituais da humanidade à engenharia invisível de uma fragrância moderna.</p>
+      </section>
+
+      <section class="conteudo">
+        <p class="rotulo">Uma breve cronologia</p>
+        <h2>Da fumaça à memória</h2>
+        <div class="linha-do-tempo">
+          <article><span>01 · Antiguidade</span><h3>Per fumum</h3><p>No Egito e na Mesopotâmia, resinas, óleos e bálsamos eram usados em rituais. O perfume nasceu da fumaça que aproximava o humano do sagrado.</p></article>
+          <article><span>02 · Idade Média</span><h3>A arte de destilar</h3><p>Estudiosos do mundo islâmico aperfeiçoaram a destilação e ampliaram as possibilidades de extração de óleos e águas aromáticas.</p></article>
+          <article><span>03 · Séculos XIV—XVIII</span><h3>Da corte à cidade</h3><p>A Água da Hungria, as luvas perfumadas de Grasse e a Água de Colônia transformaram o aroma em parte da vida cotidiana.</p></article>
+          <article><span>04 · Século XX</span><h3>A perfumaria moderna</h3><p>Moléculas sintéticas abriram novos territórios criativos e deram início a uma nova linguagem olfativa.</p></article>
+        </div>
+        <a class="proximo" href="trajetoria.html">Próximo capítulo <strong>Minha trajetória →</strong></a>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
+<script>
+    document.documentElement.classList.add("js");
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const destino = document.querySelector(link.getAttribute("href"));
+    if (!destino) return;
+    event.preventDefault();
+    destino.scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+</script>

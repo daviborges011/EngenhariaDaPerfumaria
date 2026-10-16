@@ -68,6 +68,12 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Usou:** a estrutura de seções (Contexto, Objetivo, Justificativa, Escopo, Materiais e Métodos, Próximos Passos, Agradecimentos e Referências) e os textos da história e da imagem pessoal.
 * **Mudou:** acrescentei as respostas das cinco perguntas do desafio (interesse, valores, dificuldades, superações e gratidão) em uma nova seção. Os trechos marcados com [confirmar] precisam ser conferidos ou removidos.
 
+### 📝 Registro #005 — Criação das telas “A Origem” e “A Minha Trajetória”
+* **Data:** 16/10/2026
+* **Pediu:** a criação de duas telas institucionais para o projeto “A Engenharia da Perfumaria”, sem aparência de loja ou produto comercial. A primeira tela deveria apresentar a origem e a evolução histórica da perfumaria. A segunda deveria contar a minha trajetória pessoal, iniciada em 2021, quando ganhei da minha mãe o Malbec Clássico, até chegar à coleção atual com mais de 15 fragrâncias. Também pedi os códigos das telas separados em HTML, CSS e JavaScript.
+* **Usou:** o conteúdo da documentação do projeto, a identidade visual em azul-noite e dourado envelhecido e a imagem das telas de login e cadastro como referência estética. Foram utilizadas tipografia editorial, linha do tempo histórica, pirâmide olfativa, indicadores da coleção, navegação entre capítulos e elementos visuais inspirados em frascos de perfume.
+* **Mudou:** foram criadas as telas “A Origem” e “A Minha Trajetória”, com layout responsivo para computador e celular. Também foram gerados os arquivos separados origem.html, trajetoria.html, styles.css e script.js. Além disso, foram disponibilizados dois arquivos para download: codigos-duas-telas.zip, com os códigos editáveis, e site-pronto.zip, com a versão compilada do site para visualização ou envio a outra IA. A compilação do projeto foi testada e concluída sem erros.
+
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
 
 - [ ] Planejamento semanal distribuído (Matérias + Grupo + Individual).
