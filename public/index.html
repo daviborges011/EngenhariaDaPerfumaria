@@ -1,80 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Página Inicial</title>
+    <title>Início | A Engenharia da Perfumaria</title>
 
     <script src="./js/sessao.js"></script>
 
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
 </head>
 
 <body>
     <div class="header">
       <div class="container">
-        <h1 class="titulo">AquaTech</h1>
+        <h1 class="titulo">A Engenharia da Perfumaria</h1>
         <ul class="navbar">
           <li class="agora">
-            <a href="#">Inicial</a>
+            <a href="index.html">Início</a>
           </li>
           <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
+            <a href="origem.html">A Origem</a>
           </li>
           <li>
-            <a href="cadastro.html">Cadastro</a>
+            <a href="trajetoria.html">Minha trajetória</a>
+          </li>
+          <li class="separador">|</li>
+          <li id="item-login">
+            <a href="login.html" class="btn-login">Login</a>
+          </li>
+          <li id="item-cadastro">
+            <a href="cadastro.html" class="btn-cadastro">Cadastro</a>
           </li>
         </ul>
       </div>
     </div>
-  
+
+  <main>
+
+    <!-- Banner -->
     <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
+      <div class="hero">
+        <div class="hero-texto">
+          <span class="capitulo">Projeto Individual 2026</span>
+          <p class="frase-banner">Um cheiro pode guardar uma <span>lembrança</span> para sempre.</p>
+          <p class="frase-destaque">Minha história através das fragrâncias.</p>
+          <p class="descricao">Aqui eu conto como o perfume nasceu, como ele chegou à minha vida e por que vale a pena prestar atenção nele.</p>
+          <div class="botoes-hero">
+            <a href="origem.html" class="btn-principal">Começar pela origem</a>
+            <a href="cadastro.html" class="btn-secundario">Criar minha conta</a>
           </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
+        </div>
+
+        <div class="hero-frasco" aria-hidden="true">
+          <div class="frasco-tampa"></div>
+          <div class="frasco-gargalo"></div>
+          <div class="frasco-vidro"><div class="frasco-liquido"></div></div>
         </div>
       </div>
     </div>
-  
+
+    <!-- Por que perfume? -->
+    <section class="secao">
+      <div class="titulo-secao">
+        <span class="rotulo">Por que perfume?</span>
+        <h2>Três motivos para se apaixonar</h2>
+      </div>
+
+      <div class="cartoes">
+        <article class="cartao">
+          <span class="rotulo">01</span>
+          <h3>Memória</h3>
+          <p>O olfato guarda lembranças. Um cheiro pode levar você de volta a um dia, a um lugar ou a alguém.</p>
+        </article>
+        <article class="cartao">
+          <span class="rotulo">02</span>
+          <h3>Identidade</h3>
+          <p>O perfume que você escolhe diz muito sobre quem você é e sobre a imagem que quer transmitir.</p>
+        </article>
+        <article class="cartao">
+          <span class="rotulo">03</span>
+          <h3>Conexão</h3>
+          <p>Presentear ou ser presenteado com uma fragrância cria vínculo. A minha história começou com um gesto da minha mãe.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pirâmide olfativa -->
+    <section class="secao">
+      <div class="titulo-secao">
+        <span class="rotulo">A arquitetura da fragrância</span>
+        <h2>Como um perfume se revela</h2>
+        <p>Como uma narrativa, o perfume se mostra aos poucos, em três tempos.</p>
+      </div>
+
+      <div class="cartoes">
+        <article class="cartao">
+          <span class="rotulo">Topo</span>
+          <h3>Notas de topo</h3>
+          <p>A primeira impressão.</p>
+        </article>
+        <article class="cartao">
+          <span class="rotulo">Coração</span>
+          <h3>Notas de coração</h3>
+          <p>A identidade.</p>
+        </article>
+        <article class="cartao">
+          <span class="rotulo">Fundo</span>
+          <h3>Notas de fundo</h3>
+          <p>A memória que fica.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Prévia da minha história -->
+    <section class="secao">
+      <div class="previa">
+        <div class="previa-texto">
+          <span class="rotulo">Minha história</span>
+          <h2>Tudo começou em 2021</h2>
+          <p>Ganhei meu primeiro perfume, um Malbec Clássico, da minha mãe. Hoje a coleção tem mais de 15 fragrâncias e continua crescendo.</p>
+        </div>
+        <a class="btn-capitulo" href="trajetoria.html">
+          <small>Ler a história</small>
+          Minha trajetória →
+        </a>
+      </div>
+    </section>
+
+    <!-- Capítulos do site -->
+    <section class="secao">
+      <div class="titulo-secao">
+        <span class="rotulo">Explore o site</span>
+        <h2>Os capítulos da jornada</h2>
+      </div>
+
+      <div class="cartoes">
+        <a class="cartao" href="origem.html">
+          <span class="rotulo">Capítulo 01</span>
+          <h3>A Origem</h3>
+          <p>Do ritual ao laboratório: como o perfume nasceu.</p>
+        </a>
+        <a class="cartao" href="trajetoria.html">
+          <span class="rotulo">Capítulo 02</span>
+          <h3>Minha Trajetória</h3>
+          <p>Do Malbec de 2021 à coleção de hoje.</p>
+        </a>
+        <article class="cartao">
+          <span class="rotulo">Capítulo 03 · Em breve</span>
+          <h3>Dashboard</h3>
+          <p>Os dados da jornada e das pessoas cadastradas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Números e total de cadastros -->
+    <section class="secao">
+      <!-- Os números são desenhados pelo JavaScript (veja o script no final da página) -->
+      <div class="estatisticas" id="numeros"></div>
+
+      <!-- Fica escondido até a API responder -->
+      <p class="total-cadastros" id="total-cadastros" hidden>
+        Já são <strong id="total-numero">0</strong> pessoas nessa jornada.
+      </p>
+    </section>
+
+    <!-- Convite final -->
+    <section class="convite">
+      <h2>Faça parte da jornada</h2>
+      <p>Crie sua conta para receber uma saudação com o seu nome.</p>
+      <a href="cadastro.html" class="btn-principal">Criar minha conta</a>
+    </section>
+
+  </main>
+
     <div class="footer">
       <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
+        <h4>Feito com amor por Davi Borges Taioque &hearts; SPTech &copy; 2026</h4>
       </div>
     </div>
-  </body>
+
+    <script>
+    // 1) Números da jornada
+    const numeros = [
+      { valor: '15',   sufixo: '+', texto: 'fragrâncias na coleção' },
+      { valor: '2021', sufixo: '',  texto: 'o ano do primeiro perfume' },
+      { valor: '05',   sufixo: '',  texto: 'anos de descobertas' }
+    ];
+
+    document.getElementById('numeros').innerHTML = numeros.map((item) => `
+      <article class="estatistica">
+        <strong>${item.valor}${item.sufixo ? `<span>${item.sufixo}</span>` : ''}</strong>
+        <p>${item.texto}</p>
+      </article>
+    `).join('');
+
+    // 2) Saudação: se a pessoa estiver logada, troca Login e Cadastro por "Olá, nome" e Sair
+    // [confirmar] o nome da chave que o seu login salva no sessionStorage
+    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+
+    if (nomeUsuario) {
+      const saudacao = document.createElement('li');
+      saudacao.className = 'saudacao';
+      saudacao.textContent = 'Olá, ';
+      const nome = document.createElement('strong');
+      nome.textContent = nomeUsuario;
+      saudacao.appendChild(nome);
+
+      const itemSair = document.createElement('li');
+      const linkSair = document.createElement('a');
+      linkSair.href = '#';
+      linkSair.className = 'btn-login';
+      linkSair.textContent = 'Sair';
+      linkSair.addEventListener('click', (evento) => {
+        evento.preventDefault();
+        sessionStorage.clear();
+        window.location.reload();
+      });
+      itemSair.appendChild(linkSair);
+
+      document.getElementById('item-login').replaceWith(saudacao);
+      document.getElementById('item-cadastro').replaceWith(itemSair);
+    }
+
+    // 3) Total de pessoas cadastradas (vem da API)
+    // [preencher] com a rota da sua API que devolve o total de usuários
+    const ROTA_TOTAL_USUARIOS = '';
+
+    if (ROTA_TOTAL_USUARIOS) {
+      fetch(ROTA_TOTAL_USUARIOS)
+        .then((resposta) => resposta.json())
+        .then((dados) => {
+          // [confirmar] o formato da resposta; aqui espera algo como { total: 12 }
+          document.getElementById('total-numero').textContent = dados.total;
+          document.getElementById('total-cadastros').hidden = false;
+        })
+        .catch((erro) => console.error('Erro ao buscar o total de cadastros:', erro));
+    }
+    </script>
+</body>
 
 </html>
