@@ -1,53 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A Origem — A Engenharia da Perfumaria</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-      <a class="marca" href="origem.html">A Engenharia <small>da Perfumaria</small></a>
-      <nav>
-        <a class="ativo" href="origem.html">01. A Origem</a>
-        <a href="trajetoria.html">02. Minha trajetória</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <main>
-      <section class="capa origem">
-        <p class="capitulo">Capítulo 01</p>
-        <p class="subtitulo">Antes de ser uma fragrância, o perfume foi ritual.</p>
+  <title>A Origem | A Engenharia da Perfumaria</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/origem.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+      <span class="nome-logo">A Engenharia <span>da Perfumaria</span></span>
+    </div>
+
+    <nav class="menu">
+      <a href="origem.html" class="ativo">A Origem</a>
+      <a href="trajetoria.html">Minha trajetória</a>
+    </nav>
+
+    <div class="botoes-header">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="cadastro.html" class="btn-cadastro">Cadastro</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Abertura -->
+    <section class="hero">
+      <div class="hero-texto">
+        <span class="capitulo">Capítulo 01</span>
+        <p class="frase-destaque">Antes de ser uma fragrância, o perfume foi ritual.</p>
         <h1>A Origem</h1>
-        <p class="introducao">Uma história construída entre fumaça, flores e ciência — dos primeiros rituais da humanidade à engenharia invisível de uma fragrância moderna.</p>
-      </section>
+        <p class="descricao">Uma história construída entre fumaça, flores e ciência — dos primeiros rituais da humanidade à engenharia invisível de uma fragrância moderna.</p>
+        <a class="link-rolar" href="#linha-do-tempo">Percorra a história ↓</a>
+      </div>
 
-      <section class="conteudo">
-        <p class="rotulo">Uma breve cronologia</p>
+      <div class="hero-frasco" aria-hidden="true">
+        <div class="frasco-tampa"></div>
+        <div class="frasco-gargalo"></div>
+        <div class="frasco-vidro"><div class="frasco-liquido"></div></div>
+        <span class="palavra-lateral">PER FUMUM</span>
+      </div>
+    </section>
+
+    <!-- Linha do tempo e pirâmide olfativa -->
+    <section class="historia" id="linha-do-tempo">
+      <div class="titulo-secao">
+        <span class="rotulo">Uma breve cronologia</span>
         <h2>Da fumaça à memória</h2>
-        <div class="linha-do-tempo">
-          <article><span>01 · Antiguidade</span><h3>Per fumum</h3><p>No Egito e na Mesopotâmia, resinas, óleos e bálsamos eram usados em rituais. O perfume nasceu da fumaça que aproximava o humano do sagrado.</p></article>
-          <article><span>02 · Idade Média</span><h3>A arte de destilar</h3><p>Estudiosos do mundo islâmico aperfeiçoaram a destilação e ampliaram as possibilidades de extração de óleos e águas aromáticas.</p></article>
-          <article><span>03 · Séculos XIV—XVIII</span><h3>Da corte à cidade</h3><p>A Água da Hungria, as luvas perfumadas de Grasse e a Água de Colônia transformaram o aroma em parte da vida cotidiana.</p></article>
-          <article><span>04 · Século XX</span><h3>A perfumaria moderna</h3><p>Moléculas sintéticas abriram novos territórios criativos e deram início a uma nova linguagem olfativa.</p></article>
+        <p>A perfumaria sempre ocupou o encontro entre técnica e emoção. Cada descoberta mudou não apenas como produzimos aromas, mas como contamos quem somos.</p>
+      </div>
+
+      <!-- Os marcos são desenhados pelo JavaScript (veja o script no final da página) -->
+      <div class="linha-tempo" id="linha-tempo"></div>
+
+      <div class="piramide">
+        <div class="piramide-texto">
+          <span class="rotulo">A arquitetura da fragrância</span>
+          <h2>Três tempos,<br>uma só memória.</h2>
+          <p>Como uma narrativa, o perfume se revela aos poucos. A primeira impressão abre caminho para a identidade e, por fim, para aquilo que permanece na pele.</p>
         </div>
-        <a class="proximo" href="trajetoria.html">Próximo capítulo <strong>Minha trajetória →</strong></a>
-      </section>
-    </main>
-    <script src="script.js"></script>
-  </body>
+
+        <div class="piramide-visual">
+          <div class="piramide-linha topo">
+            <span>01</span>
+            <strong>Notas de topo</strong>
+            <small>A primeira impressão</small>
+          </div>
+          <div class="piramide-linha coracao">
+            <span>02</span>
+            <strong>Notas de coração</strong>
+            <small>A identidade</small>
+          </div>
+          <div class="piramide-linha fundo">
+            <span>03</span>
+            <strong>Notas de fundo</strong>
+            <small>A memória que fica</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="proximo">
+        <a class="btn-capitulo" href="trajetoria.html">
+          <small>Próximo capítulo</small>
+          Minha trajetória →
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    <div class="conteudo-rodape">
+      <div class="rodape-empresa">
+        <div class="logo-rodape">
+          <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+          <span>A Engenharia <span>da Perfumaria</span></span>
+        </div>
+        <p>Minha história através das fragrâncias.</p>
+      </div>
+
+      <div class="coluna-rodape">
+        <h3>Capítulos</h3>
+        <a href="origem.html">A Origem</a>
+        <a href="trajetoria.html">Minha trajetória</a>
+      </div>
+
+      <div class="coluna-rodape">
+        <h3>Acesso</h3>
+        <a href="login.html">Login</a>
+        <a href="cadastro.html">Cadastro</a>
+      </div>
+    </div>
+
+    <div class="rodape-inferior">
+      <p>A Engenharia da Perfumaria · Projeto Individual 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    // Marcos da linha do tempo
+    const marcos = [
+      {
+        periodo: 'Antiguidade',
+        titulo: 'Per fumum',
+        texto: 'No Egito e na Mesopotâmia, resinas, óleos e bálsamos eram usados em rituais. O perfume nasceu da fumaça que aproximava o humano do sagrado.'
+      },
+      {
+        periodo: 'Idade Média',
+        titulo: 'A arte de destilar',
+        texto: 'Estudiosos do mundo islâmico aperfeiçoaram a destilação e ampliaram as possibilidades de extração de óleos e águas aromáticas.'
+      },
+      {
+        periodo: 'Séculos XIV—XVIII',
+        titulo: 'Da corte à cidade',
+        texto: 'A Água da Hungria, as luvas perfumadas de Grasse e a Água de Colônia transformaram o aroma em parte da vida e da apresentação pessoal.'
+      },
+      {
+        periodo: 'Século XX',
+        titulo: 'A perfumaria moderna',
+        texto: 'Moléculas sintéticas abriram novos territórios criativos. Em 1921, Chanel Nº 5 tornou-se um símbolo dessa nova linguagem olfativa.'
+      }
+    ];
+
+    // Desenha cada marco dentro da div #linha-tempo
+    document.getElementById('linha-tempo').innerHTML = marcos.map((marco, i) => `
+      <article class="marco">
+        <span class="marco-numero">0${i + 1}</span>
+        <span class="marco-periodo">${marco.periodo}</span>
+        <h3>${marco.titulo}</h3>
+        <p>${marco.texto}</p>
+      </article>
+    `).join('');
+  </script>
+</body>
 </html>
-<script>
-    document.documentElement.classList.add("js");
-
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const destino = document.querySelector(link.getAttribute("href"));
-    if (!destino) return;
-    event.preventDefault();
-    destino.scrollIntoView({ behavior: "smooth" });
-  });
-});
-
-</script>

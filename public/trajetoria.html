@@ -1,48 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minha Trajetória — A Engenharia da Perfumaria</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-      <a class="marca" href="origem.html">A Engenharia <small>da Perfumaria</small></a>
-      <nav>
-        <a href="origem.html">01. A Origem</a>
-        <a class="ativo" href="trajetoria.html">02. Minha trajetória</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <main>
-      <section class="capa trajetoria">
-        <p class="capitulo">Capítulo 02</p>
-        <p class="subtitulo">Um presente. Uma descoberta. Uma coleção.</p>
-        <h1>A Minha <em>Trajetória</em></h1>
-        <blockquote>“Um cheiro pode guardar uma lembrança para sempre.”</blockquote>
-      </section>
+  <title>Minha Trajetória | A Engenharia da Perfumaria</title>
 
-      <section class="conteudo memoria">
-        <p class="rotulo">O começo · 2021</p>
-        <div class="texto-memoria">
-          <div>
-            <p class="rotulo">Minha primeira fragrância</p>
-            <h2>Malbec Clássico</h2>
-          </div>
-          <div>
-            <p class="destaque">Foi o primeiro perfume que eu ganhei — um presente da minha mãe que mudou a forma como eu me relaciono com os cheiros.</p>
-            <p>A partir daquele frasco, o perfume deixou de ser apenas parte da apresentação pessoal. Tornou-se curiosidade, pesquisa e uma maneira de marcar fases da minha própria história.</p>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/trajetoria.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+      <span class="nome-logo">A Engenharia <span>da Perfumaria</span></span>
+    </div>
+
+    <nav class="menu">
+      <a href="origem.html">A Origem</a>
+      <a href="trajetoria.html" class="ativo">Minha trajetória</a>
+    </nav>
+
+    <div class="botoes-header">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="cadastro.html" class="btn-cadastro">Cadastro</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Abertura -->
+    <section class="abertura">
+      <div class="abertura-titulo">
+        <span class="capitulo">Capítulo 02</span>
+        <p class="frase-destaque">Um presente. Uma descoberta. Uma coleção.</p>
+        <h1>A Minha<br><em>Trajetória</em></h1>
+      </div>
+
+      <div class="abertura-texto">
+        <span class="aspas">“</span>
+        <blockquote>Um cheiro pode guardar uma lembrança para sempre.</blockquote>
+        <p>Minha história com a perfumaria não começou em uma loja ou em um laboratório. Começou em casa, com um gesto de carinho da minha mãe.</p>
+      </div>
+    </section>
+
+    <!-- Primeira fragrância -->
+    <section class="primeira">
+      <div class="ano">
+        <span class="rotulo">O começo</span>
+        <strong>2021</strong>
+      </div>
+
+      <div class="cartao-memoria">
+        <div class="malbec" aria-hidden="true">
+          <div class="malbec-tampa"></div>
+          <div class="malbec-corpo"><i>MALBEC<small>O BOTICÁRIO</small></i></div>
+        </div>
+
+        <div class="cartao-texto">
+          <span class="numero-memoria">01</span>
+          <span class="rotulo">Minha primeira fragrância</span>
+          <h2>Malbec Clássico</h2>
+          <p class="destaque">Foi o primeiro perfume que eu ganhei — um presente da minha mãe que mudou a forma como eu me relaciono com os cheiros.</p>
+          <p>A partir daquele frasco, o perfume deixou de ser apenas parte da apresentação pessoal. Tornou-se curiosidade, pesquisa e uma maneira de marcar fases da minha própria história.</p>
+          <div class="nota-aroma">
+            <span>Madeiras · Ameixa · Baunilha</span>
+            <small>O aroma que iniciou a coleção</small>
           </div>
         </div>
-        <div class="numeros">
-          <article><strong>15+</strong><span>fragrâncias na coleção</span></article>
-          <article><strong>05</strong><span>anos de descobertas</span></article>
-          <article><strong>01</strong><span>paixão que continua crescendo</span></article>
+      </div>
+    </section>
+
+    <!-- Coleção -->
+    <section class="colecao">
+      <div class="colecao-titulo">
+        <span class="rotulo">A coleção hoje</span>
+        <h2>Mais do que frascos,<br>capítulos de uma vida.</h2>
+      </div>
+
+      <!-- Os números são desenhados pelo JavaScript (veja o script no final da página) -->
+      <div class="estatisticas" id="estatisticas"></div>
+
+      <div class="colecao-nota">
+        <p>Hoje, cada escolha diz algo sobre o momento, o clima e a imagem que quero transmitir. Colecionar perfumes é também aprender a reconhecer detalhes — e perceber como pequenas notas constroem uma identidade.</p>
+        <span class="assinatura">Davi Borges Taioque</span>
+      </div>
+    </section>
+
+    <!-- Capítulo anterior -->
+    <div class="voltar">
+      <a class="btn-capitulo" href="origem.html">
+        <small>Capítulo anterior</small>
+        ← A Origem
+      </a>
+    </div>
+
+  </main>
+
+  <footer class="rodape">
+    <div class="conteudo-rodape">
+      <div class="rodape-empresa">
+        <div class="logo-rodape">
+          <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+          <span>A Engenharia <span>da Perfumaria</span></span>
         </div>
-        <a class="proximo" href="origem.html">Capítulo anterior <strong>← A Origem</strong></a>
-      </section>
-    </main>
-    <script src="script.js"></script>
-  </body>
+        <p>Minha história através das fragrâncias.</p>
+      </div>
+
+      <div class="coluna-rodape">
+        <h3>Capítulos</h3>
+        <a href="origem.html">A Origem</a>
+        <a href="trajetoria.html">Minha trajetória</a>
+      </div>
+
+      <div class="coluna-rodape">
+        <h3>Acesso</h3>
+        <a href="login.html">Login</a>
+        <a href="cadastro.html">Cadastro</a>
+      </div>
+    </div>
+
+    <div class="rodape-inferior">
+      <p>A Engenharia da Perfumaria · Projeto Individual 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    // Números da coleção
+    const estatisticas = [
+      { valor: '15', sufixo: '+', texto: 'fragrâncias na coleção' },
+      { valor: '05', sufixo: '',  texto: 'anos de descobertas' },
+      { valor: '01', sufixo: '',  texto: 'paixão que continua crescendo' }
+    ];
+
+    // Desenha cada número dentro da div #estatisticas
+    document.getElementById('estatisticas').innerHTML = estatisticas.map((item) => `
+      <article class="estatistica">
+        <strong>${item.valor}${item.sufixo ? `<span>${item.sufixo}</span>` : ''}</strong>
+        <p>${item.texto}</p>
+      </article>
+    `).join('');
+  </script>
+</body>
 </html>
