@@ -68,11 +68,53 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Usou:** a estrutura de seções (Contexto, Objetivo, Justificativa, Escopo, Materiais e Métodos, Próximos Passos, Agradecimentos e Referências) e os textos da história e da imagem pessoal.
 * **Mudou:** acrescentei as respostas das cinco perguntas do desafio (interesse, valores, dificuldades, superações e gratidão) em uma nova seção. Os trechos marcados com [confirmar] precisam ser conferidos ou removidos.
 
-### 📝 Registro #005 — Criação das telas “A Origem” e “A Minha Trajetória”
-* **Data:** 16/10/2026
-* **Pediu:** a criação de duas telas institucionais para o projeto “A Engenharia da Perfumaria”, sem aparência de loja ou produto comercial. A primeira tela deveria apresentar a origem e a evolução histórica da perfumaria. A segunda deveria contar a minha trajetória pessoal, iniciada em 2021, quando ganhei da minha mãe o Malbec Clássico, até chegar à coleção atual com mais de 15 fragrâncias. Também pedi os códigos das telas separados em HTML, CSS e JavaScript.
-* **Usou:** o conteúdo da documentação do projeto, a identidade visual em azul-noite e dourado envelhecido e a imagem das telas de login e cadastro como referência estética. Foram utilizadas tipografia editorial, linha do tempo histórica, pirâmide olfativa, indicadores da coleção, navegação entre capítulos e elementos visuais inspirados em frascos de perfume.
-* **Mudou:** foram criadas as telas “A Origem” e “A Minha Trajetória”, com layout responsivo para computador e celular. Também foram gerados os arquivos separados origem.html, trajetoria.html, styles.css e script.js. Além disso, foram disponibilizados dois arquivos para download: codigos-duas-telas.zip, com os códigos editáveis, e site-pronto.zip, com a versão compilada do site para visualização ou envio a outra IA. A compilação do projeto foi testada e concluída sem erros.
+### 📝 Registro #005 — Telas A Origem e Minha Trajetória (a partir do ZIP)
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Analise o site presente neste arquivo ZIP e recrie-o em HTML e JavaScript juntos, porém um código para a tela de origem, e o outro para a tela da minha trajetória, e me dê o CSS separado de ambos mantendo o mesmo design, conteúdo, responsividade e navegação entre as telas. Me dê com base nos comandos que você já me enviou, sem colocar nada novo."*
+* **Usou:** os textos e o CSS do site do ZIP, divididos em `origem.html`, `trajetoria.html` e um CSS para cada tela. O JavaScript desenha a linha do tempo a partir de uma lista de marcos.
+* **Mudou:** o ZIP era um app React já compilado, então a IA leu o código e recriou em HTML e JavaScript puros. Os botões "Baixar site pronto" e "Códigos" do original foram removidos.
+* **Domínio do código:** [escreva com suas palavras: como a lista `marcos` vira HTML com `.map()` e `innerHTML`, e como o CSS foi separado por tela].
+
+### 📝 Registro #006 — Botões Login e Cadastro no cabeçalho
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Me dê dois botões no canto superior direito, mostrando login e cadastro, para posteriormente eu integrar essas telas às telas de cadastro e login."*
+* **Usou:** dois links no cabeçalho, apontando para `login.html` e `cadastro.html`.
+* **Mudou:** com os botões novos, o cabeçalho passou a ter duas linhas no celular (marca e botões em cima, menu embaixo).
+* **Domínio do código:** [explique como o link leva para outra página e como o `@media` reorganiza o cabeçalho no celular].
+
+### 📝 Registro #007 — Telas refeitas com o CSS e o HTML permitidos
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Vou te mandar os códigos que eu posso utilizar para você se basear, pois tem alguns que eu não posso, ok? Irei mandar o de CSS e o de HTML."*
+* **Usou:** a estrutura e os nomes de classe do modelo (`.header`, `.logo`, `.menu`, `.botoes-header`, `.btn-login`, `.btn-cadastro` e o rodapé), com `flex` e `grid`. Mantive as cores azul e dourado e as fontes do login.
+* **Mudou:** as telas foram refeitas e ficaram mais simples que a versão do ZIP (sem palavra vertical nem linhas decorativas). Usei `@media` para o celular, que não estava no modelo, e preciso confirmar se pode.
+* **Domínio do código:** [explique `display: flex`, `display: grid` e a organização de `css/` e dos arquivos HTML].
+
+### 📝 Registro #008 — Ideias para o index
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Estou com um código da API chamado index, me dê algumas ideias para colocar no index do meu site."*
+* **Usou:** as ideias sugeridas: abertura com botões, três pilares (memória, identidade, conexão), pirâmide olfativa, prévia da minha história, cards dos capítulos, números, saudação personalizada, total de cadastrados e convite final.
+* **Mudou:** nada no código ainda, só o planejamento do conteúdo.
+
+### 📝 Registro #009 — Código do index
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Então faça o código do index baseado nisso, e o código baseado nos outros."*
+  Depois enviei o `index.html` da API (AquaTech) para servir de base.
+* **Usou:** a estrutura do index da API (`sessao.js`, `header` com `navbar`, `banner`, `footer`) com o conteúdo das ideias do #008.
+* **Mudou:** a primeira versão seguia o modelo do CSS e foi refeita na estrutura do index da API. "Missão, Visão e Valores" viraram "Memória, Identidade e Conexão". A rota do total de cadastros e o nome da chave do `sessionStorage` ficaram para confirmar.
+* **Domínio do código:** [explique o que é `sessionStorage`, como o `fetch` busca o total na API e como o script troca Login e Cadastro por "Olá, nome"].
+
+### 📝 Registro #010 — README do projeto
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Preciso de um README agora, colocando o objetivo e mais coisas."*
+  > *"Preciso melhorar meu GitHub, com fotos, banners, e preciso melhorar tudo mais, me dê um código para eu colocar no meu README."*
+* **Usou:** o banner, os badges, a tabela de telas, o diagrama do fluxo e a paleta em imagem.
+* **Mudou:** a primeira versão era só texto, e a segunda ganhou banner, badges e prints (ainda são placeholders para eu substituir pelos prints reais).
 
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
 
