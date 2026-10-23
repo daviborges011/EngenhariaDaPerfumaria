@@ -69,7 +69,7 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Mudou:** acrescentei as respostas das cinco perguntas do desafio (interesse, valores, dificuldades, superações e gratidão) em uma nova seção. Os trechos marcados com [confirmar] precisam ser conferidos ou removidos.
 
 ### 📝 Registro #005 — Telas A Origem e Minha Trajetória (a partir do ZIP)
-* **Data:** [preencher]
+* **Data:** 16/10/2026
 * **Pediu:**
   > *"Analise o site presente neste arquivo ZIP e recrie-o em HTML e JavaScript juntos, porém um código para a tela de origem, e o outro para a tela da minha trajetória, e me dê o CSS separado de ambos mantendo o mesmo design, conteúdo, responsividade e navegação entre as telas. Me dê com base nos comandos que você já me enviou, sem colocar nada novo."*
 * **Usou:** os textos e o CSS do site do ZIP, divididos em `origem.html`, `trajetoria.html` e um CSS para cada tela. O JavaScript desenha a linha do tempo a partir de uma lista de marcos.
@@ -77,7 +77,7 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Domínio do código:** [escreva com suas palavras: como a lista `marcos` vira HTML com `.map()` e `innerHTML`, e como o CSS foi separado por tela].
 
 ### 📝 Registro #006 — Botões Login e Cadastro no cabeçalho
-* **Data:** [preencher]
+* **Data:** 16/10/2026
 * **Pediu:**
   > *"Me dê dois botões no canto superior direito, mostrando login e cadastro, para posteriormente eu integrar essas telas às telas de cadastro e login."*
 * **Usou:** dois links no cabeçalho, apontando para `login.html` e `cadastro.html`.
@@ -85,7 +85,7 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Domínio do código:** [explique como o link leva para outra página e como o `@media` reorganiza o cabeçalho no celular].
 
 ### 📝 Registro #007 — Telas refeitas com o CSS e o HTML permitidos
-* **Data:** [preencher]
+* **Data:** 17/10/2026
 * **Pediu:**
   > *"Vou te mandar os códigos que eu posso utilizar para você se basear, pois tem alguns que eu não posso, ok? Irei mandar o de CSS e o de HTML."*
 * **Usou:** a estrutura e os nomes de classe do modelo (`.header`, `.logo`, `.menu`, `.botoes-header`, `.btn-login`, `.btn-cadastro` e o rodapé), com `flex` e `grid`. Mantive as cores azul e dourado e as fontes do login.
@@ -93,14 +93,14 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Domínio do código:** [explique `display: flex`, `display: grid` e a organização de `css/` e dos arquivos HTML].
 
 ### 📝 Registro #008 — Ideias para o index
-* **Data:** [preencher]
+* **Data:** 17/10/2026
 * **Pediu:**
   > *"Estou com um código da API chamado index, me dê algumas ideias para colocar no index do meu site."*
 * **Usou:** as ideias sugeridas: abertura com botões, três pilares (memória, identidade, conexão), pirâmide olfativa, prévia da minha história, cards dos capítulos, números, saudação personalizada, total de cadastrados e convite final.
 * **Mudou:** nada no código ainda, só o planejamento do conteúdo.
 
 ### 📝 Registro #009 — Código do index
-* **Data:** [preencher]
+* **Data:** 17/10/2026
 * **Pediu:**
   > *"Então faça o código do index baseado nisso, e o código baseado nos outros."*
   Depois enviei o `index.html` da API (AquaTech) para servir de base.
@@ -109,7 +109,7 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Domínio do código:** [explique o que é `sessionStorage`, como o `fetch` busca o total na API e como o script troca Login e Cadastro por "Olá, nome"].
 
 ### 📝 Registro #010 — README do projeto
-* **Data:** [preencher]
+* **Data:** 21/10/2026
 * **Pediu:**
   > *"Preciso de um README agora, colocando o objetivo e mais coisas."*
   > *"Preciso melhorar meu GitHub, com fotos, banners, e preciso melhorar tudo mais, me dê um código para eu colocar no meu README."*
