@@ -10,7 +10,7 @@ function autenticar(req, res) {
   } else if (senha == undefined) {
     res.status(400).send("Sua senha está indefinida!");
   } else {
-    // NOVO: primeiro confere se o e-mail está cadastrado
+
     usuarioModel
       .buscarPorEmail(email)
       .then(function (resultadoEmail) {
