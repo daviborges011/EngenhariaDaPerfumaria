@@ -1,0 +1,73 @@
+/* dashboard.css - complementa o index.css (cabeçalho, cartões, rodapé) */
+
+/* PAINEL: gráfico à esquerda, lista à direita */
+.painel {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.caixa-grafico,
+.caixa-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px;
+
+    background-color: #1E293B;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: 12px;
+}
+
+.caixa-grafico h3,
+.caixa-lista h3 {
+    font-size: 24px;
+}
+
+.legenda {
+    font-size: 13px;
+    color: #E2E8F0;
+}
+
+/* O Chart.js precisa de um contêiner com altura e position: relative */
+.grafico {
+    position: relative;
+    height: 320px;
+}
+
+.lista-recentes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lista-recentes li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+}
+
+.lista-recentes strong {
+    font-weight: 600;
+    color: #C5A059;
+}
+
+.lista-recentes span,
+.aviso-vazio {
+    font-size: 13px;
+    color: #E2E8F0;
+}
+
+.aviso-erro {
+    text-align: center;
+    color: #f2a7a7;
+}
+
+@media (max-width: 900px) {
+    .painel {
+        grid-template-columns: 1fr;
+    }
+}

@@ -30,6 +30,9 @@
           <li>
             <a href="trajetoria.html">Minha trajetória</a>
           </li>
+          <li>
+            <a href="dashboard.html">Dashboard</a>
+          </li>
           <li class="separador">|</li>
           <li id="item-login">
             <a href="login.html" class="btn-login">Login</a>
@@ -151,11 +154,11 @@
           <h3>Minha Trajetória</h3>
           <p>Do Malbec de 2021 à coleção de hoje.</p>
         </a>
-        <article class="cartao">
-          <span class="rotulo">Capítulo 03 · Em breve</span>
+          <a class="cartao" href="dashboard.html">
+          <span class="rotulo">Capítulo 03</span>
           <h3>Dashboard</h3>
           <p>Os dados da jornada e das pessoas cadastradas.</p>
-        </article>
+        </a>
       </div>
     </section>
 
@@ -229,19 +232,19 @@
     }
 
     // 3) Total de pessoas cadastradas (vem da API)
-    // [preencher] com a rota da sua API que devolve o total de usuários
-    const ROTA_TOTAL_USUARIOS = '';
+    const ROTA_TOTAL_USUARIOS = '/usuarios/total';
 
     if (ROTA_TOTAL_USUARIOS) {
       fetch(ROTA_TOTAL_USUARIOS)
         .then((resposta) => resposta.json())
         .then((dados) => {
-          // [confirmar] o formato da resposta; aqui espera algo como { total: 12 }
+
           document.getElementById('total-numero').textContent = dados.total;
           document.getElementById('total-cadastros').hidden = false;
         })
         .catch((erro) => console.error('Erro ao buscar o total de cadastros:', erro));
     }
+
     </script>
 </body>
 

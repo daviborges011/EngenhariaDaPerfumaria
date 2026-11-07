@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | A Engenharia da Perfumaria</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+
+    <!-- Biblioteca de gráficos (a mesma usada no dashboard do template) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">A Engenharia da Perfumaria</h1>
+        <ul class="navbar">
+          <li>
+            <a href="index.html">Início</a>
+          </li>
+          <li>
+            <a href="origem.html">A Origem</a>
+          </li>
+          <li>
+            <a href="trajetoria.html">Minha trajetória</a>
+          </li>
+          <li class="agora">
+            <a href="dashboard.html">Dashboard</a>
+          </li>
+          <li class="separador">|</li>
+          <li class="saudacao">Olá, <strong id="b_usuario"></strong></li>
+          <li>
+            <a href="#" class="btn-login" id="sair">Sair</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  <main>
+    <section class="secao">
+      <div class="titulo-secao">
+        <span class="rotulo">Capítulo 03</span>
+        <h2>As pessoas nessa jornada</h2>
+        <p>Os dados abaixo vêm direto do banco de dados: cada pessoa que cria uma conta entra na contagem.</p>
+      </div>
+
+      <!-- Os três números são desenhados pelo JavaScript -->
+      <div class="estatisticas" id="resumo"></div>
+
+      <p class="aviso-erro" id="aviso-erro" hidden>Não foi possível carregar os dados. Tente novamente mais tarde.</p>
+
+      <div class="painel">
+        <div class="caixa-grafico">
+          <h3>Cadastros por dia</h3>
+          <p class="legenda">Últimos 30 dias</p>
+          <div class="grafico">
+            <canvas id="grafico-cadastros"></canvas>
+          </div>
+        </div>
+
+        <div class="caixa-lista">
+          <h3>Últimos cadastrados</h3>
+          <ul class="lista-recentes" id="lista-recentes"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+    <div class="footer">
+      <div class="container">
+        <h4>Feito com amor por Davi Borges Taioque &hearts; SPTech &copy; 2026</h4>
+      </div>
+    </div>
+
+    <script>
+    // 1) Só entra quem fez login (o login guarda o nome em sessionStorage)
+    if (!sessionStorage.NOME_USUARIO) {
+      window.location = 'login.html';
+    }
+
+    document.getElementById('b_usuario').textContent = sessionStorage.NOME_USUARIO;
+
+    document.getElementById('sair').addEventListener('click', (evento) => {
+      evento.preventDefault();
+      sessionStorage.clear();
+      window.location = 'login.html';
+    });
+
+    // 2) Busca um dado na API e devolve o JSON
+    function buscar(rota) {
+      return fetch(rota, { cache: 'no-store' }).then((resposta) => {
+        if (!resposta.ok) {
+          throw new Error('Erro na rota ' + rota);
+        }
+        return resposta.json();
+      });
+    }
+
+    // 3) Desenha os três cards de números
+    function montarResumo(total, recentes, porDia) {
+      const novosNoPeriodo = porDia.reduce((soma, item) => soma + item.total, 0);
+      const ultimo = recentes.length > 0 ? recentes[0].data.split(' ')[0] : '—';
+
+      const cards = [
+        { valor: total.total, texto: 'pessoas cadastradas' },
+        { valor: novosNoPeriodo, texto: 'novos cadastros nos últimos 30 dias' },
+        { valor: ultimo, texto: 'data do último cadastro' }
+      ];
+
+      document.getElementById('resumo').innerHTML = cards.map((card) => `
+        <article class="estatistica">
+          <strong>${card.valor}</strong>
+          <p>${card.texto}</p>
+        </article>
+      `).join('');
+    }
+
+    // 4) Lista dos últimos cadastrados (textContent evita código malicioso no nome)
+    function montarLista(recentes) {
+      const lista = document.getElementById('lista-recentes');
+
+      if (recentes.length === 0) {
+        const vazio = document.createElement('li');
+        vazio.className = 'aviso-vazio';
+        vazio.textContent = 'Ainda não há cadastros.';
+        lista.appendChild(vazio);
+        return;
+      }
+
+      recentes.forEach((pessoa) => {
+        const item = document.createElement('li');
+        const nome = document.createElement('strong');
+        const data = document.createElement('span');
+        nome.textContent = pessoa.nome;
+        data.textContent = pessoa.data;
+        item.appendChild(nome);
+        item.appendChild(data);
+        lista.appendChild(item);
+      });
+    }
+
+    // 5) Gráfico de barras: cadastros por dia
+    function montarGrafico(porDia) {
+      const dias = porDia.map((item) => {
+        const partes = item.dia.split('-');   // 2026-10-28 -> 28/10
+        return partes[2] + '/' + partes[1];
+      });
+      const totais = porDia.map((item) => item.total);
+
+      Chart.defaults.color = '#E2E8F0';
+      Chart.defaults.font.family = "'Figtree', sans-serif";
+
+      new Chart(document.getElementById('grafico-cadastros'), {
+        type: 'bar',
+        data: {
+          labels: dias,
+          datasets: [{
+            label: 'Cadastros',
+            data: totais,
+            backgroundColor: '#C5A059',
+            hoverBackgroundColor: '#D4AF37',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false } },
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 },
+              grid: { color: 'rgba(197, 160, 89, 0.15)' }
+            }
+          }
+        }
+      });
+    }
+
+    // 6) Busca tudo de uma vez e monta a tela
+    Promise.all([
+      buscar('/usuarios/total'),
+      buscar('/usuarios/recentes'),
+      buscar('/usuarios/por-dia')
+    ])
+      .then(([total, recentes, porDia]) => {
+        montarResumo(total, recentes, porDia);
+        montarLista(recentes);
+        montarGrafico(porDia);
+      })
+      .catch((erro) => {
+        console.error(erro);
+        document.getElementById('aviso-erro').hidden = false;
+      });
+    </script>
+</body>
+
+</html>
