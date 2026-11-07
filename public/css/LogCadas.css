@@ -256,3 +256,17 @@ button:focus-visible { outline: 2px solid var(--texto); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   .liquido { animation: none; }
 }
+/* ===== Mensagens de erro e sucesso dos formulários ===== */
+.mensagem {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.mensagem.erro { color: #f2a7a7; }
+.mensagem.sucesso { color: var(--ouro); }
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
