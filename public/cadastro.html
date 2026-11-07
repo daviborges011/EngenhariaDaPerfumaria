@@ -45,6 +45,8 @@
           <label for="confirma">Confirmar senha</label>
           <input type="password" id="confirma" name="confirma" autocomplete="new-password" minlength="8" required>
 
+          <p id="mensagem" class="mensagem" role="alert"></p>
+
           <button type="submit">Criar conta</button>
         </form>
         <p class="troca">Já tem conta? <a href="login.html">Entrar</a></p>
@@ -52,5 +54,56 @@
     </section>
 
   </main>
+    <script>
+    const formulario = document.getElementById('form-cadastro');
+    const mensagem = document.getElementById('mensagem');
+    const botao = formulario.querySelector('button');
+
+    function mostrar(texto, tipo) {
+      mensagem.textContent = texto;
+      mensagem.className = 'mensagem ' + tipo;
+    }
+
+    formulario.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      mostrar('', '');
+
+      const senha = document.getElementById('senha').value;
+      const confirma = document.getElementById('confirma').value;
+
+      // Validação no navegador: as duas senhas precisam ser iguais
+      if (senha !== confirma) {
+        mostrar('As senhas não são iguais.', 'erro');
+        return;
+      }
+
+      botao.disabled = true;
+
+      // Envia os dados para a API (rota POST /usuarios/cadastrar)
+      fetch('/usuarios/cadastrar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nomeServer: document.getElementById('nome').value,
+          emailServer: document.getElementById('email').value,
+          senhaServer: senha
+        })
+      })
+        .then((resposta) => {
+          if (resposta.ok) {
+            mostrar('Conta criada! Levando você para o login...', 'sucesso');
+            setTimeout(() => { window.location = 'login.html'; }, 1500);
+          } else {
+            resposta.text().then((texto) => mostrar(texto, 'erro'));
+            botao.disabled = false;
+          }
+        })
+        .catch(() => {
+          mostrar('Não foi possível falar com o servidor. Tente novamente.', 'erro');
+          botao.disabled = false;
+        });
+    });
+  </script>
+</body>
 </body>
 </html>
