@@ -38,6 +38,8 @@
           <label for="senha">Senha</label>
           <input type="password" id="senha" name="senha" autocomplete="current-password" required>
 
+            <p id="mensagem" class="mensagem" role="alert"></p>
+
           <button type="submit">Entrar</button>
         </form>
         <p class="troca">Ainda não tem conta? <a href="cadastro.html">Criar conta</a></p>
@@ -45,5 +47,49 @@
     </section>
 
   </main>
+    <script>
+    const formulario = document.getElementById('form-entrar');
+    const mensagem = document.getElementById('mensagem');
+    const botao = formulario.querySelector('button');
+
+    function mostrar(texto, tipo) {
+      mensagem.textContent = texto;
+      mensagem.className = 'mensagem ' + tipo;
+    }
+
+    formulario.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      mostrar('', '');
+      botao.disabled = true;
+
+      // Envia e-mail e senha para a API (rota POST /usuarios/autenticar)
+      fetch('/usuarios/autenticar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          emailServer: document.getElementById('email').value,
+          senhaServer: document.getElementById('senha').value
+        })
+      })
+        .then((resposta) => {
+          if (resposta.ok) {
+            resposta.json().then((dados) => {
+              // Guarda quem entrou (o index e o dashboard leem estes valores)
+              sessionStorage.EMAIL_USUARIO = dados.email;
+              sessionStorage.NOME_USUARIO = dados.nome;
+              sessionStorage.ID_USUARIO = dados.id;
+              window.location = 'index.html';
+            });
+          } else {
+            resposta.text().then((texto) => mostrar(texto, 'erro'));
+            botao.disabled = false;
+          }
+        })
+        .catch(() => {
+          mostrar('Não foi possível falar com o servidor. Tente novamente.', 'erro');
+          botao.disabled = false;
+        });
+    });
+  </script>
 </body>
 </html>
