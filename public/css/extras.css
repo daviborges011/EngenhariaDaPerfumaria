@@ -1,0 +1,121 @@
+/* extras.css - estilos compartilhados pelas páginas novas */
+
+/* Faz o atributo hidden funcionar mesmo em elementos com display definido */
+[hidden] {
+    display: none !important;
+}
+
+.links-rodape {
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.links-rodape a {
+    margin: 0 8px;
+    color: #C5A059;
+    text-decoration: none;
+}
+
+.links-rodape a:hover {
+    color: #D4AF37;
+}
+
+.centro {
+    text-align: center;
+}
+
+/* FORMULÁRIOS */
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 28px;
+
+    background-color: #1E293B;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: 12px;
+}
+
+.formulario label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    color: #E2E8F0;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+    font: inherit;
+    padding: 10px 12px;
+    color: #F8FAF8;
+    background-color: #0B1325;
+    border: 1px solid rgba(197, 160, 89, 0.5);
+    border-radius: 8px;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+    outline: 2px solid #C5A059;
+}
+
+.formulario .largo {
+    grid-column: 1 / -1;
+}
+
+.formulario button {
+    font: inherit;
+    font-weight: 600;
+    padding: 12px;
+    color: #0B1325;
+    background-color: #C5A059;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background-color: #D4AF37;
+}
+
+.formulario button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.mensagem {
+    font-size: 14px;
+}
+
+.mensagem.erro {
+    color: #f2a7a7;
+}
+
+.mensagem.sucesso {
+    color: #C5A059;
+}
+
+/* Botão de remover dentro de um cartão (área do administrador) */
+.btn-remover {
+    margin-top: auto;
+    padding: 8px 12px;
+    font: inherit;
+    font-size: 13px;
+    color: #f2a7a7;
+    background-color: transparent;
+    border: 1px solid rgba(242, 167, 167, 0.6);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-remover:hover {
+    background-color: rgba(242, 167, 167, 0.12);
+}
+
+@media (max-width: 700px) {
+    .formulario {
+        grid-template-columns: 1fr;
+    }
+}
