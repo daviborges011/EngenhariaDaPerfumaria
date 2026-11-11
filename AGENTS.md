@@ -116,6 +116,79 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Usou:** o banner, os badges, a tabela de telas, o diagrama do fluxo e a paleta em imagem.
 * **Mudou:** a primeira versão era só texto, e a segunda ganhou banner, badges e prints (ainda são placeholders para eu substituir pelos prints reais).
 
+### 📝 Registro #011 — Próximo passo do projeto
+* **Data:** 22/10/2026
+* **Pediu:**
+  > *"Qual é o próximo passo do meu projeto? Já fiz as telas."*
+* **Usou:** a ordem sugerida: colocar as telas no web-data-viz, preparar o banco, ligar cadastro e login à API, preencher a rota do total de cadastros, criar o dashboard, fechar a documentação e ensaiar a apresentação.
+* **Mudou:** nada no código, só o planejamento.
+
+### 📝 Registro #012 — Ligação do login, cadastro e dashboard com a API e o banco
+* **Data:** 22/10/2026
+* **Pediu:**
+  > *"Preciso ligar minha tela de login e cadastro ao meu banco de dados, como eu faço usando o usuário controller, etc. Você tem acesso a ele, né?"*
+  Enviei o projeto web-data-viz compactado (sem `.env`) e colei o `usuarioController` e o `usuarioModel` do template.
+* **Usou:** as rotas, o controller e o model de usuários; o script SQL do banco `perfumaria`; o `fetch` do `cadastro.html` e do `login.html` para `/usuarios/cadastrar` e `/usuarios/autenticar`; o `sessionStorage` para guardar o nome de quem entrou; a rota `/usuarios/total` no index; e o `dashboard.html` com Chart.js e as rotas `/usuarios/recentes` e `/usuarios/por-dia`.
+* **Mudou:** o template montava o SQL juntando texto, guardava a senha pura, devolvia a senha ao navegador e exigia empresa e aquário (exemplo AquaTech). Troquei por consultas com `?`, senha guardada como hash (biblioteca `crypto` do Node) e login que devolve só id, nome e e-mail. Também protegi `.env` e `.env.dev` no `.gitignore`.
+* **Domínio do código:** [explique o caminho cadastro → rota → controller → model → MySQL, o que é o hash da senha com sal e por que os `?` evitam SQL injection].
+
+### 📝 Registro #013 — Passo a passo para aplicar manualmente
+* **Data:** 22/10/2026
+* **Pediu:**
+  > *"Me dê todos os códigos que eu preciso alterar e o passo a passo, para eu fazer manualmente."*
+* **Usou:** um guia de 14 passos (gitignore, banco, `config.js`, model, controller, rotas, telas, CSS, index, dashboard, logo e teste).
+* **Mudou:** nada novo no código, só a forma de entrega: em vez do ZIP, passo a passo para eu aplicar e entender cada arquivo.
+
+### 📝 Registro #014 — Dúvidas sobre o código
+* **Data:** 23/10/2026
+* **Pediu:**
+  > *"Por que os valores na function que eu adicionei estão meio apagados?"*
+  > *"Como realizo o passo 13?"*
+  > *"Para o cliente acessar a dashboard, ele tem que estar logado?"*
+* **Usou:** as explicações: o VS Code apaga o que está declarado e não usado (no `config.js`, o `valores` precisa estar também dentro de `conexao.query`); o passo 13 é copiar o `logo-selo.svg` para `public/`; e o dashboard só abre com login, mas essa proteção é feita só no navegador (`sessionStorage`), e as rotas da API são públicas.
+* **Mudou:** nada no código.
+* **Domínio do código:** [explique a diferença entre proteger a tela no navegador e proteger a rota no servidor].
+
+### 📝 Registro #015 — Ideias para ampliar o site
+* **Data:** 25/10/2026
+* **Pediu:**
+  > *"Estou sem ideias novas para o projeto, me dê ideias para eu fazer no meu site."*
+  > *"Quero ideias também que falem mais sobre a minha história e que mostrem alguma foto minha pequeno."*
+  > *"Agora me dê ideias mais abrangentes."*
+* **Usou:** [liste as ideias que você escolheu, por exemplo: Sobre o projeto, Glossário, Calculadora, Coleção, Mural].
+* **Mudou:** nada no código, só o planejamento.
+
+### 📝 Registro #016 — Roteiro das novas páginas
+* **Data:** [preencher]
+* **Pediu:**
+  > *"Me dê um passo a passo bem explícito para eu realizar todas essas."*
+* **Usou:** um roteiro em 10 etapas (sobre, glossário, calculadora, página 404, coleção, administrador, coleção em números, perfil olfativo, mural e publicação). As etapas 1 a 4 já estão detalhadas; as 5 a 10 ficam para depois.
+* **Mudou:** nada no código ainda.
+
+### 📝 Registro #017 — Correção das páginas novas
+* **Data:** 29/10/2026
+* **Pediu:**
+  > *"Esse sobre não é a origem? E o CSS não está aplicado."*
+  > *"Não estou conseguindo acessar a correção, me mande de outro jeito."*
+  Enviei o projeto compactado.
+* **Usou:** os arquivos corrigidos: `sobre.html`, `glossario.html`, `calculadora.html`, `404.html`, `js/menu.js`, `app.js` (com a página 404), `usuarioController.js` e `usuarioModel.js`.
+* **Mudou:** o `sobre.html` estava só com o miolo da página, sem o `<head>` com os links dos CSS, e por isso ficava sem estilo (também havia um erro de digitação, "letruir"). O back-end estava na versão só de login e cadastro, mas as rotas já chamavam o total e o dashboard, então esses davam erro. Também faltavam as páginas novas e o `menu.js`.
+* **Domínio do código:** [explique por que uma página precisa do `<head>` com `<link rel="stylesheet">` e por que a rota precisa de uma função correspondente no controller].
+
+### 📝 Registro #018 — Navegação entre as páginas
+* **Data:** 02/11/2026
+* **Pediu:**
+  > *"As páginas com o index e outras, por exemplo, não têm os botões para navegar."*
+* **Usou:** três cartões novos no index (Glossário, Calculadora e Sobre o projeto) e links no rodapé de todas as páginas.
+* **Mudou:** o `index.html` e o `dashboard.html` passaram a carregar o `extras.css`. Os menus do topo ficaram como estavam, porque mais itens apertariam o cabeçalho no celular. Tirei o link "Coleção" das páginas novas, porque essa página ainda não existe.
+
+### 📝 Registro #019 — Erro 404 no dashboard
+* **Data:** 11/11/2026
+* **Pediu:**
+  > *"Dash deu erro 404."*
+* **Usou:** o diagnóstico das três causas possíveis: arquivo fora de `public/` (ou dentro da pasta antiga `public/dashboard/`), servidor com a versão antiga das rotas, ou arquivo de CSS no caminho errado.
+* **Mudou:** [escreva o que resolveu o seu caso].
+
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
 
 - [ ] Planejamento semanal distribuído (Matérias + Grupo + Individual).
