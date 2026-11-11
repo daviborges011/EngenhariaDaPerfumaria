@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculadora | A Engenharia da Perfumaria</title>
+    <meta name="description" content="Minha história através das fragrâncias: a origem do perfume, a minha trajetória e a minha coleção.">
+    <meta property="og:title" content="A Engenharia da Perfumaria">
+    <meta property="og:description" content="Minha história através das fragrâncias.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/extras.css">
+    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+</head>
+
+<body>
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">A Engenharia da Perfumaria</h1>
+        <ul class="navbar">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="origem.html">A Origem</a></li>
+          <li><a href="trajetoria.html">Minha trajetória</a></li>
+          <li><a href="colecao.html">Coleção</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li class="separador">|</li>
+          <li id="item-login"><a href="login.html" class="btn-login">Login</a></li>
+          <li id="item-cadastro"><a href="cadastro.html" class="btn-cadastro">Cadastro</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <main>
+      <section class="secao">
+        <div class="titulo-secao">
+          <span class="rotulo">Matemática do frasco</span>
+          <h2>Quanto rende um perfume?</h2>
+          <p>Preencha os dados do frasco e veja quantas borrifadas ele rende, quanto custa cada uma e quantos dias ele dura.</p>
+        </div>
+
+        <form class="formulario" id="form-calculo">
+          <label>Preço do frasco (R$)
+            <input type="number" id="preco" min="0.01" step="0.01" required>
+          </label>
+          <label>Volume do frasco (mL)
+            <input type="number" id="volume" min="1" step="1" required>
+          </label>
+          <label>Borrifadas por mL
+            <input type="number" id="por-ml" min="1" step="1" value="10" required>
+          </label>
+          <label>Borrifadas por dia
+            <input type="number" id="por-dia" min="1" step="1" value="4" required>
+          </label>
+          <button type="submit" class="largo">Calcular</button>
+        </form>
+
+        <div class="estatisticas" id="resultado"></div>
+      </section>
+    </main>
+
+    <div class="footer">
+      <div class="container">
+        <p class="links-rodape">
+          <a href="glossario.html">Glossário</a> ·
+          <a href="calculadora.html">Calculadora</a> ·
+          <a href="analise.html">A coleção em números</a> ·
+          <a href="mural.html">Mural de memórias</a> ·
+          <a href="sobre.html">Sobre o projeto</a> ·
+          <a href="#" id="compartilhar">Compartilhar</a>
+        </p>
+        <h4>Feito com amor por Davi Borges Taioque &hearts; SPTech &copy; 2026</h4>
+      </div>
+    </div>
+
+    <script src="./js/menu.js"></script>
+    <script>
+      // A conta do projeto: total de borrifadas = mL x borrifadas por mL
+      function calcular(preco, volume, porMl, porDia) {
+        const totalBorrifadas = volume * porMl;
+        return {
+          totalBorrifadas: totalBorrifadas,
+          custoPorBorrifada: preco / totalBorrifadas,
+          dias: Math.floor(totalBorrifadas / porDia)
+        };
+      }
+
+      function moeda(valor) {
+        return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      }
+
+      document.getElementById('form-calculo').addEventListener('submit', (evento) => {
+        evento.preventDefault();
+
+        const resultado = calcular(
+          Number(document.getElementById('preco').value),
+          Number(document.getElementById('volume').value),
+          Number(document.getElementById('por-ml').value),
+          Number(document.getElementById('por-dia').value)
+        );
+
+        const cards = [
+          { valor: resultado.totalBorrifadas, texto: 'borrifadas no frasco' },
+          { valor: moeda(resultado.custoPorBorrifada), texto: 'custo por borrifada' },
+          { valor: resultado.dias, texto: 'dias de duração' }
+        ];
+
+        document.getElementById('resultado').innerHTML = cards.map((card) => `
+          <article class="estatistica">
+            <strong>${card.valor}</strong>
+            <p>${card.texto}</p>
+          </article>
+        `).join('');
+      });
+    </script>
+</body>
+
+</html>
