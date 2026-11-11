@@ -54,7 +54,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Pediu:** HTML e CSS da tela de login e cadastro do site pessoal "A Engenharia da Perfumaria", com a paleta azul noite (#0B1325, #1E293B) e dourado (#C5A059), sem cara de produto comercial.
 * **Usou:** o layout em duas colunas (capa com o título à esquerda e formulário à direita), o frasco de perfume feito só com CSS, os formulários com validação do próprio HTML e as variáveis de cor no `:root`.
 * **Mudou:** separei login e cadastro em `login.html` e `cadastro.html`, ligados por links. Troquei a paleta original pela minha, corrigi as variáveis antigas que sobraram no CSS e ajustei o contraste entre o fundo, a capa e o cartão do formulário.
-* **Domínio do código:** [escreva com suas palavras: o que é `var()`, o que o `grid` faz, como o `@media` adapta para celular].
 
 ### 📝 Registro #003 — Logo
 * **Data:** 14/10/2026
@@ -74,7 +73,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   > *"Analise o site presente neste arquivo ZIP e recrie-o em HTML e JavaScript juntos, porém um código para a tela de origem, e o outro para a tela da minha trajetória, e me dê o CSS separado de ambos mantendo o mesmo design, conteúdo, responsividade e navegação entre as telas. Me dê com base nos comandos que você já me enviou, sem colocar nada novo."*
 * **Usou:** os textos e o CSS do site do ZIP, divididos em `origem.html`, `trajetoria.html` e um CSS para cada tela. O JavaScript desenha a linha do tempo a partir de uma lista de marcos.
 * **Mudou:** o ZIP era um app React já compilado, então a IA leu o código e recriou em HTML e JavaScript puros. Os botões "Baixar site pronto" e "Códigos" do original foram removidos.
-* **Domínio do código:** [escreva com suas palavras: como a lista `marcos` vira HTML com `.map()` e `innerHTML`, e como o CSS foi separado por tela].
 
 ### 📝 Registro #006 — Botões Login e Cadastro no cabeçalho
 * **Data:** 16/10/2026
@@ -82,7 +80,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   > *"Me dê dois botões no canto superior direito, mostrando login e cadastro, para posteriormente eu integrar essas telas às telas de cadastro e login."*
 * **Usou:** dois links no cabeçalho, apontando para `login.html` e `cadastro.html`.
 * **Mudou:** com os botões novos, o cabeçalho passou a ter duas linhas no celular (marca e botões em cima, menu embaixo).
-* **Domínio do código:** [explique como o link leva para outra página e como o `@media` reorganiza o cabeçalho no celular].
 
 ### 📝 Registro #007 — Telas refeitas com o CSS e o HTML permitidos
 * **Data:** 17/10/2026
@@ -90,7 +87,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   > *"Vou te mandar os códigos que eu posso utilizar para você se basear, pois tem alguns que eu não posso, ok? Irei mandar o de CSS e o de HTML."*
 * **Usou:** a estrutura e os nomes de classe do modelo (`.header`, `.logo`, `.menu`, `.botoes-header`, `.btn-login`, `.btn-cadastro` e o rodapé), com `flex` e `grid`. Mantive as cores azul e dourado e as fontes do login.
 * **Mudou:** as telas foram refeitas e ficaram mais simples que a versão do ZIP (sem palavra vertical nem linhas decorativas). Usei `@media` para o celular, que não estava no modelo, e preciso confirmar se pode.
-* **Domínio do código:** [explique `display: flex`, `display: grid` e a organização de `css/` e dos arquivos HTML].
 
 ### 📝 Registro #008 — Ideias para o index
 * **Data:** 17/10/2026
@@ -106,7 +102,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   Depois enviei o `index.html` da API (AquaTech) para servir de base.
 * **Usou:** a estrutura do index da API (`sessao.js`, `header` com `navbar`, `banner`, `footer`) com o conteúdo das ideias do #008.
 * **Mudou:** a primeira versão seguia o modelo do CSS e foi refeita na estrutura do index da API. "Missão, Visão e Valores" viraram "Memória, Identidade e Conexão". A rota do total de cadastros e o nome da chave do `sessionStorage` ficaram para confirmar.
-* **Domínio do código:** [explique o que é `sessionStorage`, como o `fetch` busca o total na API e como o script troca Login e Cadastro por "Olá, nome"].
 
 ### 📝 Registro #010 — README do projeto
 * **Data:** 21/10/2026
@@ -130,7 +125,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   Enviei o projeto web-data-viz compactado (sem `.env`) e colei o `usuarioController` e o `usuarioModel` do template.
 * **Usou:** as rotas, o controller e o model de usuários; o script SQL do banco `perfumaria`; o `fetch` do `cadastro.html` e do `login.html` para `/usuarios/cadastrar` e `/usuarios/autenticar`; o `sessionStorage` para guardar o nome de quem entrou; a rota `/usuarios/total` no index; e o `dashboard.html` com Chart.js e as rotas `/usuarios/recentes` e `/usuarios/por-dia`.
 * **Mudou:** o template montava o SQL juntando texto, guardava a senha pura, devolvia a senha ao navegador e exigia empresa e aquário (exemplo AquaTech). Troquei por consultas com `?`, senha guardada como hash (biblioteca `crypto` do Node) e login que devolve só id, nome e e-mail. Também protegi `.env` e `.env.dev` no `.gitignore`.
-* **Domínio do código:** [explique o caminho cadastro → rota → controller → model → MySQL, o que é o hash da senha com sal e por que os `?` evitam SQL injection].
 
 ### 📝 Registro #013 — Passo a passo para aplicar manualmente
 * **Data:** 22/10/2026
@@ -147,7 +141,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   > *"Para o cliente acessar a dashboard, ele tem que estar logado?"*
 * **Usou:** as explicações: o VS Code apaga o que está declarado e não usado (no `config.js`, o `valores` precisa estar também dentro de `conexao.query`); o passo 13 é copiar o `logo-selo.svg` para `public/`; e o dashboard só abre com login, mas essa proteção é feita só no navegador (`sessionStorage`), e as rotas da API são públicas.
 * **Mudou:** nada no código.
-* **Domínio do código:** [explique a diferença entre proteger a tela no navegador e proteger a rota no servidor].
 
 ### 📝 Registro #015 — Ideias para ampliar o site
 * **Data:** 25/10/2026
@@ -159,7 +152,7 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Mudou:** nada no código, só o planejamento.
 
 ### 📝 Registro #016 — Roteiro das novas páginas
-* **Data:** [preencher]
+* **Data:** 27/10/2026
 * **Pediu:**
   > *"Me dê um passo a passo bem explícito para eu realizar todas essas."*
 * **Usou:** um roteiro em 10 etapas (sobre, glossário, calculadora, página 404, coleção, administrador, coleção em números, perfil olfativo, mural e publicação). As etapas 1 a 4 já estão detalhadas; as 5 a 10 ficam para depois.
@@ -173,7 +166,6 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
   Enviei o projeto compactado.
 * **Usou:** os arquivos corrigidos: `sobre.html`, `glossario.html`, `calculadora.html`, `404.html`, `js/menu.js`, `app.js` (com a página 404), `usuarioController.js` e `usuarioModel.js`.
 * **Mudou:** o `sobre.html` estava só com o miolo da página, sem o `<head>` com os links dos CSS, e por isso ficava sem estilo (também havia um erro de digitação, "letruir"). O back-end estava na versão só de login e cadastro, mas as rotas já chamavam o total e o dashboard, então esses davam erro. Também faltavam as páginas novas e o `menu.js`.
-* **Domínio do código:** [explique por que uma página precisa do `<head>` com `<link rel="stylesheet">` e por que a rota precisa de uma função correspondente no controller].
 
 ### 📝 Registro #018 — Navegação entre as páginas
 * **Data:** 02/11/2026
