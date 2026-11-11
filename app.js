@@ -35,6 +35,11 @@ app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
 
+// Qualquer endereço que não existe mostra a página 404
+app.use(function (req, res) {
+    res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
+});
+
 app.listen(PORTA_APP, function () {
     console.log(`
     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
