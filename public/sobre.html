@@ -1,0 +1,54 @@
+      <section class="secao">
+        <div class="titulo-secao">
+          <span class="rotulo">Sobre o projeto</span>
+          <h2>Por que fiz este site</h2>
+          <p>Ganhei meu primeiro perfume em 2021, das mãos da minha mãe, e desde então virei apaixonado pelo tema. Este site é a minha forma de contar essa história e de convidar as pessoas próximas a conhecerem o universo dos perfumes.</p>
+        </div>
+        <div class="cartoes" id="bastidores"></div>
+      </section>
+
+      <section class="secao">
+        <div class="titulo-secao">
+          <span class="rotulo">Valores</span>
+          <h2>O que este projeto representa</h2>
+        </div>
+        <div class="cartoes" id="valores"></div>
+      </section>
+
+      <script>
+
+      let bastidores = [
+        { rotulo: 'Interesse', titulo: 'Como o meu interesse cresceu', texto: 'Cresceu conforme eu comprava perfumes e pesquisava quais eram os melhores e os de melhor custo-benefício. Também cresceu porque fui gostando de me sentir “cheiroso” e percebi que os elogios aumentavam.' },
+        { rotulo: 'Dificuldade', titulo: 'A maior dificuldade', texto: 'Entender e assumir que eu realmente gostava de perfumes.' },
+        { rotulo: 'Superação', titulo: 'A maior superação', texto: 'Assumir a responsabilidade pelo projeto, focando nele e sem depender dos colegas de equipe. Se eu não faço, quem faz?' },
+        { rotulo: 'Gratidão', titulo: 'A quem devo o resultado', texto: 'À minha mãe, que me deu o meu primeiro perfume, um Malbec Clássico, em 2021, e expandiu a minha mente: antes eu nem imaginava que usar perfume fosse necessário.' },
+        { rotulo: 'Processo', titulo: 'Uso de IA', texto: 'O projeto foi feito com apoio de IA. Tudo está registrado no diário de prompts, e cada trecho foi revisado para que eu consiga explicá-lo.' }
+      ];
+
+      let valores = [
+        { rotulo: '01', titulo: 'Profundidade', texto: 'Pesquisa sobre a história da perfumaria, as notas e o custo-benefício.' },
+        { rotulo: '02', titulo: 'Conexão', texto: 'A ligação entre cheiro e memória, a começar pelo Malbec Clássico.' },
+        { rotulo: '03', titulo: 'Relacionamento', texto: 'O vínculo com a minha mãe e um site feito para quem é próximo.' },
+        { rotulo: '04', titulo: 'Exposição', texto: 'Contar publicamente a minha história pessoal com os perfumes.' },
+        { rotulo: '05', titulo: 'Iniciativa', texto: 'Pesquisar, montar a coleção e letruir o projeto por conta própria.' },
+        { rotulo: '06', titulo: 'Resiliência', texto: 'Superar as dificuldades do processo e persistir até concluir.' },
+        { rotulo: '07', titulo: 'Pontualidade', texto: 'Apontamento semanal e cumprimento do prazo de entrega.' },
+        { rotulo: '08', titulo: 'Profissionalismo', texto: 'Documentação, commits organizados, diário de prompts e domínio do código.' }
+      ];
+
+      // Desenha uma lista de cartões dentro da div indicada
+      function desenhar(idDiv, lista) {
+        document.getElementById(idDiv).innerHTML = lista.map((item) => `
+          <article class="cartao">
+            <span class="rotulo">${item.rotulo}</span>
+            <h3>${item.titulo}</h3>
+            <p>${item.texto}</p>
+          </article>
+        `).join('');
+      }
+
+      desenhar('bastidores', bastidores);
+      desenhar('valores', valores);
+
+      </script>
+

@@ -1,7 +1,9 @@
 var usuarioModel = require("../models/usuarioModel");
-var crypto = require("crypto"); // já vem com o Node.js
+var crypto = require("crypto"); // biblioteca que já vem com o Node.js
 
+// ----- proteção da senha -----
 // A senha nunca é guardada pura: guardamos "sal:hash".
+// O sal é um texto aleatório que torna o hash diferente mesmo para senhas iguais.
 function gerarHash(senha) {
     var sal = crypto.randomBytes(16).toString("hex");
     var hash = crypto.scryptSync(senha, sal, 64).toString("hex");
@@ -18,6 +20,7 @@ function conferirSenha(senha, guardado) {
     return hashGuardado.length == hashTentativa.length && crypto.timingSafeEqual(hashGuardado, hashTentativa);
 }
 
+// ----- cadastro -----
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
@@ -47,6 +50,7 @@ function cadastrar(req, res) {
     }
 }
 
+// ----- login -----
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
@@ -74,7 +78,48 @@ function autenticar(req, res) {
     }
 }
 
+// ----- dados para o index e para o dashboard -----
+function total(req, res) {
+    usuarioModel.contar()
+        .then(function (resultado) {
+            res.json({ total: resultado[0].total });
+        })
+        .catch(function (erro) {
+            console.log("Erro ao contar usuários:", erro.sqlMessage || erro);
+            res.status(500).send("Erro ao buscar o total.");
+        });
+}
+
+function recentes(req, res) {
+    usuarioModel.listarRecentes(8)
+        .then(function (resultado) {
+            // só o primeiro nome, para preservar a privacidade de quem se cadastrou
+            var lista = resultado.map(function (linha) {
+                return { nome: String(linha.nome).split(" ")[0], data: linha.data };
+            });
+            res.json(lista);
+        })
+        .catch(function (erro) {
+            console.log("Erro ao listar recentes:", erro.sqlMessage || erro);
+            res.status(500).send("Erro ao buscar os últimos cadastros.");
+        });
+}
+
+function porDia(req, res) {
+    usuarioModel.cadastrosPorDia()
+        .then(function (resultado) {
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar cadastros por dia:", erro.sqlMessage || erro);
+            res.status(500).send("Erro ao buscar os cadastros por dia.");
+        });
+}
+
 module.exports = {
     cadastrar,
-    autenticar
+    autenticar,
+    total,
+    recentes,
+    porDia
 };
