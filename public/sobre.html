@@ -1,3 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sobre o projeto | A Engenharia da Perfumaria</title>
+    <meta name="description" content="Minha história através das fragrâncias: a origem do perfume, a minha trajetória e a minha coleção.">
+    <meta property="og:title" content="A Engenharia da Perfumaria">
+    <meta property="og:description" content="Minha história através das fragrâncias.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/extras.css">
+    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+</head>
+
+<body>
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">A Engenharia da Perfumaria</h1>
+        <ul class="navbar">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="origem.html">A Origem</a></li>
+          <li><a href="trajetoria.html">Minha trajetória</a></li>
+          <li><a href="colecao.html">Coleção</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li class="separador">|</li>
+          <li id="item-login"><a href="login.html" class="btn-login">Login</a></li>
+          <li id="item-cadastro"><a href="cadastro.html" class="btn-cadastro">Cadastro</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <main>
       <section class="secao">
         <div class="titulo-secao">
           <span class="rotulo">Sobre o projeto</span>
@@ -14,10 +51,25 @@
         </div>
         <div class="cartoes" id="valores"></div>
       </section>
+    </main>
 
-      <script>
+    <div class="footer">
+      <div class="container">
+        <p class="links-rodape">
+          <a href="glossario.html">Glossário</a> ·
+          <a href="calculadora.html">Calculadora</a> ·
+          <a href="analise.html">A coleção em números</a> ·
+          <a href="mural.html">Mural de memórias</a> ·
+          <a href="sobre.html">Sobre o projeto</a> ·
+          <a href="#" id="compartilhar">Compartilhar</a>
+        </p>
+        <h4>Feito com amor por Davi Borges Taioque &hearts; SPTech &copy; 2026</h4>
+      </div>
+    </div>
 
-      let bastidores = [
+    <script src="./js/menu.js"></script>
+    <script>
+      const bastidores = [
         { rotulo: 'Interesse', titulo: 'Como o meu interesse cresceu', texto: 'Cresceu conforme eu comprava perfumes e pesquisava quais eram os melhores e os de melhor custo-benefício. Também cresceu porque fui gostando de me sentir “cheiroso” e percebi que os elogios aumentavam.' },
         { rotulo: 'Dificuldade', titulo: 'A maior dificuldade', texto: 'Entender e assumir que eu realmente gostava de perfumes.' },
         { rotulo: 'Superação', titulo: 'A maior superação', texto: 'Assumir a responsabilidade pelo projeto, focando nele e sem depender dos colegas de equipe. Se eu não faço, quem faz?' },
@@ -25,12 +77,12 @@
         { rotulo: 'Processo', titulo: 'Uso de IA', texto: 'O projeto foi feito com apoio de IA. Tudo está registrado no diário de prompts, e cada trecho foi revisado para que eu consiga explicá-lo.' }
       ];
 
-      let valores = [
+      const valores = [
         { rotulo: '01', titulo: 'Profundidade', texto: 'Pesquisa sobre a história da perfumaria, as notas e o custo-benefício.' },
         { rotulo: '02', titulo: 'Conexão', texto: 'A ligação entre cheiro e memória, a começar pelo Malbec Clássico.' },
         { rotulo: '03', titulo: 'Relacionamento', texto: 'O vínculo com a minha mãe e um site feito para quem é próximo.' },
         { rotulo: '04', titulo: 'Exposição', texto: 'Contar publicamente a minha história pessoal com os perfumes.' },
-        { rotulo: '05', titulo: 'Iniciativa', texto: 'Pesquisar, montar a coleção e letruir o projeto por conta própria.' },
+        { rotulo: '05', titulo: 'Iniciativa', texto: 'Pesquisar, montar a coleção e construir o projeto por conta própria.' },
         { rotulo: '06', titulo: 'Resiliência', texto: 'Superar as dificuldades do processo e persistir até concluir.' },
         { rotulo: '07', titulo: 'Pontualidade', texto: 'Apontamento semanal e cumprimento do prazo de entrega.' },
         { rotulo: '08', titulo: 'Profissionalismo', texto: 'Documentação, commits organizados, diário de prompts e domínio do código.' }
@@ -49,6 +101,7 @@
 
       desenhar('bastidores', bastidores);
       desenhar('valores', valores);
+    </script>
+</body>
 
-      </script>
-
+</html>
