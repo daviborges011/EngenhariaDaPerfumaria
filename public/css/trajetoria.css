@@ -347,51 +347,37 @@ blockquote {
     border-radius: 12px;
 }
 
-/* FRASCO DO MALBEC */
-.malbec {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* FOTOS DO CARTÃO (uma sobre a outra) - tamanhos em % para acompanhar a tela */
+
+/* FOTOS DO CARTÃO (uma sobre a outra) - tamanho fixo */
+.fotos-memoria {
+    position: relative;      /* a foto pequena se posiciona em relação a esta caixa */
+    flex: none;              /* não encolhe nem estica junto com o cartão */
+    width: 260px;
+    max-width: 100%;         /* só evita sair da tela em celulares muito pequenos */
+    margin-bottom: 40px;     /* espaço para a foto pequena que sai um pouco para baixo */
 }
 
-.malbec-tampa {
-    width: 50px;
-    height: 36px;
-    background-color: #C5A059;
-    border-radius: 4px 4px 2px 2px;
+.foto-principal {
+    display: block;
+    width: 260px;
+    height: 346px;
+    max-width: 100%;
+    object-fit: cover;       /* recorta o excesso em vez de deformar */
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: 12px;
 }
 
-.malbec-corpo {
-    width: 110px;
-    height: 190px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    background-color: #0B1325;
-    border: 2px solid #C5A059;
-    border-radius: 14px;
-}
-
-.malbec-corpo i {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-
-    font-family: 'Bodoni Moda', serif;
-    font-style: normal;
-    font-size: 16px;
-    letter-spacing: 3px;
-    color: #C5A059;
-}
-
-.malbec-corpo small {
-    font-family: 'Figtree', sans-serif;
-    font-size: 8px;
-    letter-spacing: 2px;
-    color: #E2E8F0;
+.foto-sobreposta {
+    position: absolute;      /* solta a foto do fluxo e a deixa por cima */
+    right: -20px;
+    bottom: -40px;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border: 4px solid #1E293B;   /* mesma cor do cartão, parece um recorte */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .cartao-texto {
@@ -551,6 +537,18 @@ blockquote {
     .cartao-memoria {
         flex-direction: column;
         width: 100%;
+    }
+
+    /* em telas menores a foto ocupa a largura do cartão */
+    .fotos-memoria {
+        flex: none;
+        width: 100%;
+        max-width: 360px;
+        margin-bottom: 40px;
+    }
+
+    .foto-sobreposta {
+        right: 0;
     }
 
     .estatisticas {
