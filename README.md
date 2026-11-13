@@ -1,3 +1,13 @@
+<div align="center">
+
+<img src="img/banner.jpg" width="bannerProjeto">
+
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Projeto](https://img.shields.io/badge/projeto-acadêmico-blue)
+![SPTech](https://img.shields.io/badge/SPTech-1ADSA-red)
+
+</div>
+
 # A Engenharia da Perfumaria: Minha História Através das Fragrâncias
 
 Site pessoal e interativo que conta a origem do perfume e a minha trajetória com a perfumaria, com um dashboard alimentado por dados reais do banco de dados.
