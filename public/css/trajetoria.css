@@ -586,3 +586,41 @@ blockquote {
         font-size: 30px;
     }
 }
+/* BLOCO TEXTO + FOTO DA COLEÇÃO */
+.colecao-conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    margin-top: 40px;
+}
+
+.colecao-nota {
+    flex: 1;
+}
+
+.colecao-foto {
+    flex: 1;
+    max-width: 480px;
+}
+
+.colecao-foto img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(197, 160, 89, 0.45);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    object-fit: cover;
+}
+
+/* Ajuste para celular */
+@media (max-width: 768px) {
+    .colecao-conteudo {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .colecao-foto {
+        max-width: 100%;
+    }
+}
