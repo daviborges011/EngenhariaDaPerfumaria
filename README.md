@@ -1,11 +1,6 @@
 <div align="center">
 
 <img src="img/banner.jpg" width="bannerProjeto">
-
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Projeto](https://img.shields.io/badge/projeto-acadêmico-blue)
-![SPTech](https://img.shields.io/badge/SPTech-1ADSA-red)
-
 </div>
 
 # A Engenharia da Perfumaria: Minha História Através das Fragrâncias
