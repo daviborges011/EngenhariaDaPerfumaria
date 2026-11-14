@@ -21,6 +21,8 @@ let avisosRouter = require("./src/routes/avisos");
 let medidasRouter = require("./src/routes/medidas");
 let aquariosRouter = require("./src/routes/aquarios");
 let empresasRouter = require("./src/routes/empresas");
+let colecaoRouter = require("./src/routes/colecao");
+let perfilRouter = require("./src/routes/perfil");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +36,8 @@ app.use("/avisos", avisosRouter);
 app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
+app.use("/colecao", colecaoRouter);
+app.use("/perfil", perfilRouter);
 
 // Qualquer endereço que não existe mostra a página 404
 app.use(function (req, res) {
