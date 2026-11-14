@@ -559,10 +559,11 @@ a.cartao:hover {
     }
 }
 
-/* ===== FOTOS ===== */
+/* ===== FOTOS E GALERIA (PROPORCIONAL AO ZOOM E SEM SOBREPOSIÇÃO) ===== */
+
 .hero-foto {
-    flex: 0 0 46%;
-    max-width: 560px;
+    flex: 0 0 42%;
+    max-width: 480px;
 }
 
 .hero-foto img {
@@ -585,18 +586,22 @@ a.cartao:hover {
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
+/* Galeria com 1 foto grande à esquerda e 2 menores empilhadas à direita */
 .galeria {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 2fr 1fr; /* Esquerda tem o dobro da largura da direita */
+    grid-template-rows: 1fr 1fr;    /* Duas linhas iguais na direita */
     gap: 16px;
-    height: 520px;
+    width: 100%;
+    aspect-ratio: 16 / 7; /* Proporção fluida: acompanha o zoom sem nunca estourar a altura */
+    overflow: hidden;     /* Impede que qualquer imagem vaze para cima dos cards */
 }
 
 .galeria img {
     display: block;
     width: 100%;
     height: 100%;
+    min-height: 0;        /* Essencial no CSS Grid para a imagem não empurrar o container */
     object-fit: cover;
     border-radius: 12px;
     border: 1px solid rgba(197, 160, 89, 0.35);
@@ -607,29 +612,32 @@ a.cartao:hover {
     filter: brightness(1.12);
 }
 
+/* Faz a primeira foto ocupar as duas linhas da esquerda (ficando grande) */
 .galeria-grande {
+    grid-column: 1 / 2;
     grid-row: 1 / 3;
 }
 
+/* ===== RESPONSIVO ===== */
 @media (max-width: 900px) {
     .hero-foto {
         flex: none;
         width: 100%;
-        max-width: 480px;
+        max-width: 440px;
     }
 
     .galeria {
         grid-template-columns: 1fr;
-        grid-template-rows: none;
-        height: auto;
+        grid-template-rows: auto;
+        aspect-ratio: auto;
     }
 
     .galeria-grande {
+        grid-column: auto;
         grid-row: auto;
     }
 
     .galeria img {
-        height: auto;
         aspect-ratio: 4 / 3;
     }
 }
