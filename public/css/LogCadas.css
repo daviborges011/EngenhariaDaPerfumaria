@@ -270,3 +270,54 @@ button:disabled {
   opacity: 0.6;
   cursor: wait;
 }
+
+/* ===== Foto da coleção na metade da capa ===== */
+.capa {
+  /* uma camada escura por cima da foto, para o título continuar legível */
+  background-image:
+    linear-gradient(rgba(11, 19, 37, 0.45), rgba(11, 19, 37, 0.85)),
+    url("../img/colecao.jpg");
+  background-size: cover;
+  background-position: center;
+  background-color: #0B1325;   /* aparece se a foto não carregar */
+  justify-content: flex-end;   /* título embaixo, sobre a foto */
+  padding-bottom: 4rem;
+}
+
+.capa .frasco {
+  display: none;               /* a foto substitui o frasco desenhado */
+}
+
+.capa h1,
+.capa .subtitulo {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Cadastro: formulário na esquerda e foto na direita */
+.pagina-cadastro .acesso {
+  order: 1;
+}
+
+.pagina-cadastro .capa {
+  order: 2;
+  border-right: 0;
+  border-left: 1px solid var(--borda-forte);
+}
+
+/* Celular: a foto volta para cima nas duas telas */
+ @media (max-width: 800px) {
+  .capa {
+    min-height: 260px;
+    padding-bottom: 2rem;
+  }
+
+  .pagina-cadastro .acesso {
+    order: 2;
+  }
+
+  .pagina-cadastro .capa {
+    order: 1;
+    border-left: 0;
+    border-bottom: 1px solid var(--borda-forte);
+  }
+}
