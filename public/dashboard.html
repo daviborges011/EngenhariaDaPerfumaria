@@ -83,9 +83,9 @@
     <script>
     // 1) Só entra quem fez login (o login guarda o nome em sessionStorage)
 
-    // if (!sessionStorage.NOME_USUARIO) {
-    //  window.location = 'login.html';
-    // }
+     if (!sessionStorage.NOME_USUARIO) {
+      window.location = 'login.html';
+     }
 
     document.getElementById('b_usuario').textContent = sessionStorage.NOME_USUARIO;
 
