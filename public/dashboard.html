@@ -76,7 +76,7 @@
 
     <div class="footer">
       <div class="container">
-        <h4>Feito com amor por Davi Borges Taioque &hearts; SPTech &copy; 2026</h4>
+        <h4>Engenharia da Perfumaria - 2026</h4>
       </div>
     </div>
 
@@ -107,10 +107,10 @@
 
     // 3) Desenha os três cards de números
     function montarResumo(total, recentes, porDia) {
-      const novosNoPeriodo = porDia.reduce((soma, item) => soma + item.total, 0);
-      const ultimo = recentes.length > 0 ? recentes[0].data.split(' ')[0] : '—';
+      let novosNoPeriodo = porDia.reduce((soma, item) => soma + item.total, 0);
+      let ultimo = recentes.length > 0 ? recentes[0].data.split(' ')[0] : '—';
 
-      const cards = [
+      let cards = [
         { valor: total.total, texto: 'pessoas cadastradas' },
         { valor: novosNoPeriodo, texto: 'novos cadastros nos últimos 30 dias' },
         { valor: ultimo, texto: 'data do último cadastro' }
@@ -126,10 +126,10 @@
 
     // 4) Lista dos últimos cadastrados (textContent evita código malicioso no nome)
     function montarLista(recentes) {
-      const lista = document.getElementById('lista-recentes');
+      let lista = document.getElementById('lista-recentes');
 
       if (recentes.length === 0) {
-        const vazio = document.createElement('li');
+        let vazio = document.createElement('li');
         vazio.className = 'aviso-vazio';
         vazio.textContent = 'Ainda não há cadastros.';
         lista.appendChild(vazio);
@@ -137,9 +137,9 @@
       }
 
       recentes.forEach((pessoa) => {
-        const item = document.createElement('li');
-        const nome = document.createElement('strong');
-        const data = document.createElement('span');
+        let item = document.createElement('li');
+        let nome = document.createElement('strong');
+        let data = document.createElement('span');
         nome.textContent = pessoa.nome;
         data.textContent = pessoa.data;
         item.appendChild(nome);
@@ -150,11 +150,11 @@
 
     // 5) Gráfico de barras: cadastros por dia
     function montarGrafico(porDia) {
-      const dias = porDia.map((item) => {
-        const partes = item.dia.split('-');   // 2026-10-28 -> 28/10
+      let dias = porDia.map((item) => {
+        let partes = item.dia.split('-');   // 2026-10-28 -> 28/10
         return partes[2] + '/' + partes[1];
       });
-      const totais = porDia.map((item) => item.total);
+      let totais = porDia.map((item) => item.total);
 
       Chart.defaults.color = '#E2E8F0';
       Chart.defaults.font.family = "'Figtree', sans-serif";

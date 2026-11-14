@@ -33,6 +33,9 @@
           <li>
             <a href="trajetoria.html">Minha trajetória</a>
           </li>
+           <li>
+            <a href="colecao.html">Minha Coleção</a>
+          </li>
           <li>
             <a href="dashboard.html">Dashboard</a>
           </li>
@@ -215,7 +218,7 @@
 
     <script>
     // 1) Números da jornada
-    const numeros = [
+    let numeros = [
       { valor: '+15',   sufixo: '', texto: 'fragrâncias na coleção' },
       { valor: '2021', sufixo: '',  texto: 'o ano do primeiro perfume' },
       { valor: '05',   sufixo: '',  texto: 'anos de descobertas' }
@@ -230,18 +233,18 @@
 
     // 2) Saudação: se a pessoa estiver logada, troca Login e Cadastro por "Olá, nome" e Sair
     // [confirmar] o nome da chave que o seu login salva no sessionStorage
-    const nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
+    let nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
     if (nomeUsuario) {
-      const saudacao = document.createElement('li');
+      let saudacao = document.createElement('li');
       saudacao.className = 'saudacao';
       saudacao.textContent = 'Olá, ';
-      const nome = document.createElement('strong');
+      let nome = document.createElement('strong');
       nome.textContent = nomeUsuario;
       saudacao.appendChild(nome);
 
-      const itemSair = document.createElement('li');
-      const linkSair = document.createElement('a');
+      let itemSair = document.createElement('li');
+      let linkSair = document.createElement('a');
       linkSair.href = '#';
       linkSair.className = 'btn-login';
       linkSair.textContent = 'Sair';
@@ -257,7 +260,7 @@
     }
 
     // 3) Total de pessoas cadastradas (vem da API)
-    const ROTA_TOTAL_USUARIOS = '/usuarios/total';
+    let ROTA_TOTAL_USUARIOS = '/usuarios/total';
 
     if (ROTA_TOTAL_USUARIOS) {
       fetch(ROTA_TOTAL_USUARIOS)

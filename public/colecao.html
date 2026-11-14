@@ -102,18 +102,18 @@
 
     <script src="./js/menu.js"></script>
     <script>
-      const FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
+      let FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
 
       // O login guardou o id da pessoa no sessionStorage
-      const idUsuario = sessionStorage.getItem('ID_USUARIO');
+      let idUsuario = sessionStorage.getItem('ID_USUARIO');
 
-      const formulario = document.getElementById('form-perfume');
-      const mensagem = document.getElementById('mensagem');
-      const lista = document.getElementById('lista');
+      let formulario = document.getElementById('form-perfume');
+      let mensagem = document.getElementById('mensagem');
+      let lista = document.getElementById('lista');
 
       // Cria um elemento com texto (textContent evita código malicioso no que a pessoa digitou)
       function criar(tag, classe, texto) {
-        const elemento = document.createElement(tag);
+        let elemento = document.createElement(tag);
         if (classe) { elemento.className = classe; }
         if (texto !== undefined) { elemento.textContent = texto; }
         return elemento;
@@ -134,7 +134,7 @@
         }
 
         itens.forEach((item) => {
-          const cartao = criar('article', 'cartao');
+          let cartao = criar('article', 'cartao');
 
           let etiqueta = 'Tenho';
           if (item.status === 'tenho' && item.ano) { etiqueta = 'Tenho · ' + item.ano; }
@@ -148,7 +148,7 @@
           if (item.notas) { cartao.appendChild(criar('p', '', 'Notas: ' + item.notas)); }
           if (item.comentario) { cartao.appendChild(criar('p', '', item.comentario)); }
 
-          const botao = criar('button', 'btn-remover', 'Remover');
+          let botao = criar('button', 'btn-remover', 'Remover');
           botao.type = 'button';
           botao.addEventListener('click', () => remover(item));
           cartao.appendChild(botao);
@@ -187,7 +187,7 @@
       formulario.addEventListener('submit', (evento) => {
         evento.preventDefault();
         mostrar('', '');
-        const botao = formulario.querySelector('button');
+        let botao = formulario.querySelector('button');
         botao.disabled = true;
 
         fetch('/colecao', {
@@ -226,7 +226,7 @@
         document.getElementById('aviso-login').hidden = false;
       } else {
         FAMILIAS.forEach((familia) => {
-          const opcao = document.createElement('option');
+          let opcao = document.createElement('option');
           opcao.value = familia;
           opcao.textContent = familia;
           document.getElementById('familia').appendChild(opcao);

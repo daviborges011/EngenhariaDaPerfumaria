@@ -79,7 +79,7 @@
     <script>
       // A conta do projeto: total de borrifadas = mL x borrifadas por mL
       function calcular(preco, volume, porMl, porDia) {
-        const totalBorrifadas = volume * porMl;
+        let totalBorrifadas = volume * porMl;
         return {
           totalBorrifadas: totalBorrifadas,
           custoPorBorrifada: preco / totalBorrifadas,
@@ -94,14 +94,14 @@
       document.getElementById('form-calculo').addEventListener('submit', (evento) => {
         evento.preventDefault();
 
-        const resultado = calcular(
+        let resultado = calcular(
           Number(document.getElementById('preco').value),
           Number(document.getElementById('volume').value),
           Number(document.getElementById('por-ml').value),
           Number(document.getElementById('por-dia').value)
         );
 
-        const cards = [
+        let cards = [
           { valor: resultado.totalBorrifadas, texto: 'borrifadas no frasco' },
           { valor: moeda(resultado.custoPorBorrifada), texto: 'custo por borrifada' },
           { valor: resultado.dias, texto: 'dias de duração' }

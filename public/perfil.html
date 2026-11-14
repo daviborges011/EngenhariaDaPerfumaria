@@ -82,13 +82,13 @@
 
     <script src="./js/menu.js"></script>
     <script>
-      const FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
+      let FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
 
       // O login guardou o id da pessoa no sessionStorage
-      const idUsuario = sessionStorage.getItem('ID_USUARIO');
+      let idUsuario = sessionStorage.getItem('ID_USUARIO');
 
-      const formulario = document.getElementById('form-perfil');
-      const mensagem = document.getElementById('mensagem');
+      let formulario = document.getElementById('form-perfil');
+      let mensagem = document.getElementById('mensagem');
 
       function mostrar(texto, tipo) {
         mensagem.textContent = texto;
@@ -99,7 +99,7 @@
       formulario.addEventListener('submit', (evento) => {
         evento.preventDefault();
         mostrar('', '');
-        const botao = formulario.querySelector('button');
+        let botao = formulario.querySelector('button');
         botao.disabled = true;
 
         fetch('/perfil', {
@@ -130,13 +130,13 @@
         document.getElementById('aviso-login').hidden = false;
       } else {
         // opção vazia + as famílias da lista
-        const vazia = document.createElement('option');
+        let vazia = document.createElement('option');
         vazia.value = '';
         vazia.textContent = 'Prefiro não dizer';
         document.getElementById('familia').appendChild(vazia);
 
         FAMILIAS.forEach((familia) => {
-          const opcao = document.createElement('option');
+          let opcao = document.createElement('option');
           opcao.value = familia;
           opcao.textContent = familia;
           document.getElementById('familia').appendChild(opcao);

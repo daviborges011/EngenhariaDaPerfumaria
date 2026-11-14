@@ -55,9 +55,9 @@
 
   </main>
     <script>
-    const formulario = document.getElementById('form-cadastro');
-    const mensagem = document.getElementById('mensagem');
-    const botao = formulario.querySelector('button');
+    let formulario = document.getElementById('form-cadastro');
+    let mensagem = document.getElementById('mensagem');
+    let botao = formulario.querySelector('button');
 
     function mostrar(texto, tipo) {
       mensagem.textContent = texto;
@@ -68,8 +68,8 @@
       evento.preventDefault();
       mostrar('', '');
 
-      const senha = document.getElementById('senha').value;
-      const confirma = document.getElementById('confirma').value;
+      let senha = document.getElementById('senha').value;
+      let confirma = document.getElementById('confirma').value;
 
       // Validação no navegador: as duas senhas precisam ser iguais
       if (senha !== confirma) {
