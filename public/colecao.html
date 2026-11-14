@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minha coleção | A Engenharia da Perfumaria</title>
+    <meta name="description" content="Minha história através das fragrâncias: a origem do perfume, a minha trajetória e a minha coleção.">
+    <meta property="og:title" content="A Engenharia da Perfumaria">
+    <meta property="og:description" content="Minha história através das fragrâncias.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/extras.css">
+    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+</head>
+
+<body>
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">A Engenharia da Perfumaria</h1>
+        <ul class="navbar">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="origem.html">A Origem</a></li>
+          <li><a href="trajetoria.html">Minha trajetória</a></li>
+          <li class="agora"><a href="colecao.html">Coleção</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li class="separador">|</li>
+          <li id="item-login"><a href="login.html" class="btn-login">Login</a></li>
+          <li id="item-cadastro"><a href="cadastro.html" class="btn-cadastro">Cadastro</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <main>
+      <section class="secao">
+        <div class="titulo-secao">
+          <span class="rotulo">Minha coleção</span>
+          <h2>Os perfumes da minha história</h2>
+          <p>Cadastre os perfumes que você tem e os que quer ter. Tudo fica guardado no banco de dados, na sua conta.</p>
+        </div>
+
+        <!-- Aparece só para quem NÃO está logado -->
+        <div class="centro" id="aviso-login" hidden>
+          <p class="mensagem">Entre na sua conta para montar a sua coleção.</p>
+          <br>
+          <a class="btn-principal" href="login.html">Ir para o login</a>
+        </div>
+
+        <!-- Aparece só para quem está logado -->
+        <form class="formulario" id="form-perfume" hidden>
+          <label>Nome do perfume
+            <input type="text" id="nome" maxlength="60" required>
+          </label>
+          <label>Marca
+            <input type="text" id="marca" maxlength="40" required>
+          </label>
+          <label>Família olfativa
+            <select id="familia" required></select>
+          </label>
+          <label>Situação
+            <select id="status">
+              <option value="tenho">Tenho</option>
+              <option value="desejo">Quero ter</option>
+            </select>
+          </label>
+          <label>Notas (opcional)
+            <input type="text" id="notas" maxlength="100" placeholder="Madeiras, Ameixa, Baunilha">
+          </label>
+          <label>Ano em que ganhei ou comprei
+            <input type="number" id="ano" min="1990" max="2100">
+          </label>
+          <label>Prioridade de 1 a 5 (só para "Quero ter")
+            <input type="number" id="prioridade" min="1" max="5">
+          </label>
+          <label>Comentário (opcional)
+            <input type="text" id="comentario" maxlength="200">
+          </label>
+          <p class="mensagem largo" id="mensagem"></p>
+          <button type="submit" class="largo">Adicionar à minha coleção</button>
+        </form>
+
+        <div class="cartoes" id="lista"></div>
+      </section>
+    </main>
+
+    <div class="footer">
+      <div class="container">
+        <p class="links-rodape">
+          <a href="colecao.html">Minha coleção</a> ·
+          <a href="perfil.html">Meu perfil</a> ·
+          <a href="glossario.html">Glossário</a> ·
+          <a href="calculadora.html">Calculadora</a> ·
+          <a href="sobre.html">Sobre o projeto</a> ·
+          <a href="#" id="compartilhar">Compartilhar</a>
+        </p>
+        <h4>Feito com amor por Davi Borges Taioque &hearts; SPTech &copy; 2026</h4>
+      </div>
+    </div>
+
+    <script src="./js/menu.js"></script>
+    <script>
+      const FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
+
+      // O login guardou o id da pessoa no sessionStorage
+      const idUsuario = sessionStorage.getItem('ID_USUARIO');
+
+      const formulario = document.getElementById('form-perfume');
+      const mensagem = document.getElementById('mensagem');
+      const lista = document.getElementById('lista');
+
+      // Cria um elemento com texto (textContent evita código malicioso no que a pessoa digitou)
+      function criar(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) { elemento.className = classe; }
+        if (texto !== undefined) { elemento.textContent = texto; }
+        return elemento;
+      }
+
+      function mostrar(texto, tipo) {
+        mensagem.textContent = texto;
+        mensagem.className = 'mensagem largo ' + tipo;
+      }
+
+      // Desenha um cartão para cada perfume da coleção
+      function desenharLista(itens) {
+        lista.innerHTML = '';
+
+        if (itens.length === 0) {
+          lista.appendChild(criar('p', 'mensagem', 'Você ainda não adicionou nenhum perfume.'));
+          return;
+        }
+
+        itens.forEach((item) => {
+          const cartao = criar('article', 'cartao');
+
+          let etiqueta = 'Tenho';
+          if (item.status === 'tenho' && item.ano) { etiqueta = 'Tenho · ' + item.ano; }
+          if (item.status === 'desejo') {
+            etiqueta = 'Quero ter' + (item.prioridade ? ' · prioridade ' + item.prioridade : '');
+          }
+
+          cartao.appendChild(criar('span', 'rotulo', etiqueta));
+          cartao.appendChild(criar('h3', '', item.nome));
+          cartao.appendChild(criar('p', '', item.marca + ' · ' + item.familia));
+          if (item.notas) { cartao.appendChild(criar('p', '', 'Notas: ' + item.notas)); }
+          if (item.comentario) { cartao.appendChild(criar('p', '', item.comentario)); }
+
+          const botao = criar('button', 'btn-remover', 'Remover');
+          botao.type = 'button';
+          botao.addEventListener('click', () => remover(item));
+          cartao.appendChild(botao);
+
+          lista.appendChild(cartao);
+        });
+      }
+
+      // GET /colecao/:idUsuario
+      function carregar() {
+        fetch('/colecao/' + idUsuario, { cache: 'no-store' })
+          .then((resposta) => {
+            if (!resposta.ok) { throw new Error('Erro ao carregar'); }
+            return resposta.json();
+          })
+          .then(desenharLista)
+          .catch(() => {
+            lista.innerHTML = '';
+            lista.appendChild(criar('p', 'mensagem erro', 'Não foi possível carregar a sua coleção.'));
+          });
+      }
+
+      // DELETE /colecao/:idUsuario/:idPerfume
+      function remover(item) {
+        if (!confirm('Remover "' + item.nome + '" da sua coleção?')) { return; }
+
+        fetch('/colecao/' + idUsuario + '/' + item.idPerfume, { method: 'DELETE' })
+          .then((resposta) => {
+            if (resposta.ok) { carregar(); }
+            else { resposta.text().then((texto) => alert(texto)); }
+          })
+          .catch(() => alert('Não foi possível falar com o servidor.'));
+      }
+
+      // POST /colecao
+      formulario.addEventListener('submit', (evento) => {
+        evento.preventDefault();
+        mostrar('', '');
+        const botao = formulario.querySelector('button');
+        botao.disabled = true;
+
+        fetch('/colecao', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            idUsuario: Number(idUsuario),
+            nome: document.getElementById('nome').value,
+            marca: document.getElementById('marca').value,
+            familia: document.getElementById('familia').value,
+            status: document.getElementById('status').value,
+            notas: document.getElementById('notas').value,
+            ano: document.getElementById('ano').value,
+            prioridade: document.getElementById('prioridade').value,
+            comentario: document.getElementById('comentario').value
+          })
+        })
+          .then((resposta) => {
+            if (resposta.ok) {
+              mostrar('Perfume adicionado à coleção!', 'sucesso');
+              formulario.reset();
+              carregar();
+            } else {
+              resposta.text().then((texto) => mostrar(texto, 'erro'));
+            }
+            botao.disabled = false;
+          })
+          .catch(() => {
+            mostrar('Não foi possível falar com o servidor. Tente novamente.', 'erro');
+            botao.disabled = false;
+          });
+      });
+
+      // Começo da página: quem não está logado vê o aviso; quem está logado vê o formulário
+      if (!idUsuario) {
+        document.getElementById('aviso-login').hidden = false;
+      } else {
+        FAMILIAS.forEach((familia) => {
+          const opcao = document.createElement('option');
+          opcao.value = familia;
+          opcao.textContent = familia;
+          document.getElementById('familia').appendChild(opcao);
+        });
+        formulario.hidden = false;
+        carregar();
+      }
+    </script>
+</body>
+
+</html>
