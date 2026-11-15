@@ -624,3 +624,6 @@ blockquote {
         max-width: 100%;
     }
 }
+
+.botoes-header .saudacao { font-size: 14px; color: #E2E8F0; }
+.botoes-header .saudacao strong { color: #C5A059; }
