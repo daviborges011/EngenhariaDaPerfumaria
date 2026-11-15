@@ -144,3 +144,14 @@ module.exports = {
     listar,
     remover
 };
+
+function porFamilia(req, res) {
+    colecaoModel.contarPorFamilia()
+        .then(function (resultado) {
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.log("Erro ao contar por família:", erro.sqlMessage || erro);
+            res.status(500).send("Erro ao buscar as famílias olfativas.");
+        });
+}

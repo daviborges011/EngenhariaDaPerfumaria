@@ -3,6 +3,10 @@ var router = express.Router();
 
 var colecaoController = require("../controllers/colecaoController");
 
+router.get("/familias", function (req, res) {
+    colecaoController.porFamilia(req, res);
+});
+
 // Lista a coleção de uma pessoa
 router.get("/:idUsuario", function (req, res) {
     colecaoController.listar(req, res);

@@ -31,5 +31,19 @@ function remover(idUsuario, idPerfume) {
 module.exports = {
     listar,
     adicionar,
-    remover
+    remover,
+    contarPorFamilia
 };
+
+// Dashboard: quantos perfumes das coleções há em cada família olfativa
+function contarPorFamilia() {
+    var instrucaoSql = `
+        SELECT p.familia, COUNT(*) AS total
+        FROM colecao c
+        JOIN perfume p ON p.id = c.fk_perfume
+        WHERE c.status = 'tenho'
+        GROUP BY p.familia
+        ORDER BY total DESC;
+    `;
+    return database.executar(instrucaoSql);
+}
