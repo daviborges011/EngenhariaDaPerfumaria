@@ -208,6 +208,18 @@ function criarRosca(canvas, rotulos, valores, legenda) {
   });
 }
 
+function criarLinha(canvas, rotulos, valores) {
+  return new Chart(canvas, {
+    type: 'line',
+    data: { labels: rotulos, datasets: [{ label: 'Total', data: valores, borderColor: '#C5A059', backgroundColor: 'rgba(197,160,89,.2)', fill: true, tension: 0.3, pointRadius: 3 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { ticks: { precision: 0 }, grid: { color: 'rgba(197,160,89,.15)' } } }
+    }
+  });
+}
+
 // ---------- Peças da tela ----------
 function linha(a, b) {
   let li = document.createElement('li');
@@ -287,15 +299,45 @@ function detalhes(chave) {
   let novos = soma(dados.porDia);
   let totalPerfumes = soma(dados.familias);
 
-  if (chave === 'cadastros') {
-    return {
-      titulo: 'Cadastros por dia',
-      sub: dados.total + ' pessoas cadastradas, ' + novos + ' nos últimos 30 dias.',
-      grafico: { tipo: 'bar', rotulos: dados.porDia.map((i) => dia(i.dia)), valores: dados.porDia.map((i) => i.total) },
-      cab: 'Últimos cadastrados',
-      linhas: dados.recentes.map((r) => [r.nome, r.data])
-    };
-  }
+ if (chave === 'total') {
+  let acum = dados.total - novos;   // quantos já existiam antes dos 30 dias
+  const acumulado = dados.porDia.map((i) => { acum += i.total; return acum; });
+  return {
+    titulo: 'Pessoas cadastradas',
+    sub: 'Crescimento acumulado do site nos últimos 30 dias.',
+    grafico: { tipo: 'line', rotulos: dados.porDia.map((i) => dia(i.dia)), valores: acumulado },
+    cab: 'Resumo',
+    linhas: [
+      ['Total hoje', String(dados.total)],
+      ['Antes dos 30 dias', String(dados.total - novos)],
+      ['Entraram no período', String(novos)],
+      ['Meta', META_CADASTROS + ' (' + Math.round(Math.min(dados.total / META_CADASTROS, 1) * 100) + '%)']
+    ]
+  };
+}
+if (chave === 'novos') {
+  const melhor = dados.porDia.reduce((m, i) => (i.total > m.total ? i : m), { dia: '', total: 0 });
+  return {
+    titulo: 'Novos nos últimos 30 dias',
+    sub: novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' neste período.',
+    cab: 'Ritmo de cadastros',
+    linhas: [
+      ['Média por dia', (novos / 30).toFixed(1).replace('.', ',')],
+      ['Dias com cadastro', dados.porDia.length + ' de 30'],
+      ['Melhor dia', melhor.total ? dia(melhor.dia) + ' (' + melhor.total + ')' : '—'],
+      ['Parte do total', dados.total ? Math.round(novos / dados.total * 100) + '%' : '0%']
+    ]
+  };
+}
+if (chave === 'cadastros') {
+  return {
+    titulo: 'Cadastros por dia',
+    sub: 'Quantas pessoas se cadastraram em cada dia.',
+    grafico: { tipo: 'bar', rotulos: dados.porDia.map((i) => dia(i.dia)), valores: dados.porDia.map((i) => i.total) },
+    cab: 'Dia a dia',
+    linhas: dados.porDia.slice().reverse().map((i) => [dia(i.dia), i.total + (i.total === 1 ? ' cadastro' : ' cadastros')])
+  };
+}
   if (chave === 'familias') {
     return {
       titulo: 'Famílias olfativas',
@@ -361,9 +403,10 @@ function abrir(chave) {
   if (graficoModal) { graficoModal.destroy(); graficoModal = null; }
   if (temGrafico) {
     let c = document.getElementById('m-canvas');
-    graficoModal = d.grafico.tipo === 'bar'
-      ? criarBarras(c, d.grafico.rotulos, d.grafico.valores)
-      : criarRosca(c, d.grafico.rotulos, d.grafico.valores, 'right');
+   let t = d.grafico.tipo;
+graficoModal = t === 'bar' ? criarBarras(c, d.grafico.rotulos, d.grafico.valores)
+  : t === 'line' ? criarLinha(c, d.grafico.rotulos, d.grafico.valores)
+  : criarRosca(c, d.grafico.rotulos, d.grafico.valores, 'right');
   }
   document.getElementById('fechar').focus();
 }
