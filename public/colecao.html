@@ -20,7 +20,11 @@
 <body>
     <div class="header">
       <div class="container">
-        <h1 class="titulo">A Engenharia da Perfumaria</h1>
+         <div class="logo">
+          <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+        </div>
+      <span class="nome-logo">A Engenharia <span>da Perfumaria</span></span>
+          <li class="separador">|</li>
         <ul class="navbar">
           <li><a href="index.html">Início</a></li>
           <li><a href="origem.html">A Origem</a></li>
@@ -42,7 +46,7 @@
           <p>Mais do que aromas, memórias e preferências. Esta é a vitrine de todas as fragrâncias que compõem a minha identidade no dia a dia.</p>
         </div>
 
-        <img src="img/colection.jpg" alt="Minha coleção de perfumes na prateleira" class="foto-faixa">
+        <img src="img/colection1.jpg" alt="Minha coleção de perfumes na prateleira" class="foto-faixa">
 
         <!-- Aparece só para quem NÃO está logado -->
         <div class="centro" id="aviso-login" hidden>
@@ -236,6 +240,8 @@
         formulario.hidden = false;
         carregar();
       }
+      // a cada 30 segundos, recarrega se nenhum detalhe estiver aberto
+setInterval(() => { if (document.getElementById('modal').hidden) { location.reload(); } }, 30000);
     </script>
 </body>
 

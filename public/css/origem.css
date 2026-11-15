@@ -566,3 +566,17 @@ h3 {
 
 .botoes-header .saudacao { font-size: 14px; color: #E2E8F0; }
 .botoes-header .saudacao strong { color: #C5A059; }
+
+.separador {
+  list-style: none; /* Remove a bolinha do item de lista */
+}
+
+.separador {
+  list-style: none;
+  color: #F8FAF8; /* branco */
+}
+
+.separadorDourado {
+  list-style: none;
+  color: #C5A059; /* dourado */
+}

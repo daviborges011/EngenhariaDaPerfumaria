@@ -71,3 +71,14 @@
         grid-template-columns: 1fr;
     }
 }
+
+.perfil-familia {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 40px;
+    font-weight: 500;
+    color: #C5A059;
+}
+
+.painel + .painel {
+    margin-top: 24px;
+}

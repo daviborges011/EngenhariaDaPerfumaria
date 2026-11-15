@@ -142,7 +142,8 @@ function remover(req, res) {
 module.exports = {
     adicionar,
     listar,
-    remover
+    remover,
+    porFamilia
 };
 
 function porFamilia(req, res) {
