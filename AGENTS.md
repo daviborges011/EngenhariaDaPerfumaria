@@ -181,6 +181,37 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Usou:** o diagnóstico das três causas possíveis: arquivo fora de `public/` (ou dentro da pasta antiga `public/dashboard/`), servidor com a versão antiga das rotas, ou arquivo de CSS no caminho errado.
 * **Mudou:** [escreva o que resolveu o seu caso].
 
+### 📝 Registro #020 — Ideias e uso de fotos
+* **Data:** 13/11/2026
+* **Pediu:** "Preciso de ideias onde posso adicionar fotos minhas, fotos de perfumes, foto da minha coleção." / "Como eu adiciono imagem?" / "Preciso de mais fotos para dentro do meu site."
+* **Usou:** a pasta `public/img/`, a tag `<img>` com `alt` e CSS para foto redonda, sobreposta e em galeria.
+* **Mudou:** a foto pequena e a foto grande do Malbec na trajetória, em tamanho fixo. A seção "coleção" saiu da trajetória.
+
+### 📝 Registro #021 — Modelagem do banco (relacionamentos)
+* **Data:** 14/11/2026
+* **Pediu:** "No mínimo 3 tabelas, com relacionamentos, n:n se der, senão 1:1 e 1:n." / "No máximo 5 tabelas." / "Tire SMALLINT, DELETE CASCADE."
+* **Usou:** 5 tabelas (usuario, perfil, marca, perfume, colecao) com 1:1, 1:N e N:N.
+* **Mudou:** a primeira versão tinha 8 tabelas e foi reduzida; os tipos viraram INT e foi retirado o CASCADE (agora apaga-se coleção e perfil antes do usuário).
+
+### 📝 Registro #022 — Erros de conexão com o banco
+* **Data:** 14/11/2026
+* **Pediu:** prints do erro 500 no cadastro e do terminal.
+* **Usou:** a leitura do terminal (`Access denied for user 'root'@'localhost'`).
+* **Mudou:** [escreva o que você fez, por exemplo: criou um usuário do projeto e ajustou o `.env.dev`]. A senha do banco não deve ser guardada em chat nem enviada ao GitHub.
+
+### 📝 Registro #023 — Tabelas funcionando no site
+* **Data:** 14/11/2026
+* **Pediu:** "Dê o passo a passo para as tabelas funcionarem, todos os códigos." / "Onde eu adiciono cada arquivo novo?" / "Por que cada pasta, qual o objetivo?"
+* **Usou:** routes, controllers e models de coleção e perfil, `familias.js`, `colecao.html` e `perfil.html`, além da explicação do padrão MVC.
+* **Mudou:** [escreva o que foi aplicado e o que ainda falta].
+
+### 📝 Registro #024 — Login e telas de login/cadastro
+* **Data:** 14/11/2026
+* **Pediu:** "O que está liberado apenas para quem realizou o login?" / "Cadastro na metade da esquerda, login na direita, com foto da coleção."
+* **Usou:** o `sessionStorage` para o login (proteção só no navegador) e `order` e `background-image` no CSS.
+* **Mudou:** o cadastro ganhou a classe `pagina-cadastro`; a foto da coleção entrou na capa das duas telas.
+com essa base
+
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
 
 - [ ] Planejamento semanal distribuído (Matérias + Grupo + Individual).
