@@ -38,9 +38,9 @@ Ganhei meu primeiro perfume em 2021, das mãos da minha mãe. Desde então, fui 
 |---|---|---|---|
 | Login | `login.html` | Entrada de quem já tem cadastro | Layout pronto, falta ligar à API |
 | Cadastro | `cadastro.html` | Criação de conta | Layout pronto, falta ligar à API |
-| A Origem | [a definir] | História do perfume no mundo | A fazer |
-| A Minha Trajetória | [a definir] | Minha história pessoal com os perfumes | A fazer |
-| Dashboard | [a definir] | Indicadores com os usuários cadastrados | A fazer |
+| A Origem | `origem.html` | História do perfume no mundo | A fazer |
+| A Minha Trajetória | `trajetoria.html` | Minha história pessoal com os perfumes | A fazer |
+| Dashboard | `dashboard.html` | Indicadores com os usuários cadastrados | A fazer |
 
 ## Funcionalidades
 
