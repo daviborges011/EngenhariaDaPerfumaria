@@ -1,84 +1,77 @@
-/* dashboard.css - complementa o index.css (cabeçalho, cartões, rodapé) */
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+:root{--fundo:#0B1325;--painel:#1E293B;--ouro:#C5A059;--ouro2:#D4AF37;--texto:#E2E8F0;--borda:rgba(197,160,89,.35)}
+html,body{height:100%;overflow:hidden}
+body{background:var(--fundo);color:var(--texto);font-family:'Figtree',sans-serif}
 
-/* PAINEL: gráfico à esquerda, lista à direita */
-.painel {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
+/* A tela inteira é uma grade: cabeçalho, KPIs e o conteúdo ocupando o resto (sem rolagem) */
+.app{height:100vh;height:100dvh;display:grid;grid-template-rows:auto auto 1fr;gap:14px;padding:16px 24px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px}
+h1{font-family:'Bodoni Moda',serif;font-weight:500;font-size:28px}
+header p{font-size:13px;opacity:.8}
+nav{display:flex;align-items:center;gap:18px;font-size:14px}
+nav a{color:var(--texto);text-decoration:none}
+nav a:hover,nav strong{color:var(--ouro)}
+nav .sair{border:1px solid var(--ouro);color:var(--ouro);padding:6px 14px;border-radius:8px}
+.aviso-erro{grid-row:2;text-align:center;color:#f2a7a7;font-size:14px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi,.painel{background:var(--painel);border:1px solid var(--borda);border-radius:12px;transition:border-color .2s}
+.kpi{padding:14px 20px;display:flex;flex-direction:column;gap:2px}
+.kpi strong{font-family:'Bodoni Moda',serif;font-weight:500;font-size:38px;line-height:1.1;color:var(--ouro);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi span{font-size:13px}
+
+/* Tudo que tem data-abrir abre o detalhe ao clicar */
+[data-abrir]{cursor:pointer}
+[data-abrir]:hover{border-color:var(--ouro)}
+[data-abrir]:focus-visible{outline:2px solid var(--ouro2);outline-offset:2px}
+
+main{display:grid;grid-template-columns:1fr 1.1fr 1.1fr;gap:14px;min-height:0}
+.painel{padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cab h2{font-family:'Bodoni Moda',serif;font-weight:500;font-size:20px}
+.ampliar{font-size:12px;color:var(--ouro);opacity:.65}
+[data-abrir]:hover .ampliar{opacity:1}
+.area{position:relative;flex:1;min-height:0}
+.coluna{display:grid;grid-template-rows:1.3fr 1fr;gap:14px;min-height:0}
+
+/* Mostradores (semicírculos) */
+.mostradores{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}
+.mostrador{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;border:1px solid transparent;border-radius:10px;padding:2px}
+.mostrador svg{flex:1;min-height:0;width:100%}
+.mostrador span{font-size:13px}
+.trilho{fill:none;stroke:rgba(197,160,89,.18);stroke-width:14;stroke-linecap:round}
+.barra{fill:none;stroke:var(--ouro);stroke-width:14;stroke-linecap:round;transition:stroke-dasharray .9s ease}
+.barra[data-pct="0"]{opacity:0}
+.num{font-family:'Bodoni Moda',serif;font-size:30px;fill:var(--ouro);text-anchor:middle}
+.marca{font-size:9px;fill:var(--texto);opacity:.6;text-anchor:middle}
+
+.lista{list-style:none;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.lista li{display:flex;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid rgba(197,160,89,.25);font-size:13px}
+.lista strong{color:var(--ouro);font-weight:600}
+.vazio{font-size:13px;opacity:.8}
+
+/* Detalhe ampliado */
+.modal{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:rgba(11,19,37,.85);padding:20px}
+.caixa{position:relative;width:min(920px,100%);max-height:90vh;overflow:auto;background:var(--painel);border:1px solid var(--ouro);border-radius:14px;padding:26px 28px}
+.caixa h2{font-family:'Bodoni Moda',serif;font-weight:500;font-size:28px}
+.caixa>p{font-size:14px;margin:4px 0 18px;opacity:.85}
+.fechar{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--ouro);font-size:30px;line-height:1;cursor:pointer}
+.m-corpo{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+.m-corpo.sem-grafico{grid-template-columns:1fr}
+.m-corpo.sem-grafico .m-grafico{display:none}
+.m-grafico{position:relative;height:300px}
+.m-lista h3{font-size:14px;font-weight:600;color:var(--ouro);margin-bottom:10px}
+
+@media (max-width:900px){
+  html,body{overflow:auto}
+  .app{height:auto}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  main{grid-template-columns:1fr}
+  .coluna{grid-template-rows:auto}
+  .area{flex:none;height:260px}
+  .mostradores{flex:none;height:380px}
+  .m-corpo{grid-template-columns:1fr}
+  header{flex-direction:column;align-items:flex-start}
 }
-
-.caixa-grafico,
-.caixa-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 28px;
-
-    background-color: #1E293B;
-    border: 1px solid rgba(197, 160, 89, 0.35);
-    border-radius: 12px;
-}
-
-.caixa-grafico h3,
-.caixa-lista h3 {
-    font-size: 24px;
-}
-
-.legenda {
-    font-size: 13px;
-    color: #E2E8F0;
-}
-
-/* O Chart.js precisa de um contêiner com altura e position: relative */
-.grafico {
-    position: relative;
-    height: 320px;
-}
-
-.lista-recentes {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.lista-recentes li {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(197, 160, 89, 0.25);
-}
-
-.lista-recentes strong {
-    font-weight: 600;
-    color: #C5A059;
-}
-
-.lista-recentes span,
-.aviso-vazio {
-    font-size: 13px;
-    color: #E2E8F0;
-}
-
-.aviso-erro {
-    text-align: center;
-    color: #f2a7a7;
-}
-
-@media (max-width: 900px) {
-    .painel {
-        grid-template-columns: 1fr;
-    }
-}
-
-.perfil-familia {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 40px;
-    font-weight: 500;
-    color: #C5A059;
-}
-
-.painel + .painel {
-    margin-top: 24px;
-}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

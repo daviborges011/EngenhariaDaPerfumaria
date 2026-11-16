@@ -9,85 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-[hidden]{display:none!important}
-:root{--fundo:#0B1325;--painel:#1E293B;--ouro:#C5A059;--ouro2:#D4AF37;--texto:#E2E8F0;--borda:rgba(197,160,89,.35)}
-html,body{height:100%;overflow:hidden}
-body{background:var(--fundo);color:var(--texto);font-family:'Figtree',sans-serif}
-
-/* A tela inteira é uma grade: cabeçalho, KPIs e o conteúdo ocupando o resto (sem rolagem) */
-.app{height:100vh;height:100dvh;display:grid;grid-template-rows:auto auto 1fr;gap:14px;padding:16px 24px}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px}
-h1{font-family:'Bodoni Moda',serif;font-weight:500;font-size:28px}
-header p{font-size:13px;opacity:.8}
-nav{display:flex;align-items:center;gap:18px;font-size:14px}
-nav a{color:var(--texto);text-decoration:none}
-nav a:hover,nav strong{color:var(--ouro)}
-nav .sair{border:1px solid var(--ouro);color:var(--ouro);padding:6px 14px;border-radius:8px}
-.aviso-erro{grid-row:2;text-align:center;color:#f2a7a7;font-size:14px}
-
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.kpi,.painel{background:var(--painel);border:1px solid var(--borda);border-radius:12px;transition:border-color .2s}
-.kpi{padding:14px 20px;display:flex;flex-direction:column;gap:2px}
-.kpi strong{font-family:'Bodoni Moda',serif;font-weight:500;font-size:38px;line-height:1.1;color:var(--ouro)}
-.kpi span{font-size:13px}
-
-/* Tudo que tem data-abrir abre o detalhe ao clicar */
-[data-abrir]{cursor:pointer}
-[data-abrir]:hover{border-color:var(--ouro)}
-[data-abrir]:focus-visible{outline:2px solid var(--ouro2);outline-offset:2px}
-
-main{display:grid;grid-template-columns:1fr 1.1fr 1.1fr;gap:14px;min-height:0}
-.painel{padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-height:0}
-.cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.cab h2{font-family:'Bodoni Moda',serif;font-weight:500;font-size:20px}
-.ampliar{font-size:12px;color:var(--ouro);opacity:.65}
-[data-abrir]:hover .ampliar{opacity:1}
-.area{position:relative;flex:1;min-height:0}
-.coluna{display:grid;grid-template-rows:1.3fr 1fr;gap:14px;min-height:0}
-
-/* Mostradores (semicírculos) */
-.mostradores{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}
-.mostrador{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;border:1px solid transparent;border-radius:10px;padding:2px}
-.mostrador svg{flex:1;min-height:0;width:100%}
-.mostrador span{font-size:13px}
-.trilho{fill:none;stroke:rgba(197,160,89,.18);stroke-width:14;stroke-linecap:round}
-.barra{fill:none;stroke:var(--ouro);stroke-width:14;stroke-linecap:round;transition:stroke-dasharray .9s ease}
-.barra[data-pct="0"]{opacity:0}
-.num{font-family:'Bodoni Moda',serif;font-size:30px;fill:var(--ouro);text-anchor:middle}
-.marca{font-size:9px;fill:var(--texto);opacity:.6;text-anchor:middle}
-
-.lista{list-style:none;display:flex;flex-direction:column;gap:8px;overflow:hidden}
-.lista li{display:flex;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid rgba(197,160,89,.25);font-size:13px}
-.lista strong{color:var(--ouro);font-weight:600}
-.vazio{font-size:13px;opacity:.8}
-
-/* Detalhe ampliado */
-.modal{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:rgba(11,19,37,.85);padding:20px}
-.caixa{position:relative;width:min(920px,100%);max-height:90vh;overflow:auto;background:var(--painel);border:1px solid var(--ouro);border-radius:14px;padding:26px 28px}
-.caixa h2{font-family:'Bodoni Moda',serif;font-weight:500;font-size:28px}
-.caixa>p{font-size:14px;margin:4px 0 18px;opacity:.85}
-.fechar{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--ouro);font-size:30px;line-height:1;cursor:pointer}
-.m-corpo{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
-.m-corpo.sem-grafico{grid-template-columns:1fr}
-.m-corpo.sem-grafico .m-grafico{display:none}
-.m-grafico{position:relative;height:300px}
-.m-lista h3{font-size:14px;font-weight:600;color:var(--ouro);margin-bottom:10px}
-
-@media (max-width:900px){
-  html,body{overflow:auto}
-  .app{height:auto}
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  main{grid-template-columns:1fr}
-  .coluna{grid-template-rows:auto}
-  .area{flex:none;height:260px}
-  .mostradores{flex:none;height:380px}
-  .m-corpo{grid-template-columns:1fr}
-  header{flex-direction:column;align-items:flex-start}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+<link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 <div class="app">
@@ -181,6 +103,15 @@ function perfil() {
   return { tenho: tenho.length, lista, pct: lista.length ? lista[0][1] / tenho.length : 0 };
 }
 
+function resumoColecao() {
+  let tenho = dados.colecao.filter((i) => i.status === 'tenho');
+  let desejos = dados.colecao.filter((i) => i.status === 'desejo');
+  let cont = {};
+  tenho.forEach((i) => { cont[i.marca] = (cont[i.marca] || 0) + 1; });
+  let marcas = Object.entries(cont).sort((a, b) => b[1] - a[1]);
+  return { tenho, desejos, marcas };
+}
+
 // ---------- Gráficos ----------
 Chart.defaults.color = '#E2E8F0';
 Chart.defaults.font.family = "'Figtree', sans-serif";
@@ -252,12 +183,15 @@ function desenhar() {
   let perfumes = soma(dados.familias);
   let ultimo = dados.recentes.length ? dados.recentes[0].data.split(' ')[0] : '—';
 
+  let r = resumoColecao();
+let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
+
   // KPIs
  let cards = [
   ['total', dados.total, 'pessoas cadastradas'],
-  ['novos', novos, 'novos nos últimos 30 dias'],
-  ['familias', perfumes, 'perfumes nas coleções'],
-  ['recentes', ultimo, 'data do último cadastro']
+  ['minha', r.tenho.length, 'perfumes na sua coleção'],
+  ['desejos', r.desejos.length, 'na sua lista de desejos'],
+  ['marcas', topMarca, 'marca mais presente na sua coleção']
 ];
   document.getElementById('kpis').innerHTML = cards.map(([k, v, t]) =>
     `<div class="kpi" data-abrir="${k}" role="button" tabindex="0"><strong>${v}</strong><span>${t}</span></div>`).join('');
@@ -301,7 +235,7 @@ function detalhes(chave) {
 
  if (chave === 'total') {
   let acum = dados.total - novos;   // quantos já existiam antes dos 30 dias
-  const acumulado = dados.porDia.map((i) => { acum += i.total; return acum; });
+  let acumulado = dados.porDia.map((i) => { acum += i.total; return acum; });
   return {
     titulo: 'Pessoas cadastradas',
     sub: 'Crescimento acumulado do site nos últimos 30 dias.',
@@ -316,7 +250,7 @@ function detalhes(chave) {
   };
 }
 if (chave === 'novos') {
-  const melhor = dados.porDia.reduce((m, i) => (i.total > m.total ? i : m), { dia: '', total: 0 });
+  let melhor = dados.porDia.reduce((m, i) => (i.total > m.total ? i : m), { dia: '', total: 0 });
   return {
     titulo: 'Novos nos últimos 30 dias',
     sub: novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' neste período.',
@@ -329,6 +263,17 @@ if (chave === 'novos') {
     ]
   };
 }
+
+let r = resumoColecao();
+let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
+
+let cards = [
+  ['total', dados.total, 'pessoas cadastradas'],
+  ['minha', r.tenho.length, 'perfumes na sua coleção'],
+  ['desejos', r.desejos.length, 'na sua lista de desejos'],
+  ['marcas', topMarca, 'marca mais presente na sua coleção']
+];
+
 if (chave === 'cadastros') {
   return {
     titulo: 'Cadastros por dia',
