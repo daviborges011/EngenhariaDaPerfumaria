@@ -212,6 +212,126 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Mudou:** o cadastro ganhou a classe `pagina-cadastro`; a foto da coleção entrou na capa das duas telas.
 com essa base
 
+### 📝 Registro #025 — Fotos no site (como adicionar e sobrepor)
+* **Data:** 14/11/2026
+* **Pediu:**
+  > *"Preciso de ideias onde posso adicionar fotos minhas, fotos de perfumes, foto da minha coleção."*
+  > *"Como eu adiciono imagem?"*
+  > *"Tenho que criar a pasta img.html?"*
+  > *"Na mesma pasta eu posso tacar duas fotos? Uma sobreposta à outra."*
+* **Usou:** a pasta `public/img/`, a tag `<img>` com `alt` e o CSS de foto sobreposta (`position: relative` na caixa e `position: absolute` na foto pequena). No `trajetoria.html`, as duas fotos substituíram o frasco do Malbec desenhado em CSS.
+* **Mudou:** o `img` tinha sido criado como arquivo, e precisava ser uma pasta. As fotos precisam ser arrastadas para a pasta na barra lateral do VS Code, e não para dentro do editor. Também ajustei os nomes no HTML para bater com os dos arquivos (`malbec.jpg` e `colecao.jpg`).
+
+### 📝 Registro #026 — Ajuste das fotos da trajetória
+* **Data:** 14/11/2026
+* **Pediu:**
+  > *"Quando eu tiro o zoom ou dou zoom a foto não acompanha, como eu ajusto isso?"* / *"Ajuste."*
+  > *"Eu não quero que a foto acompanhe a tela, o que faço? Quero que ela fique paradinha lá."*
+  > *"Tire o card da coleção, não irei usar agora."*
+* **Usou:** o bloco `.fotos-memoria`, `.foto-principal` e `.foto-sobreposta` no `trajetoria.css`, primeiro em porcentagem e depois com tamanho fixo em pixels (`aspect-ratio` e `object-fit: cover`). Também apaguei a seção "A coleção hoje" e o `<script>` que desenhava os números dela.
+* **Mudou:** o CSS que eu tinha ainda não tinha o bloco das fotos, então ele foi reconstruído. A foto passou a ter tamanho fixo (260 × 346 px e 140 × 140 px) em vez de acompanhar a tela.
+
+### 📝 Registro #027 — Modelagem do banco (relacionamentos)
+* **Data:** 14/11/2026
+* **Pediu:**
+  > *"Preciso que você me dê no mínimo 3 tabelas no MySQL, com relacionamentos e, se der, faça um N:N, senão um 1:1 e 1:N."*
+  > *"Me dê no máximo 5 tabelas."*
+  > *"Tire SMALLINT, DELETE CASCADE."*
+* **Usou:** o `script-perfumaria-5-tabelas.sql`, com `usuario`, `perfil` (1:1), `marca` (1:N com `perfume`), `perfume` e `colecao` (N:N entre usuário e perfume).
+* **Mudou:** a primeira versão tinha 8 tabelas e foi reduzida para 5. Os tipos `SMALLINT` e `TINYINT` viraram `INT`, e o `ON DELETE CASCADE` saiu. Agora, para apagar um usuário, apaga-se antes a coleção e o perfil dele.
+
+### 📝 Registro #028 — Erro de conexão com o banco
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"Eu não mexi nas rotas mais nada desde a última vez, já era para estar funcionando e mandando para o banco?"*
+  Enviei os prints do erro 500 no cadastro e do terminal. Também perguntei sobre a conexão "individual" do Workbench, que sumiu ao reabrir, e pedi para a IA guardar a senha do banco (ela recusou, porque a senha fica no `.env.dev`).
+* **Usou:** a leitura do terminal (`Access denied for user 'root'@'localhost'`), a conferência do `.env.dev` e a criação de um usuário próprio do projeto no MySQL.
+* **Mudou:** [escreva o que resolveu, por exemplo: a senha ou o usuário do `.env.dev`]. Troque qualquer senha que tenha sido escrita em conversa, e não coloque senhas neste diário.
+
+### 📝 Registro #029 — Tabelas funcionando no site
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"O que eu preciso fazer para essas novas tabelas funcionarem? Que aba eu preciso criar, etc."*
+  > *"Dê o passo a passo para as tabelas funcionarem, me dê todos os códigos e o passo a passo."*
+  > *"Onde eu adiciono cada arquivo novo?"*
+  > *"Agora me explique o porquê de cada pasta, o porquê você criou elas, qual o objetivo."*
+* **Usou:** 3 models, 2 controllers, 2 rotas, o `familias.js`, as páginas `colecao.html` e `perfil.html` e 4 linhas no `app.js`. Também usei a explicação do padrão MVC (rotas, controllers, models e a pasta `public`).
+* **Mudou:** [escreva o que foi aplicado e o que ainda falta].
+
+### 📝 Registro #030 — O que exige login
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"Hoje, o que está liberado apenas para quem realizou o login?"*
+* **Usou:** a explicação: o login guarda `NOME_USUARIO`, `EMAIL_USUARIO` e `ID_USUARIO` no `sessionStorage`. Dashboard, coleção e perfil dependem dele, mas essa proteção é só no navegador, e as rotas da API não verificam quem pede.
+* **Mudou:** nada no código.
+
+### 📝 Registro #031 — Login e cadastro em metades opostas
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"Quero alterar para que, em vez do login e cadastro serem aparentemente do mesmo lado, o cadastro fique na metade da esquerda e o login na metade da direita, ainda um em cada aba. E depois, nas telas de login e cadastro, quero adicionar uma foto de uma coleção de perfumes no fundo, na metade."*
+* **Usou:** a classe `pagina-cadastro` no `cadastro.html` e, no `LogCadas.css`, a propriedade `order` para trocar os lados e o `background-image` com uma camada escura por cima da foto.
+* **Mudou:** o frasco desenhado em CSS foi substituído pela foto da coleção. No celular, a foto volta para cima da tela.
+
+### 📝 Registro #032 — Mais fotos e onde colocá-las
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"Preciso de mais fotos para dentro do meu site mesmo, me dê ideias, pode ser de perfumes soltos, coleções, etc."*
+  > *"Me dê um passo a passo de onde exatamente colocar a foto para ficar bonito e chamativo, onde exatamente colocar no código."*
+* **Usou:** [liste os lugares que você aplicou: banner do index, galeria "Minha estante", faixa na trajetória e na coleção]. O código usa `.hero-foto`, `.galeria` e `.foto-faixa`, com `aspect-ratio`, `object-fit: cover` e moldura dourada.
+* **Mudou:** usei alguns lugares que ele me passou.
+
+### 📝 Registro #033 — Resumo do projeto e o que é o diário
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"Me conte um resumão dessa conversa, sobre o que é o meu trabalho, o que foi feito, diário de prompts, ideias, tudo resumão."*
+  > *"Não é para você me dar o diário de prompts ainda, é para você falar dele, o que ele é."*
+* **Usou:** o resumo geral e a explicação do diário (para que serve, os campos pediu, usou, mudou e domínio do código, e onde ele fica).
+* **Mudou:** nada no código.
+
+### 📝 Registro #034 — Dashboard que não atualiza
+* **Data:** 15/11/2026
+* **Pediu:**
+  > *"Essa é a minha nova dash, não sei o porquê, mas não está atualizando. Tipo, eu coloco uma família olfativa nova e ele ainda só fica cítrico."*
+  Enviei o código do dashboard novo, com mostradores e a rota `/colecao/familias`.
+* **Usou:** o diagnóstico: a página carrega os dados uma única vez; um perfume que já existe reaproveita a família antiga; só conta o que está como "Tenho"; a rota `/colecao/familias` precisa vir antes de `/:idUsuario`; e o teste com a URL da API e um `SELECT` no MySQL.
+* **Mudou:** apenas atualizei.
+
+### 📝 Registro #035 — Ideias de KPI para o dashboard
+* **Data:** 15/11/2026
+* **Pediu:** "quero que me dê ideias para a KPI da data do último cadastro, uma KPI melhor" / "você analisou as outras duas? me dê uma meio diferente" / "tem mais ideias?"
+* **Usou:** a análise de que os KPIs de cadastros eram repetidos e as ideias de KPI pessoais, ligadas à coleção (sua coleção vs. média, família favorita, marca mais presente, lista de desejos). [confirme quais você aproveitou]
+* **Mudou:** a primeira resposta da IA sugeriu KPIs que repetiam o que o dashboard já mostrava (cadastros e diversidade de famílias), então pedi algo diferente. [escreva o que você decidiu]
+
+### 📝 Registro #036 — Barrinha do menu em branco e dourado
+* **Data:** 15/11/2026
+* **Pediu:** "como fazer para essa barrinha ser dourada" / "o da esquerda eu quero branco e o da direita, dourado"
+* **Usou:** as classes `separador` (branco) e `separadorDourado` (dourado) com a propriedade `color` no `trajetoria.css` e no `origem.css`.
+* **Mudou:** a IA errou a causa nas duas primeiras respostas (apontou o `menu.js` e o CSS). Só depois de eu enviar o projeto em ZIP apareceu que a barra é um `<li class="separador">|</li>` escrito no HTML, e que a classe `separadorDourado` não tinha CSS. [escreva o que você aplicou]
+
+### 📝 Registro #037 — Detalhes diferentes para os três cliques do dashboard
+* **Data:** 15/11/2026
+* **Pediu:** "quando clica na KPI de pessoas cadastradas, na KPI de novos nos últimos 30 dias e no 'cadastros por dia', todos dão as mesmas informações, quero mudar isso" / "de que linha até que linha no passo 4"
+* **Usou:** chaves próprias (`total`, `novos`, `cadastros`) no `data-abrir`, a função `criarLinha` (gráfico de linha do Chart.js), os três blocos novos no `detalhes()` e a troca do trecho do gráfico no `abrir()` (linhas 406 a 408).
+* **Mudou:** [escreva o que você ajustou ou corrigiu].
+
+### 📝 Registro #038 — Troca de KPIs repetidos
+* **Data:** 15/11/2026
+* **Pediu:** "me dê ideia de KPI para alterar, para que minha dash não fique muito redundante" / "no CSS não tem essa regra .kpi strong"
+* **Usou:** a função `resumoColecao()`, os KPIs "perfumes na sua coleção", "lista de desejos" e "marca mais presente", os detalhes de cada um e a regra de CSS para cortar texto longo.
+* **Mudou:** a IA disse que a regra `.kpi strong` estava em um arquivo CSS, mas ela está dentro do `<style>` do próprio `dashboard.html`. Ela também apontou um erro no meu SQL (`statuss` no `INSERT INTO colecao`). [escreva o que você aplicou e se corrigiu o SQL]
+
+### 📝 Registro #039 — CSS do dashboard em arquivo próprio
+* **Data:** 15/11/2026
+* **Pediu:** "não posso separar o CSS que está dentro do HTML? E o arquivo dashboard.css posso apagar?"
+* **Usou:** a conferência de que nenhuma página usava o `dashboard.css` antigo, e o passo de mover o `<style>` para `css/dashboard.css` com um `<link rel="stylesheet">`.
+* **Mudou:** [escreva se você apagou o arquivo antigo e testou].
+
+### 📝 Registro #040 — Erro no `git push` (rejected)
+* **Data:** 15/11/2026
+* **Pediu:** print do erro e a pergunta "será que foi porque eu mudei o README dentro do próprio GitHub?" / print do editor de merge ("apareceu isso").
+* **Usou:** `git pull origin main`, salvar a mensagem do merge (`:wq`) e `git push origin main`, sem usar `--force`.
+* **Mudou:** [escreva se apareceu conflito e como resolveu].
+
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
 
 - [ ] Planejamento semanal distribuído (Matérias + Grupo + Individual).
