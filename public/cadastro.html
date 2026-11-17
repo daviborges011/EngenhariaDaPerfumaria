@@ -55,6 +55,8 @@
 
   </main>
     <script>
+if (sessionStorage.getItem('NOME_USUARIO')) { window.location = 'index.html'; }
+
     let formulario = document.getElementById('form-cadastro');
     let mensagem = document.getElementById('mensagem');
     let botao = formulario.querySelector('button');

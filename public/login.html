@@ -48,6 +48,8 @@
 
   </main>
     <script>
+if (sessionStorage.getItem('NOME_USUARIO')) { window.location = 'index.html'; }
+
     let formulario = document.getElementById('form-entrar');
     let mensagem = document.getElementById('mensagem');
     let botao = formulario.querySelector('button');

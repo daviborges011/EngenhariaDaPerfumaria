@@ -273,6 +273,13 @@
 
       document.getElementById('item-login').replaceWith(saudacao);
       document.getElementById('item-cadastro').replaceWith(itemSair);
+    
+    // esconde o que é só para visitante quando a pessoa está logada
+if (sessionStorage.getItem('NOME_USUARIO')) {
+  document.querySelectorAll('.so-visitante').forEach((elemento) => {
+    elemento.style.display = 'none';
+  });
+}
     }
 
     // 3) Total de pessoas cadastradas (vem da API)
