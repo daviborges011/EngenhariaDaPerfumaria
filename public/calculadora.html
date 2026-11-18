@@ -58,6 +58,7 @@
         </form>
 
         <div class="estatisticas" id="resultado"></div>
+        <div class="estatisticas" id="projecao"></div>
       </section>
     </main>
 
@@ -91,6 +92,39 @@
         return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       }
 
+      // Projeção de um ano de uso
+      function projecaoAno(preco, volume, porMl, porDia) {
+        let totalBorrifadas = volume * porMl;
+        let custoPorBorrifada = preco / totalBorrifadas;
+        let custoPorDia = custoPorBorrifada * porDia;
+        let custoPorMes = custoPorDia * 30;
+
+        // Vetor com o gasto acumulado em cada mês (laço for)
+        let acumulado = [];
+        for (let mes = 1; mes <= 12; mes++) {
+          acumulado.push(custoPorMes * mes);
+        }
+
+        // Quantos frascos preciso para 365 dias? (laço while)
+        let diasPorFrasco = Math.floor(totalBorrifadas / porDia);
+        let frascos = 0;
+        if (diasPorFrasco >= 1) {
+          let diasCobertos = 0;
+          while (diasCobertos < 365) {
+            frascos++;
+            diasCobertos += diasPorFrasco;
+          }
+        }
+
+        return {
+          custoPorDia: custoPorDia,
+          custoPorMes: custoPorMes,
+          acumulado: acumulado,
+          frascos: frascos,
+          custoFrascos: frascos * preco
+        };
+      }
+
       document.getElementById('form-calculo').addEventListener('submit', (evento) => {
         evento.preventDefault();
 
@@ -102,9 +136,9 @@
         );
 
         let cards = [
-          { valor: resultado.totalBorrifadas, texto: 'borrifadas no frasco' },
+          { valor: resultado.totalBorrifadas, texto: 'borrifadas por frasco' },
           { valor: moeda(resultado.custoPorBorrifada), texto: 'custo por borrifada' },
-          { valor: resultado.dias, texto: 'dias de duração' }
+          { valor: resultado.dias, texto: 'dias de duração por frasco' }
         ];
 
         document.getElementById('resultado').innerHTML = cards.map((card) => `
@@ -113,6 +147,33 @@
             <p>${card.texto}</p>
           </article>
         `).join('');
+
+        // Projeção do ano (lê os mesmos campos de novo)
+        let projecao = projecaoAno(
+          Number(document.getElementById('preco').value),
+          Number(document.getElementById('volume').value),
+          Number(document.getElementById('por-ml').value),
+          Number(document.getElementById('por-dia').value)
+        );
+
+        // Data prevista para o frasco acabar (hoje + dias de duração)
+        let fim = new Date();
+        fim.setDate(fim.getDate() + resultado.dias);
+
+        let cartoes = [
+          { valor: moeda(projecao.custoPorDia), texto: 'custo por dia de uso' },
+          { valor: moeda(projecao.custoPorMes), texto: 'gasto por mês (30 dias de uso)' },
+          { valor: moeda(projecao.acumulado[11]), texto: 'gasto em 12 meses de uso' },
+          { valor: projecao.frascos > 0 ? projecao.frascos : '—', texto: 'frascos para usar durante 1 ano' },
+          { valor: projecao.frascos > 0 ? moeda(projecao.custoFrascos) : '—', texto: 'para comprar esses frascos inteiros' },
+          { valor: resultado.dias > 0 ? fim.toLocaleDateString('pt-BR') : '—', texto: 'data prevista para o frasco acabar' }
+        ];
+
+        let html = '';
+        for (let i = 0; i < cartoes.length; i++) {
+          html += '<article class="estatistica"><strong>' + cartoes[i].valor + '</strong><p>' + cartoes[i].texto + '</p></article>';
+        }
+        document.getElementById('projecao').innerHTML = html;
       });
     </script>
 </body>
