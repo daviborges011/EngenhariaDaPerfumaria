@@ -40,7 +40,11 @@
 
           <label for="senha">Senha</label>
           <input type="password" id="senha" name="senha" autocomplete="new-password" minlength="8" required>
-          <small>Use pelo menos 8 caracteres.</small>
+                    <div class="forca" id="forca" hidden>
+            <div class="forca-trilho"><div class="forca-barra" id="forca-barra"></div></div>
+            <p class="forca-texto" id="forca-texto"></p>
+            <ul class="requisitos" id="requisitos"></ul>
+          </div>
 
           <label for="confirma">Confirmar senha</label>
           <input type="password" id="confirma" name="confirma" autocomplete="new-password" minlength="8" required>
