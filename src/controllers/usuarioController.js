@@ -32,8 +32,8 @@ function cadastrar(req, res) {
         res.status(400).send("O nome pode ter no máximo 50 caracteres.");
     } else if (typeof email != "string" || email.indexOf("@") == -1 || email.length > 80) {
         res.status(400).send("Informe um e-mail válido.");
-    } else if (typeof senha != "string" || senha.length < 8) {
-        res.status(400).send("A senha precisa ter pelo menos 8 caracteres.");
+    } else if (typeof senha != "string" || senha.length < 8 || !/\p{Lu}/u.test(senha) || !/\p{Ll}/u.test(senha) || !/\p{N}/u.test(senha) || !/[^\p{L}\p{N}]/u.test(senha)) {
+        res.status(400).send("A senha precisa ter 8 caracteres, letra maiúscula, minúscula, número e caractere especial.");
     } else {
         usuarioModel.cadastrar(nome.trim(), email.trim().toLowerCase(), gerarHash(senha))
             .then(function () {
