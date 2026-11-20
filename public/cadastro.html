@@ -70,6 +70,62 @@ if (sessionStorage.getItem('NOME_USUARIO')) { window.location = 'index.html'; }
       mensagem.className = 'mensagem ' + tipo;
     }
 
+        // Requisitos da senha: cada um tem um texto e uma regra que devolve true ou false
+    let REQUISITOS = [
+      { texto: 'Mínimo de 8 caracteres', ok: (s) => s.length >= 8 },
+      { texto: 'Letra maiúscula', ok: (s) => /\p{Lu}/u.test(s) },
+      { texto: 'Letra minúscula', ok: (s) => /\p{Ll}/u.test(s) },
+      { texto: 'Número', ok: (s) => /\p{N}/u.test(s) },
+      { texto: 'Caractere especial (!, @, #, $...)', ok: (s) => /[^\p{L}\p{N}]/u.test(s) }
+    ];
+
+    let campoSenha = document.getElementById('senha');
+    let blocoForca = document.getElementById('forca');
+    let barraForca = document.getElementById('forca-barra');
+    let textoForca = document.getElementById('forca-texto');
+    let listaRequisitos = document.getElementById('requisitos');
+    let itensRequisitos = [];
+
+    // Cria uma linha da lista para cada requisito
+    for (let i = 0; i < REQUISITOS.length; i++) {
+      let item = document.createElement('li');
+      listaRequisitos.appendChild(item);
+      itensRequisitos.push(item);
+    }
+
+    // Confere a senha a cada letra digitada e atualiza a barra e a lista
+    function atualizarForca() {
+      let senha = campoSenha.value;
+      let atendidos = 0;
+
+      for (let i = 0; i < REQUISITOS.length; i++) {
+        let cumprido = REQUISITOS[i].ok(senha);
+        if (cumprido) { atendidos++; }
+        itensRequisitos[i].textContent = (cumprido ? '✓ ' : '✗ ') + REQUISITOS[i].texto;
+        itensRequisitos[i].className = cumprido ? 'ok' : '';
+      }
+
+      // 0 a 2 requisitos = fraca, 3 ou 4 = média, 5 = forte
+      let nivel = 'fraca';
+      let texto = 'Senha fraca';
+      if (atendidos === REQUISITOS.length) {
+        nivel = 'forte';
+        texto = 'Senha forte';
+      } else if (atendidos >= 3) {
+        nivel = 'media';
+        texto = 'Senha média';
+      }
+
+      blocoForca.hidden = senha === '';
+      barraForca.style.width = (atendidos / REQUISITOS.length * 100) + '%';
+      barraForca.className = 'forca-barra ' + nivel;
+      textoForca.textContent = texto;
+      textoForca.className = 'forca-texto ' + nivel;
+    }
+
+    campoSenha.addEventListener('input', atualizarForca);
+    atualizarForca();
+
     formulario.addEventListener('submit', (evento) => {
       evento.preventDefault();
       mostrar('', '');
@@ -81,6 +137,14 @@ if (sessionStorage.getItem('NOME_USUARIO')) { window.location = 'index.html'; }
       if (senha !== confirma) {
         mostrar('As senhas não são iguais.', 'erro');
         return;
+      }
+
+            // A senha precisa cumprir todos os requisitos
+      for (let i = 0; i < REQUISITOS.length; i++) {
+        if (!REQUISITOS[i].ok(senha)) {
+          mostrar('A senha precisa cumprir: ' + REQUISITOS[i].texto.toLowerCase() + '.', 'erro');
+          return;
+        }
       }
 
       botao.disabled = true;
