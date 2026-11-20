@@ -321,3 +321,50 @@ button:disabled {
     border-bottom: 1px solid var(--borda-forte);
   }
 }
+
+/* ===== Força da senha ===== */
+.forca {
+  margin-top: 10px;
+}
+
+.forca-trilho {
+  height: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+}
+
+.forca-barra {
+  width: 0;
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s, background-color 0.3s;
+}
+
+.forca-barra.fraca { background-color: #e05d5d; }
+.forca-barra.media { background-color: #e0a030; }
+.forca-barra.forte { background-color: #4caf7a; }
+
+.forca-texto {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.forca-texto.fraca { color: #e05d5d; }
+.forca-texto.media { color: #e0a030; }
+.forca-texto.forte { color: #4caf7a; }
+
+.requisitos {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+  font-size: 13px;
+  color: #e05d5d;
+}
+
+.requisitos li.ok {
+  color: #4caf7a;
+}
