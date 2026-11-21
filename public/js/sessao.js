@@ -6,7 +6,7 @@ function validarSessao() {
     var b_usuario = document.getElementById("b_usuario");
 
     if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+        b_usuario.textContent = nome;
     } else {
         window.location = "../login.html";
     }
@@ -30,7 +30,6 @@ function finalizarAguardar(texto) {
     var divErrosLogin = document.getElementById("div_erros_login");
     if (texto) {
         divErrosLogin.style.display = "flex";
-        divErrosLogin.innerHTML = texto;
+        divErrosLogin.textContent = texto;
     }
 }
-
