@@ -17,10 +17,6 @@ let app = express();
 
 let indexRouter = require("./src/routes/index");
 let usuarioRouter = require("./src/routes/usuarios");
-let avisosRouter = require("./src/routes/avisos");
-let medidasRouter = require("./src/routes/medidas");
-let aquariosRouter = require("./src/routes/aquarios");
-let empresasRouter = require("./src/routes/empresas");
 let colecaoRouter = require("./src/routes/colecao");
 let perfilRouter = require("./src/routes/perfil");
 
@@ -32,10 +28,6 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
-app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter);
-app.use("/aquarios", aquariosRouter);
-app.use("/empresas", empresasRouter);
 app.use("/colecao", colecaoRouter);
 app.use("/perfil", perfilRouter);
 
