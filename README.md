@@ -52,10 +52,10 @@ Ganhei meu primeiro perfume em 2021, das mãos da minha mãe. Desde então, fui 
 ## Tecnologias
 
 - **Front-end:** HTML, CSS e JavaScript
-- **Back-end:** API em Node.js [confirmar: Express]
-- **Banco de dados:** [confirmar: MySQL]
+- **Back-end:** API em Node.js com Express
+- **Banco de dados:** MySQL (conexão com mysql2)
 - **Base do projeto:** template web-data-viz
-- **Gráficos:** [a definir, ex.: Chart.js]
+- **Gráficos:** Chart.js
 - **Design e versionamento:** Figma, VS Code, Git e GitHub
 
 ## Como o sistema se comunica
