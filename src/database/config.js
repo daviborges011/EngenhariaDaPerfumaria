@@ -28,7 +28,7 @@ function executar(instrucao, valores) {
             resolve(resultados);
         });
         conexao.on('error', function (erro) {
-            return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
+            console.log("ERRO NO MySQL SERVER:", erro.sqlMessage || erro);
         });
     });
 }
