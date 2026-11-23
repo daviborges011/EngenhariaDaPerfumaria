@@ -1,0 +1,28 @@
+/* transicao.css - transição suave entre as páginas (sem corte seco) */
+
+/* Evita o "flash" branco entre uma página e outra */
+html {
+  background-color: #0B1325;
+}
+
+/* Ao abrir a página: aparece aos poucos */
+body {
+  animation: entrar-pagina 1.00s ease both;
+}
+
+/* Ao clicar em um link: a página some aos poucos antes de trocar */
+body.saindo {
+  opacity: 0;
+  transition: opacity 0.3s ease; /* mesmo tempo da constante TEMPO em transicao.js */
+}
+
+@keyframes entrar-pagina {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Respeita quem desativou animações no sistema */
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  body.saindo { transition: none; opacity: 1; }
+}
