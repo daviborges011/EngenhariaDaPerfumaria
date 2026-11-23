@@ -18,6 +18,15 @@
       <h1>Dashboard</h1>
       <p>Dados direto do banco. Atualizado às <span id="hora">--:--</span>. Clique em qualquer quadro para ver mais.</p>
     </div>
+
+<div class="filtro" role="group" aria-label="Período dos cadastros">
+  <span>Período dos cadastros:</span>
+  <button type="button" data-dias="7">7 dias</button>
+  <button type="button" data-dias="15">15 dias</button>
+  <button type="button" data-dias="30" class="ativo">30 dias</button>
+  <button type="button" data-dias="90">90 dias</button>
+</div>
+
     <nav>
       <a href="index.html">Início</a>
       <a href="perfil.html">Meu Perfil</a>
@@ -44,6 +53,7 @@
     <div class="coluna">
       <div class="painel" data-abrir="cadastros" role="button" tabindex="0">
         <div class="cab"><h2>Cadastros por dia</h2><span class="ampliar">Ampliar</span></div>
+        <p class="legenda" id="legenda-cadastros"></p>
         <div class="area"><canvas id="g-cadastros"></canvas></div>
       </div>
       <div class="painel" data-abrir="recentes" role="button" tabindex="0">
