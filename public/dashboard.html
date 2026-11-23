@@ -18,15 +18,13 @@
       <h1>Dashboard</h1>
       <p>Dados direto do banco. Atualizado às <span id="hora">--:--</span>. Clique em qualquer quadro para ver mais.</p>
     </div>
-
-<div class="filtro" role="group" aria-label="Período dos cadastros">
-  <span>Período dos cadastros:</span>
-  <button type="button" data-dias="7">7 dias</button>
-  <button type="button" data-dias="15">15 dias</button>
-  <button type="button" data-dias="30" class="ativo">30 dias</button>
-  <button type="button" data-dias="90">90 dias</button>
-</div>
-
+    <div class="filtro" role="group" aria-label="Período dos cadastros">
+      <span>Período dos cadastros:</span>
+      <button type="button" data-dias="7">7 dias</button>
+      <button type="button" data-dias="15">15 dias</button>
+      <button type="button" data-dias="30" class="ativo">30 dias</button>
+      <button type="button" data-dias="90">90 dias</button>
+    </div>
     <nav>
       <a href="index.html">Início</a>
       <a href="perfil.html">Meu Perfil</a>
@@ -94,6 +92,8 @@ document.getElementById('sair').addEventListener('click', (e) => {
 // ---------- Dados ----------
 let dados = { total: 0, recentes: [], porDia: [], familias: [], colecao: [] };
 let graficoModal = null;
+let periodo = 30;            // período escolhido nos botões (7, 15, 30 ou 90 dias)
+let graficoCadastros = null;  // guardado para poder destruir e redesenhar ao trocar o período
 
 function buscar(rota) {
   return fetch(rota, { cache: 'no-store' }).then((r) => {
@@ -187,11 +187,55 @@ function mostrador(chave, pct, texto, titulo) {
   </div>`;
 }
 
+// ---------- Cadastros por período (filtro) ----------
+// Gera um dia para cada data do período, com 0 nos dias sem cadastro
+function serieCompleta() {
+  let mapa = {};
+  dados.porDia.forEach((i) => { mapa[i.dia] = i.total; });
+  let rotulos = [];
+  let valores = [];
+  for (let i = periodo - 1; i >= 0; i--) {
+    let d = new Date();
+    d.setDate(d.getDate() - i);
+    let chave = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    rotulos.push(chave.slice(8, 10) + '/' + chave.slice(5, 7));
+    valores.push(mapa[chave] || 0);
+  }
+  return { rotulos, valores };
+}
+
+function desenharCadastros() {
+  let serie = serieCompleta();
+  let novos = soma(dados.porDia);
+  let media = (novos / periodo).toFixed(1).replace('.', ',');
+  document.getElementById('legenda-cadastros').textContent =
+    novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' nos últimos ' + periodo + ' dias (média de ' + media + ' por dia)';
+  if (graficoCadastros) { graficoCadastros.destroy(); }
+  graficoCadastros = criarBarras(document.getElementById('g-cadastros'), serie.rotulos, serie.valores);
+}
+
+// A lista só mostra quem entrou dentro do período escolhido (a data vem como dd/mm/aaaa hh:mm)
+function dentroDoPeriodo(texto) {
+  let [d, m, a] = texto.split(' ')[0].split('/');
+  let limite = new Date();
+  limite.setHours(0, 0, 0, 0);
+  limite.setDate(limite.getDate() - (periodo - 1));
+  return new Date(Number(a), Number(m) - 1, Number(d)) >= limite;
+}
+
+function desenharRecentes() {
+  let lista = document.getElementById('recentes');
+  lista.innerHTML = '';
+  let doPeriodo = dados.recentes.filter((r) => dentroDoPeriodo(r.data));
+  if (!doPeriodo.length) {
+    lista.innerHTML = '<li class="vazio">Ninguém se cadastrou neste período.</li>';
+    return;
+  }
+  doPeriodo.slice(0, 4).forEach((r) => lista.appendChild(linha(r.nome, r.data)));
+}
+
 function desenhar() {
   let p = perfil();
-  let novos = soma(dados.porDia);
-  let perfumes = soma(dados.familias);
-  let ultimo = dados.recentes.length ? dados.recentes[0].data.split(' ')[0] : '—';
 
   let r = resumoColecao();
 let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
@@ -219,20 +263,15 @@ let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
   }));
 
   // Gráficos
-  criarBarras(document.getElementById('g-cadastros'), dados.porDia.map((i) => dia(i.dia)), dados.porDia.map((i) => i.total));
+  desenharCadastros();
   if (dados.familias.length) {
     criarRosca(document.getElementById('g-familias'), dados.familias.map((i) => i.familia), dados.familias.map((i) => i.total), 'bottom');
   } else {
     document.getElementById('g-familias').parentElement.innerHTML = '<p class="vazio">Ainda não há perfumes nas coleções.</p>';
   }
 
-  // Últimos cadastrados (os 4 mais recentes)
-  let lista = document.getElementById('recentes');
-  lista.innerHTML = '';
-  if (!dados.recentes.length) {
-    lista.innerHTML = '<li class="vazio">Ainda não há cadastros.</li>';
-  }
-  dados.recentes.slice(0, 4).forEach((r) => lista.appendChild(linha(r.nome, r.data)));
+  // Últimos cadastrados (dentro do período escolhido)
+  desenharRecentes();
 
   document.getElementById('hora').textContent = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
@@ -240,59 +279,84 @@ let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
 // ---------- Detalhe ampliado (ao clicar) ----------
 function detalhes(chave) {
   let p = perfil();
+  let r = resumoColecao();
   let novos = soma(dados.porDia);
   let totalPerfumes = soma(dados.familias);
+  let serie = serieCompleta();
 
- if (chave === 'total') {
-  let acum = dados.total - novos;   // quantos já existiam antes dos 30 dias
-  let acumulado = dados.porDia.map((i) => { acum += i.total; return acum; });
-  return {
-    titulo: 'Pessoas cadastradas',
-    sub: 'Crescimento acumulado do site nos últimos 30 dias.',
-    grafico: { tipo: 'line', rotulos: dados.porDia.map((i) => dia(i.dia)), valores: acumulado },
-    cab: 'Resumo',
-    linhas: [
-      ['Total hoje', String(dados.total)],
-      ['Antes dos 30 dias', String(dados.total - novos)],
-      ['Entraram no período', String(novos)],
-      ['Meta', META_CADASTROS + ' (' + Math.round(Math.min(dados.total / META_CADASTROS, 1) * 100) + '%)']
-    ]
-  };
-}
-if (chave === 'novos') {
-  let melhor = dados.porDia.reduce((m, i) => (i.total > m.total ? i : m), { dia: '', total: 0 });
-  return {
-    titulo: 'Novos nos últimos 30 dias',
-    sub: novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' neste período.',
-    cab: 'Ritmo de cadastros',
-    linhas: [
-      ['Média por dia', (novos / 30).toFixed(1).replace('.', ',')],
-      ['Dias com cadastro', dados.porDia.length + ' de 30'],
-      ['Melhor dia', melhor.total ? dia(melhor.dia) + ' (' + melhor.total + ')' : '—'],
-      ['Parte do total', dados.total ? Math.round(novos / dados.total * 100) + '%' : '0%']
-    ]
-  };
-}
+  if (chave === 'total') {
+    let acum = dados.total - novos;   // quantas pessoas já existiam antes do período
+    let acumulado = serie.valores.map((v) => { acum += v; return acum; });
+    return {
+      titulo: 'Pessoas cadastradas',
+      sub: 'Crescimento acumulado do site nos últimos ' + periodo + ' dias.',
+      grafico: { tipo: 'line', rotulos: serie.rotulos, valores: acumulado },
+      cab: 'Resumo',
+      linhas: [
+        ['Total hoje', String(dados.total)],
+        ['Antes dos ' + periodo + ' dias', String(dados.total - novos)],
+        ['Entraram no período', String(novos)],
+        ['Meta', META_CADASTROS + ' (' + Math.round(Math.min(dados.total / META_CADASTROS, 1) * 100) + '%)']
+      ]
+    };
+  }
 
-let r = resumoColecao();
-let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
+  if (chave === 'novos') {
+    let melhor = dados.porDia.reduce((m, i) => (i.total > m.total ? i : m), { dia: '', total: 0 });
+    return {
+      titulo: 'Novos nos últimos ' + periodo + ' dias',
+      sub: novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' neste período.',
+      cab: 'Ritmo de cadastros',
+      linhas: [
+        ['Média por dia', (novos / periodo).toFixed(1).replace('.', ',')],
+        ['Dias com cadastro', dados.porDia.length + ' de ' + periodo],
+        ['Melhor dia', melhor.total ? dia(melhor.dia) + ' (' + melhor.total + ')' : '—'],
+        ['Parte do total', dados.total ? Math.round(novos / dados.total * 100) + '%' : '0%']
+      ]
+    };
+  }
 
-let cards = [
-  ['total', dados.total, 'pessoas cadastradas'],
-  ['minha', r.tenho.length, 'perfumes na sua coleção'],
-  ['desejos', r.desejos.length, 'na sua lista de desejos'],
-  ['marcas', topMarca, 'marca mais presente na sua coleção']
-];
+  if (chave === 'cadastros') {
+    return {
+      titulo: 'Cadastros por dia',
+      sub: 'Quantas pessoas se cadastraram em cada dia, nos últimos ' + periodo + ' dias.',
+      grafico: { tipo: 'bar', rotulos: serie.rotulos, valores: serie.valores },
+      cab: 'Dia a dia',
+      linhas: dados.porDia.slice().reverse().map((i) => [dia(i.dia), i.total + (i.total === 1 ? ' cadastro' : ' cadastros')])
+    };
+  }
 
-if (chave === 'cadastros') {
-  return {
-    titulo: 'Cadastros por dia',
-    sub: 'Quantas pessoas se cadastraram em cada dia.',
-    grafico: { tipo: 'bar', rotulos: dados.porDia.map((i) => dia(i.dia)), valores: dados.porDia.map((i) => i.total) },
-    cab: 'Dia a dia',
-    linhas: dados.porDia.slice().reverse().map((i) => [dia(i.dia), i.total + (i.total === 1 ? ' cadastro' : ' cadastros')])
-  };
-}
+  if (chave === 'minha') {
+    let n = r.tenho.length;
+    return {
+      titulo: 'Perfumes na sua coleção',
+      sub: n ? 'Você tem ' + n + (n === 1 ? ' perfume, em ' : ' perfumes, em ') + p.lista.length + (p.lista.length === 1 ? ' família.' : ' famílias.')
+             : 'Você ainda não tem perfumes na coleção. Adicione o primeiro em "Minha Coleção".',
+      grafico: { tipo: 'doughnut', rotulos: p.lista.map((l) => l[0]), valores: p.lista.map((l) => l[1]) },
+      cab: 'Seus perfumes',
+      linhas: r.tenho.map((i) => [i.nome, i.marca])
+    };
+  }
+
+  if (chave === 'desejos') {
+    let n = r.desejos.length;
+    return {
+      titulo: 'Sua lista de desejos',
+      sub: n ? n + (n === 1 ? ' perfume que você quer ter.' : ' perfumes que você quer ter.') : 'Sua lista de desejos está vazia.',
+      cab: 'Quero ter',
+      linhas: r.desejos.map((i) => [i.nome, i.marca + (i.prioridade ? ' (prioridade ' + i.prioridade + ')' : '')])
+    };
+  }
+
+  if (chave === 'marcas') {
+    return {
+      titulo: 'Marcas na sua coleção',
+      sub: r.marcas.length ? 'As marcas dos perfumes que você tem, da mais presente para a menos.' : 'Adicione perfumes para ver as suas marcas.',
+      cab: 'Perfumes por marca',
+      linhas: r.marcas.map(([m, q]) => [m, q + (q === 1 ? ' perfume' : ' perfumes')])
+    };
+  }
+
   if (chave === 'familias') {
     return {
       titulo: 'Famílias olfativas',
@@ -302,14 +366,16 @@ if (chave === 'cadastros') {
       linhas: dados.familias.map((f) => [f.familia, f.total + ' (' + Math.round(f.total / totalPerfumes * 100) + '%)'])
     };
   }
+
   if (chave === 'recentes') {
     return {
       titulo: 'Últimos cadastrados',
       sub: 'As pessoas que entraram mais recentemente.',
       cab: 'Nome e data',
-      linhas: dados.recentes.map((r) => [r.nome, r.data])
+      linhas: dados.recentes.map((x) => [x.nome, x.data])
     };
   }
+
   if (chave === 'g-meta') {
     return {
       titulo: 'Meta de cadastros',
@@ -318,6 +384,7 @@ if (chave === 'cadastros') {
       linhas: [['Cadastrados', String(dados.total)], ['Meta', String(META_CADASTROS)], ['Faltam', String(Math.max(META_CADASTROS - dados.total, 0))]]
     };
   }
+
   if (chave === 'g-div') {
     let presentes = dados.familias.map((f) => f.familia);
     return {
@@ -327,6 +394,7 @@ if (chave === 'cadastros') {
       linhas: TODAS.map((f) => [f, presentes.includes(f) ? 'nas coleções' : 'ainda não aparece'])
     };
   }
+
   if (chave === 'g-perfil') {
     return {
       titulo: 'Seu perfil olfativo',
@@ -335,6 +403,7 @@ if (chave === 'cadastros') {
       linhas: p.lista.map(([f, q]) => [f, q + (q === 1 ? ' perfume' : ' perfumes')])
     };
   }
+
   return null;
 }
 
@@ -384,11 +453,29 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ---------- Botões de período ----------
+document.querySelectorAll('.filtro button').forEach((botao) => {
+  botao.addEventListener('click', () => {
+    periodo = Number(botao.dataset.dias);
+    document.querySelectorAll('.filtro button').forEach((b) => b.classList.toggle('ativo', b === botao));
+    buscar('/usuarios/por-dia?dias=' + periodo)
+      .then((porDia) => {
+        dados.porDia = porDia;
+        desenharCadastros();
+        desenharRecentes();
+      })
+      .catch((erro) => {
+        console.error(erro);
+        document.getElementById('aviso-erro').hidden = false;
+      });
+  });
+});
+
 // ---------- Carrega tudo ----------
 Promise.all([
   buscar('/usuarios/total'),
   buscar('/usuarios/recentes'),
-  buscar('/usuarios/por-dia'),
+  buscar('/usuarios/por-dia?dias=' + periodo),
   buscar('/colecao/familias')
 ])
   .then(([total, recentes, porDia, familias]) => {
