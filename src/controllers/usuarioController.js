@@ -106,6 +106,7 @@ function recentes(req, res) {
 }
 
 function porDia(req, res) {
+    // só aceita períodos conhecidos; qualquer outro valor vira 30 dias
     var dias = parseInt(req.query.dias, 10);
     if (![7, 15, 30, 90].includes(dias)) {
         dias = 30;
@@ -120,6 +121,7 @@ function porDia(req, res) {
             res.status(500).send("Erro ao buscar os cadastros por dia.");
         });
 }
+
 module.exports = {
     cadastrar,
     autenticar,
