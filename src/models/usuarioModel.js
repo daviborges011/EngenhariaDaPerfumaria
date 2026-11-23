@@ -30,16 +30,16 @@ function listarRecentes(limite) {
     return database.executar(instrucaoSql, [limite]);
 }
 
-// Dashboard: quantos cadastros por dia nos últimos 30 dias
-function cadastrosPorDia() {
+// Dashboard: quantos cadastros por dia nos últimos N dias
+function cadastrosPorDia(dias) {
     var instrucaoSql = `
         SELECT DATE_FORMAT(data_cadastro, '%Y-%m-%d') AS dia, COUNT(*) AS total
         FROM usuario
-        WHERE data_cadastro >= DATE_SUB(CURDATE(), INTERVAL 29 DAY)
+        WHERE data_cadastro >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
         GROUP BY dia
         ORDER BY dia ASC;
     `;
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [dias - 1]);
 }
 
 module.exports = {
