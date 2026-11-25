@@ -317,8 +317,10 @@
               aviso.textContent = 'Acertos salvos no banco! Veja no Dashboard.';
               aviso.className = 'mensagem sucesso';
             } else {
-              aviso.textContent = 'Não foi possível salvar os acertos agora.';
-              aviso.className = 'mensagem erro';
+              resposta.text().then(function (texto) {
+                aviso.textContent = texto || 'Não foi possível salvar os acertos agora.';
+                aviso.className = 'mensagem erro';
+              });
             }
           })
           .catch(function () {
