@@ -19,6 +19,7 @@ let indexRouter = require("./src/routes/index");
 let usuarioRouter = require("./src/routes/usuarios");
 let colecaoRouter = require("./src/routes/colecao");
 let perfilRouter = require("./src/routes/perfil");
+let quizRouter = require("./src/routes/quiz");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +31,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/colecao", colecaoRouter);
 app.use("/perfil", perfilRouter);
+app.use("/quiz", quizRouter);
 
 // Qualquer endereço que não existe mostra a página 404
 app.use(function (req, res) {

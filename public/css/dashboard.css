@@ -15,7 +15,7 @@ nav a:hover,nav strong{color:var(--ouro)}
 nav .sair{border:1px solid var(--ouro);color:var(--ouro);padding:6px 14px;border-radius:8px}
 .aviso-erro{grid-row:2;text-align:center;color:#f2a7a7;font-size:14px}
 
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .kpi,.painel{background:var(--painel);border:1px solid var(--borda);border-radius:12px;transition:border-color .2s}
 .kpi{padding:14px 20px;display:flex;flex-direction:column;gap:2px}
 .kpi strong{font-family:'Bodoni Moda',serif;font-weight:500;font-size:38px;line-height:1.1;color:var(--ouro);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -26,7 +26,7 @@ nav .sair{border:1px solid var(--ouro);color:var(--ouro);padding:6px 14px;border
 [data-abrir]:hover{border-color:var(--ouro)}
 [data-abrir]:focus-visible{outline:2px solid var(--ouro2);outline-offset:2px}
 
-main{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-height:0}
+main{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;min-height:0}
 .painel{padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-height:0}
 .cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .cab h2{font-family:'Bodoni Moda',serif;font-weight:500;font-size:20px}
@@ -54,7 +54,7 @@ main{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-height:0}
 @media (max-width:900px){
   html,body{overflow:auto}
   .app{height:auto}
-  .kpis{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
   main{grid-template-columns:1fr}
   .area{flex:none;height:260px}
   .m-corpo{grid-template-columns:1fr}

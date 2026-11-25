@@ -51,6 +51,12 @@
       <p class="legenda" id="legenda-cadastros"></p>
       <div class="area"><canvas id="g-cadastros"></canvas></div>
     </div>
+
+    <div class="painel" data-abrir="quiz" role="button" tabindex="0">
+      <div class="cab"><h2>Desempenho no Quiz</h2><span class="ampliar">Ampliar</span></div>
+      <p class="legenda" id="legenda-quiz"></p>
+      <div class="area"><canvas id="g-quiz"></canvas></div>
+    </div>
   </main>
 </div>
 
@@ -80,7 +86,13 @@ document.getElementById('sair').addEventListener('click', (e) => {
 });
 
 // ---------- Dados ----------
-let dados = { porDia: [], familias: [], colecao: [] };
+let dados = {
+  porDia: [],
+  familias: [],
+  colecao: [],
+  quizResumo: { tentativas: 0, media: 0, porAcertos: [] },
+  quizMeu: []
+};
 let graficoModal = null;
 let periodo = 30;            // período escolhido nos botões (7, 15, 30 ou 90 dias)
 let graficoCadastros = null;  // guardado para poder destruir e redesenhar ao trocar o período
@@ -112,14 +124,26 @@ function resumoColecao() {
   return { tenho, desejos, marcas };
 }
 
+function serieQuiz() {
+  let mapa = {};
+  dados.quizResumo.porAcertos.forEach((i) => { mapa[i.acertos] = i.total; });
+  let rotulos = [];
+  let valores = [];
+  for (let nota = 0; nota <= 5; nota++) {
+    rotulos.push(nota + (nota === 1 ? ' acerto' : ' acertos'));
+    valores.push(mapa[nota] || 0);
+  }
+  return { rotulos, valores };
+}
+
 // ---------- Gráficos ----------
 Chart.defaults.color = '#E2E8F0';
 Chart.defaults.font.family = "'Figtree', sans-serif";
 
-function criarBarras(canvas, rotulos, valores) {
+function criarBarras(canvas, rotulos, valores, legendaBarra) {
   return new Chart(canvas, {
     type: 'bar',
-    data: { labels: rotulos, datasets: [{ label: 'Cadastros', data: valores, backgroundColor: '#C5A059', hoverBackgroundColor: '#D4AF37', borderRadius: 4 }] },
+    data: { labels: rotulos, datasets: [{ label: legendaBarra || 'Total', data: valores, backgroundColor: '#C5A059', hoverBackgroundColor: '#D4AF37', borderRadius: 4 }] },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
@@ -192,12 +216,29 @@ function desenharCadastros() {
   document.getElementById('legenda-cadastros').textContent =
     novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' nos últimos ' + periodo + ' dias (média de ' + media + ' por dia)';
   if (graficoCadastros) { graficoCadastros.destroy(); }
-  graficoCadastros = criarBarras(document.getElementById('g-cadastros'), serie.rotulos, serie.valores);
+  graficoCadastros = criarBarras(document.getElementById('g-cadastros'), serie.rotulos, serie.valores, 'Cadastros');
+}
+
+function desenharQuiz() {
+  let total = dados.quizResumo.tentativas;
+  let media = String(dados.quizResumo.media).replace('.', ',');
+  document.getElementById('legenda-quiz').textContent =
+    total + (total === 1 ? ' tentativa registrada' : ' tentativas registradas') + ' · média de ' + media + ' acertos';
+
+  if (total > 0) {
+    let serie = serieQuiz();
+    criarBarras(document.getElementById('g-quiz'), serie.rotulos, serie.valores, 'Tentativas');
+  } else {
+    document.getElementById('g-quiz').parentElement.innerHTML = '<p class="vazio">Ainda não há tentativas no quiz.</p>';
+  }
 }
 
 function desenhar() {
   let r = resumoColecao();
   let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
+  let ultimoQuiz = dados.quizMeu.length
+    ? dados.quizMeu[0].acertos + '/' + dados.quizMeu[0].totalPerguntas
+    : '—';
 
   // KPIs
   let kpis = document.getElementById('kpis');
@@ -205,12 +246,14 @@ function desenhar() {
   let cards = [
     ['minha', r.tenho.length, 'perfumes na sua coleção'],
     ['desejos', r.desejos.length, 'na sua lista de desejos'],
-    ['marcas', topMarca, 'marca mais presente na sua coleção']
+    ['marcas', topMarca, 'marca mais presente na sua coleção'],
+    ['quiz-meu', ultimoQuiz, 'seu último resultado no quiz']
   ];
   cards.forEach(([k, v, t]) => kpis.appendChild(criarKpi(k, v, t)));
 
   // Gráficos
   desenharCadastros();
+  desenharQuiz();
   if (dados.familias.length) {
     criarRosca(document.getElementById('g-familias'), dados.familias.map((i) => i.familia), dados.familias.map((i) => i.total), 'bottom');
   } else {
@@ -275,6 +318,30 @@ function detalhes(chave) {
       grafico: { tipo: 'doughnut', rotulos: dados.familias.map((i) => i.familia), valores: dados.familias.map((i) => i.total) },
       cab: 'Perfumes por família',
       linhas: dados.familias.map((f) => [f.familia, f.total + ' (' + Math.round(f.total / totalPerfumes * 100) + '%)'])
+    };
+  }
+
+  if (chave === 'quiz') {
+    let sQuiz = serieQuiz();
+    let media = String(dados.quizResumo.media).replace('.', ',');
+    return {
+      titulo: 'Desempenho no Quiz',
+      sub: dados.quizResumo.tentativas + ' tentativas no quiz, com média geral de ' + media + ' acertos.',
+      grafico: dados.quizResumo.tentativas ? { tipo: 'bar', rotulos: sQuiz.rotulos, valores: sQuiz.valores } : null,
+      cab: 'Suas tentativas recentes',
+      linhas: dados.quizMeu.map((q) => [q.acertos + '/' + q.totalPerguntas + ' acertos', q.data])
+    };
+  }
+
+  if (chave === 'quiz-meu') {
+    let melhor = dados.quizMeu.reduce((m, q) => (q.acertos > m ? q.acertos : m), 0);
+    return {
+      titulo: 'Seu histórico no Quiz',
+      sub: dados.quizMeu.length
+        ? 'Você respondeu ao quiz ' + dados.quizMeu.length + (dados.quizMeu.length === 1 ? ' vez' : ' vezes') + '. Melhor nota: ' + melhor + '/5.'
+        : 'Você ainda não respondeu ao quiz. Abra a aba Quiz para testar seus conhecimentos.',
+      cab: 'Tentativas salvas',
+      linhas: dados.quizMeu.map((q) => [q.acertos + '/' + q.totalPerguntas + ' acertos', q.data])
     };
   }
 
@@ -347,15 +414,21 @@ document.querySelectorAll('.filtro button').forEach((botao) => {
 // ---------- Carrega tudo ----------
 Promise.all([
   buscar('/usuarios/por-dia?dias=' + periodo),
-  buscar('/colecao/familias')
+  buscar('/colecao/familias'),
+  buscar('/quiz/resumo').catch(() => ({ tentativas: 0, media: 0, porAcertos: [] }))
 ])
-  .then(([porDia, familias]) => {
+  .then(([porDia, familias, quizResumo]) => {
     dados.porDia = porDia;
     dados.familias = familias;
-    return buscar('/colecao/' + sessionStorage.ID_USUARIO).catch(() => []);
+    dados.quizResumo = quizResumo;
+    return Promise.all([
+      buscar('/colecao/' + sessionStorage.ID_USUARIO).catch(() => []),
+      buscar('/quiz/' + sessionStorage.ID_USUARIO).catch(() => [])
+    ]);
   })
-  .then((colecao) => {
+  .then(([colecao, quizMeu]) => {
     dados.colecao = colecao;
+    dados.quizMeu = quizMeu;
     desenhar();
   })
   .catch((erro) => {

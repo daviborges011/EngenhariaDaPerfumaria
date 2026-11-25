@@ -77,6 +77,7 @@
           <strong class="quiz-pontos" id="resultado-pontos">0 / 5</strong>
           <h3 id="resultado-titulo"></h3>
           <p class="quiz-resultado-texto" id="resultado-mensagem"></p>
+          <p class="mensagem" id="quiz-salvo"></p>
 
           <ul class="quiz-resumo">
             <li class="resumo-item" id="resumo-0"></li>
@@ -285,6 +286,45 @@
         if (respostas.length > 2) { preencherResumo(2, respostas[2]); }
         if (respostas.length > 3) { preencherResumo(3, respostas[3]); }
         if (respostas.length > 4) { preencherResumo(4, respostas[4]); }
+
+        salvarResultado();
+      }
+
+      function salvarResultado() {
+        let idUsuario = sessionStorage.getItem('ID_USUARIO');
+        let aviso = document.getElementById('quiz-salvo');
+
+        if (!idUsuario) {
+          aviso.textContent = 'Entre na sua conta para guardar seus acertos no Dashboard.';
+          aviso.className = 'mensagem';
+          return;
+        }
+
+        aviso.textContent = 'Salvando resultado...';
+        aviso.className = 'mensagem';
+
+        fetch('/quiz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            idUsuario: Number(idUsuario),
+            acertos: estado.pontos,
+            totalPerguntas: perguntas.length
+          })
+        })
+          .then(function (resposta) {
+            if (resposta.ok) {
+              aviso.textContent = 'Acertos salvos no banco! Veja no Dashboard.';
+              aviso.className = 'mensagem sucesso';
+            } else {
+              aviso.textContent = 'Não foi possível salvar os acertos agora.';
+              aviso.className = 'mensagem erro';
+            }
+          })
+          .catch(function () {
+            aviso.textContent = 'Servidor indisponível para salvar os acertos.';
+            aviso.className = 'mensagem erro';
+          });
       }
 
       function reiniciar() {
@@ -293,6 +333,7 @@
         estado.respondida = false;
         respostas = [];
 
+        document.getElementById('quiz-salvo').textContent = '';
         document.getElementById('tela-resultado').style.display = 'none';
         document.getElementById('tela-quiz').style.display = 'flex';
         mostrarPergunta();
