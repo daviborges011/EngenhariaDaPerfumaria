@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz | A Engenharia da Perfumaria</title>
+    <meta name="description" content="Teste seus conhecimentos sobre marcas, cheiros, famílias olfativas e curiosidades da perfumaria.">
+    <meta property="og:title" content="Quiz | A Engenharia da Perfumaria">
+    <meta property="og:description" content="Quiz interativo sobre o universo dos perfumes.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/extras.css">
+    <link rel="stylesheet" href="./css/quiz.css">
+    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+    <link rel="stylesheet" href="css/transicao.css">
+    <script src="js/transicao.js" defer></script>
+</head>
+
+<body>
+    <div class="header">
+      <div class="container">
+        <div class="logo">
+          <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+        </div>
+        <span class="nome-logo">A Engenharia <span>da Perfumaria</span></span>
+        <li class="separador">|</li>
+        <ul class="navbar">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="origem.html">A Origem</a></li>
+          <li><a href="trajetoria.html">Minha trajetória</a></li>
+          <li><a href="colecao.html">Minha Coleção</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li class="agora"><a href="quiz.html">Quiz</a></li>
+          <li class="separador">|</li>
+          <li id="item-login"><a href="login.html" class="btn-login">Login</a></li>
+          <li id="item-cadastro"><a href="cadastro.html" class="btn-cadastro">Cadastro</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <main>
+      <section class="secao">
+        <div class="titulo-secao">
+          <span class="rotulo">Desafio olfativo</span>
+          <h2>Quiz da Perfumaria</h2>
+          <p>Cinco perguntas sobre marcas, cheiros, famílias olfativas e detalhes que fazem parte desse universo.</p>
+        </div>
+
+        <div class="quiz-caixa" id="tela-quiz">
+          <div class="quiz-topo">
+            <span class="rotulo" id="quiz-categoria">Categoria</span>
+            <span class="quiz-progresso" id="quiz-progresso">Pergunta 1 de 5</span>
+          </div>
+
+          <h3 class="quiz-pergunta" id="quiz-pergunta"></h3>
+
+          <div class="quiz-opcoes">
+            <button type="button" class="quiz-opcao" id="op-0" onclick="responder(0)"></button>
+            <button type="button" class="quiz-opcao" id="op-1" onclick="responder(1)"></button>
+            <button type="button" class="quiz-opcao" id="op-2" onclick="responder(2)"></button>
+            <button type="button" class="quiz-opcao" id="op-3" onclick="responder(3)"></button>
+          </div>
+
+          <div class="quiz-feedback" id="quiz-feedback">
+            <strong class="mensagem" id="feedback-status"></strong>
+            <p id="feedback-texto"></p>
+            <button type="button" class="btn-principal" id="btn-proxima" onclick="proxima()">Próxima pergunta</button>
+          </div>
+        </div>
+
+        <div class="quiz-caixa quiz-resultado" id="tela-resultado">
+          <span class="rotulo">Resultado final</span>
+          <strong class="quiz-pontos" id="resultado-pontos">0 / 5</strong>
+          <h3 id="resultado-titulo"></h3>
+          <p class="quiz-resultado-texto" id="resultado-mensagem"></p>
+
+          <ul class="quiz-resumo">
+            <li class="resumo-item" id="resumo-0"></li>
+            <li class="resumo-item" id="resumo-1"></li>
+            <li class="resumo-item" id="resumo-2"></li>
+            <li class="resumo-item" id="resumo-3"></li>
+            <li class="resumo-item" id="resumo-4"></li>
+          </ul>
+
+          <div class="quiz-acoes">
+            <button type="button" class="btn-principal" onclick="reiniciar()">Refazer quiz</button>
+            <a class="btn-secundario" href="glossario.html">Explorar glossário</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer">
+      <div class="container">
+        <p class="links-rodape">
+          <a href="glossario.html">Glossário</a> ·
+          <a href="calculadora.html">Calculadora</a> ·
+          <a href="quiz.html">Quiz</a> ·
+          <a href="sobre.html">Sobre o projeto</a> ·
+          <a href="colecao.html">Minha coleção</a> ·
+          <a href="perfil.html">Meu perfil</a> ·
+          <a href="#" id="compartilhar">Compartilhar</a>
+        </p>
+        <h4>A Engenharia da Perfumaria - 2026</h4>
+      </div>
+    </div>
+
+    <script src="./js/menu.js"></script>
+    <script>
+      let perguntas = [
+        {
+          categoria: 'Marcas',
+          pergunta: 'Qual foi o primeiro perfume da história deste projeto, presenteado em 2021 pela mãe do autor?',
+          opcoes: [
+            'Malbec Clássico (O Boticário)',
+            'Chanel Nº 5 (Chanel)',
+            'Versace Eros (Versace)',
+            'Le Beau (Jean Paul Gaultier)'
+          ],
+          correta: 0,
+          explicacao: 'Foi o Malbec Clássico, d\'O Boticário, com notas de madeiras, ameixa e baunilha.'
+        },
+        {
+          categoria: 'Cheiros e Famílias',
+          pergunta: 'Notas como bergamota, limão e laranja pertencem principalmente a qual família olfativa?',
+          opcoes: [
+            'Oriental',
+            'Cítrica',
+            'Gourmand',
+            'Amadeirada'
+          ],
+          correta: 1,
+          explicacao: 'A família cítrica reúne cheiros leves e vibrantes vindos de frutas como limão, laranja e bergamota.'
+        },
+        {
+          categoria: 'Pirâmide Olfativa',
+          pergunta: 'Quais notas formam a primeira impressão ao borrifar o perfume e evaporam mais rápido?',
+          opcoes: [
+            'Notas de fundo',
+            'Notas de coração',
+            'Notas de topo',
+            'Notas de base'
+          ],
+          correta: 2,
+          explicacao: 'As notas de topo abrem a fragrância nos primeiros minutos e depois dão lugar às notas de coração.'
+        },
+        {
+          categoria: 'Concentração',
+          pergunta: 'Entre as concentrações abaixo, qual costuma ter maior concentração de essência e maior duração na pele?',
+          opcoes: [
+            'Eau de Cologne (EDC)',
+            'Eau de Toilette (EDT)',
+            'Eau de Parfum (EDP)',
+            'Parfum (Extrait)'
+          ],
+          correta: 3,
+          explicacao: 'O Parfum (Extrait) tem a concentração mais alta entre essas categorias, entregando maior intensidade.'
+        },
+        {
+          categoria: 'Marcas e Cheiros',
+          pergunta: 'Qual família olfativa traz cheiros adocicados que lembram baunilha, caramelo e chocolate?',
+          opcoes: [
+            'Gourmand',
+            'Aromática',
+            'Fresca',
+            'Amadeirada'
+          ],
+          correta: 0,
+          explicacao: 'Perfumes Gourmand exploram notas adocicadas e envolventes, como baunilha, mel e caramelo.'
+        }
+      ];
+
+      let estado = {
+        indice: 0,
+        pontos: 0,
+        respondida: false
+      };
+
+      let respostas = [];
+
+      function mostrarPergunta() {
+        let atual = perguntas[estado.indice];
+
+        document.getElementById('quiz-progresso').textContent = 'Pergunta ' + (estado.indice + 1) + ' de ' + perguntas.length;
+        document.getElementById('quiz-categoria').textContent = atual.categoria;
+        document.getElementById('quiz-pergunta').textContent = atual.pergunta;
+
+        document.getElementById('op-0').textContent = atual.opcoes[0];
+        document.getElementById('op-1').textContent = atual.opcoes[1];
+        document.getElementById('op-2').textContent = atual.opcoes[2];
+        document.getElementById('op-3').textContent = atual.opcoes[3];
+
+        document.getElementById('op-0').className = 'quiz-opcao';
+        document.getElementById('op-1').className = 'quiz-opcao';
+        document.getElementById('op-2').className = 'quiz-opcao';
+        document.getElementById('op-3').className = 'quiz-opcao';
+
+        document.getElementById('quiz-feedback').style.display = 'none';
+
+        if (estado.indice == perguntas.length - 1) {
+          document.getElementById('btn-proxima').textContent = 'Ver resultado';
+        } else {
+          document.getElementById('btn-proxima').textContent = 'Próxima pergunta';
+        }
+      }
+
+      function responder(escolha) {
+        if (estado.respondida == true) {
+          return;
+        }
+
+        estado.respondida = true;
+        let atual = perguntas[estado.indice];
+        let acertou = false;
+
+        if (escolha == atual.correta) {
+          estado.pontos = estado.pontos + 1;
+          acertou = true;
+          document.getElementById('op-' + escolha).className = 'quiz-opcao correta';
+          document.getElementById('feedback-status').textContent = 'Resposta certa!';
+          document.getElementById('feedback-status').className = 'mensagem sucesso';
+        } else {
+          document.getElementById('op-' + escolha).className = 'quiz-opcao errada';
+          document.getElementById('op-' + atual.correta).className = 'quiz-opcao correta';
+          document.getElementById('feedback-status').textContent = 'Não foi dessa vez.';
+          document.getElementById('feedback-status').className = 'mensagem erro';
+        }
+
+        respostas.push({
+          numero: estado.indice + 1,
+          categoria: atual.categoria,
+          escolhida: atual.opcoes[escolha],
+          correta: atual.opcoes[atual.correta],
+          acertou: acertou
+        });
+
+        document.getElementById('feedback-texto').textContent = atual.explicacao;
+        document.getElementById('quiz-feedback').style.display = 'flex';
+      }
+
+      function proxima() {
+        estado.indice = estado.indice + 1;
+        estado.respondida = false;
+
+        if (estado.indice < perguntas.length) {
+          mostrarPergunta();
+        } else {
+          mostrarResultado();
+        }
+      }
+
+      function preencherResumo(indice, item) {
+        let linha = document.getElementById('resumo-' + indice);
+        if (item.acertou == true) {
+          linha.textContent = item.numero + '. [' + item.categoria + '] Acertou — ' + item.correta;
+          linha.className = 'resumo-item certo';
+        } else {
+          linha.textContent = item.numero + '. [' + item.categoria + '] Você marcou "' + item.escolhida + '" · Correta: ' + item.correta;
+          linha.className = 'resumo-item errado';
+        }
+      }
+
+      function mostrarResultado() {
+        document.getElementById('tela-quiz').style.display = 'none';
+        document.getElementById('tela-resultado').style.display = 'flex';
+        document.getElementById('resultado-pontos').textContent = estado.pontos + ' / ' + perguntas.length;
+
+        if (estado.pontos == perguntas.length) {
+          document.getElementById('resultado-titulo').textContent = 'Olfato de Perfumista!';
+          document.getElementById('resultado-mensagem').textContent = 'Você acertou todas as perguntas sobre marcas, cheiros, pirâmide e concentrações.';
+        } else if (estado.pontos >= 3) {
+          document.getElementById('resultado-titulo').textContent = 'Muito bem!';
+          document.getElementById('resultado-mensagem').textContent = 'Você já domina boa parte da engenharia por trás das fragrâncias.';
+        } else {
+          document.getElementById('resultado-titulo').textContent = 'Bom começo!';
+          document.getElementById('resultado-mensagem').textContent = 'Vale dar uma olhada no Glossário e em A Origem para descobrir ainda mais sobre o tema.';
+        }
+
+        if (respostas.length > 0) { preencherResumo(0, respostas[0]); }
+        if (respostas.length > 1) { preencherResumo(1, respostas[1]); }
+        if (respostas.length > 2) { preencherResumo(2, respostas[2]); }
+        if (respostas.length > 3) { preencherResumo(3, respostas[3]); }
+        if (respostas.length > 4) { preencherResumo(4, respostas[4]); }
+      }
+
+      function reiniciar() {
+        estado.indice = 0;
+        estado.pontos = 0;
+        estado.respondida = false;
+        respostas = [];
+
+        document.getElementById('tela-resultado').style.display = 'none';
+        document.getElementById('tela-quiz').style.display = 'flex';
+        mostrarPergunta();
+      }
+
+      mostrarPergunta();
+    </script>
+</body>
+
+</html>

@@ -31,6 +31,7 @@
       <a href="index.html">Início</a>
       <a href="perfil.html">Meu Perfil</a>
       <a href="colecao.html">Minha Coleção</a>
+      <a href="quiz.html">Quiz</a>
       <span>Olá, <strong id="b_usuario"></strong></span>
       <a href="#" class="sair" id="sair">Sair</a>
     </nav>
@@ -40,26 +41,15 @@
   <p class="aviso-erro" id="aviso-erro" hidden>Não foi possível carregar os dados. Confira se o servidor está rodando.</p>
 
   <main>
-    <div class="painel">
-      <div class="cab"><h2>Mostradores</h2><span class="ampliar">Clique em um</span></div>
-      <div class="mostradores" id="mostradores"></div>
-    </div>
-
     <div class="painel" data-abrir="familias" role="button" tabindex="0">
       <div class="cab"><h2>Famílias olfativas</h2><span class="ampliar">Ampliar</span></div>
       <div class="area"><canvas id="g-familias"></canvas></div>
     </div>
 
-    <div class="coluna">
-      <div class="painel" data-abrir="cadastros" role="button" tabindex="0">
-        <div class="cab"><h2>Cadastros por dia</h2><span class="ampliar">Ampliar</span></div>
-        <p class="legenda" id="legenda-cadastros"></p>
-        <div class="area"><canvas id="g-cadastros"></canvas></div>
-      </div>
-      <div class="painel" data-abrir="recentes" role="button" tabindex="0">
-        <div class="cab"><h2>Últimos cadastrados</h2><span class="ampliar">Ver todos</span></div>
-        <ul class="lista" id="recentes"></ul>
-      </div>
+    <div class="painel" data-abrir="cadastros" role="button" tabindex="0">
+      <div class="cab"><h2>Cadastros por dia</h2><span class="ampliar">Ampliar</span></div>
+      <p class="legenda" id="legenda-cadastros"></p>
+      <div class="area"><canvas id="g-cadastros"></canvas></div>
     </div>
   </main>
 </div>
@@ -77,9 +67,7 @@
 </div>
 
 <script>
-// ---------- Ajustes que você pode mudar ----------
-let META_CADASTROS = 20;   // meta de pessoas cadastradas (alimenta o primeiro mostrador)
-let TODAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
+// ---------- Ajustes ----------
 let CORES = ['#C5A059', '#4F6D9A', '#D4AF37', '#7C8DB5', '#A67C52', '#5F9EA0', '#E2E8F0'];
 
 // ---------- Login ----------
@@ -92,7 +80,7 @@ document.getElementById('sair').addEventListener('click', (e) => {
 });
 
 // ---------- Dados ----------
-let dados = { total: 0, recentes: [], porDia: [], familias: [], colecao: [] };
+let dados = { porDia: [], familias: [], colecao: [] };
 let graficoModal = null;
 let periodo = 30;            // período escolhido nos botões (7, 15, 30 ou 90 dias)
 let graficoCadastros = null;  // guardado para poder destruir e redesenhar ao trocar o período
@@ -151,18 +139,6 @@ function criarRosca(canvas, rotulos, valores, legenda) {
   });
 }
 
-function criarLinha(canvas, rotulos, valores) {
-  return new Chart(canvas, {
-    type: 'line',
-    data: { labels: rotulos, datasets: [{ label: 'Total', data: valores, borderColor: '#C5A059', backgroundColor: 'rgba(197,160,89,.2)', fill: true, tension: 0.3, pointRadius: 3 }] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { x: { grid: { display: false } }, y: { ticks: { precision: 0 }, grid: { color: 'rgba(197,160,89,.15)' } } }
-    }
-  });
-}
-
 // ---------- Peças da tela ----------
 function linha(a, b) {
   let li = document.createElement('li');
@@ -175,18 +151,21 @@ function linha(a, b) {
   return li;
 }
 
-function mostrador(chave, pct, texto, titulo) {
-  let p = Math.round(Math.min(pct, 1) * 100);
-  return `<div class="mostrador" data-abrir="${chave}" role="button" tabindex="0">
-    <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <path class="trilho" d="M20 100 A80 80 0 0 1 180 100" pathLength="100"/>
-      <path class="barra" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" stroke-dasharray="0 100" data-pct="${p}"/>
-      <text class="num" x="100" y="92">${texto}</text>
-      <text class="marca" x="20" y="116">0</text>
-      <text class="marca" x="180" y="116">100%</text>
-    </svg>
-    <span>${titulo}</span>
-  </div>`;
+function criarKpi(chave, valor, titulo) {
+  let div = document.createElement('div');
+  div.className = 'kpi';
+  div.setAttribute('data-abrir', chave);
+  div.setAttribute('role', 'button');
+  div.tabIndex = 0;
+
+  let strong = document.createElement('strong');
+  strong.textContent = String(valor);
+  let span = document.createElement('span');
+  span.textContent = titulo;
+
+  div.appendChild(strong);
+  div.appendChild(span);
+  return div;
 }
 
 // ---------- Cadastros por período (filtro) ----------
@@ -216,53 +195,19 @@ function desenharCadastros() {
   graficoCadastros = criarBarras(document.getElementById('g-cadastros'), serie.rotulos, serie.valores);
 }
 
-// A lista só mostra quem entrou dentro do período escolhido (a data vem como dd/mm/aaaa hh:mm)
-function dentroDoPeriodo(texto) {
-  let [d, m, a] = texto.split(' ')[0].split('/');
-  let limite = new Date();
-  limite.setHours(0, 0, 0, 0);
-  limite.setDate(limite.getDate() - (periodo - 1));
-  return new Date(Number(a), Number(m) - 1, Number(d)) >= limite;
-}
-
-function desenharRecentes() {
-  let lista = document.getElementById('recentes');
-  lista.innerHTML = '';
-  let doPeriodo = dados.recentes.filter((r) => dentroDoPeriodo(r.data));
-  if (!doPeriodo.length) {
-    lista.innerHTML = '<li class="vazio">Ninguém se cadastrou neste período.</li>';
-    return;
-  }
-  doPeriodo.slice(0, 4).forEach((r) => lista.appendChild(linha(r.nome, r.data)));
-}
-
 function desenhar() {
-  let p = perfil();
-
   let r = resumoColecao();
-let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
+  let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
 
   // KPIs
- let cards = [
-  ['total', dados.total, 'pessoas cadastradas'],
-  ['minha', r.tenho.length, 'perfumes na sua coleção'],
-  ['desejos', r.desejos.length, 'na sua lista de desejos'],
-  ['marcas', topMarca, 'marca mais presente na sua coleção']
-];
-  document.getElementById('kpis').innerHTML = cards.map(([k, v, t]) =>
-    `<div class="kpi" data-abrir="${k}" role="button" tabindex="0"><strong>${v}</strong><span>${t}</span></div>`).join('');
-
-  // Mostradores
-  let metaPct = dados.total / META_CADASTROS;
-  let divPct = dados.familias.length / TODAS.length;
-  let el = document.getElementById('mostradores');
-  el.innerHTML =
-    mostrador('g-meta', metaPct, Math.round(Math.min(metaPct, 1) * 100) + '%', 'Meta de cadastros') +
-    mostrador('g-div', divPct, dados.familias.length + '/' + TODAS.length, 'Diversidade olfativa') +
-    mostrador('g-perfil', p.pct, Math.round(p.pct * 100) + '%', 'Seu perfil olfativo');
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    el.querySelectorAll('.barra').forEach((b) => b.setAttribute('stroke-dasharray', b.dataset.pct + ' 100'));
-  }));
+  let kpis = document.getElementById('kpis');
+  kpis.innerHTML = '';
+  let cards = [
+    ['minha', r.tenho.length, 'perfumes na sua coleção'],
+    ['desejos', r.desejos.length, 'na sua lista de desejos'],
+    ['marcas', topMarca, 'marca mais presente na sua coleção']
+  ];
+  cards.forEach(([k, v, t]) => kpis.appendChild(criarKpi(k, v, t)));
 
   // Gráficos
   desenharCadastros();
@@ -272,9 +217,6 @@ let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
     document.getElementById('g-familias').parentElement.innerHTML = '<p class="vazio">Ainda não há perfumes nas coleções.</p>';
   }
 
-  // Últimos cadastrados (dentro do período escolhido)
-  desenharRecentes();
-
   document.getElementById('hora').textContent = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
 
@@ -282,41 +224,8 @@ let topMarca = r.marcas.length ? r.marcas[0][0] : '—';
 function detalhes(chave) {
   let p = perfil();
   let r = resumoColecao();
-  let novos = soma(dados.porDia);
   let totalPerfumes = soma(dados.familias);
   let serie = serieCompleta();
-
-  if (chave === 'total') {
-    let acum = dados.total - novos;   // quantas pessoas já existiam antes do período
-    let acumulado = serie.valores.map((v) => { acum += v; return acum; });
-    return {
-      titulo: 'Pessoas cadastradas',
-      sub: 'Crescimento acumulado do site nos últimos ' + periodo + ' dias.',
-      grafico: { tipo: 'line', rotulos: serie.rotulos, valores: acumulado },
-      cab: 'Resumo',
-      linhas: [
-        ['Total hoje', String(dados.total)],
-        ['Antes dos ' + periodo + ' dias', String(dados.total - novos)],
-        ['Entraram no período', String(novos)],
-        ['Meta', META_CADASTROS + ' (' + Math.round(Math.min(dados.total / META_CADASTROS, 1) * 100) + '%)']
-      ]
-    };
-  }
-
-  if (chave === 'novos') {
-    let melhor = dados.porDia.reduce((m, i) => (i.total > m.total ? i : m), { dia: '', total: 0 });
-    return {
-      titulo: 'Novos nos últimos ' + periodo + ' dias',
-      sub: novos + (novos === 1 ? ' pessoa entrou' : ' pessoas entraram') + ' neste período.',
-      cab: 'Ritmo de cadastros',
-      linhas: [
-        ['Média por dia', (novos / periodo).toFixed(1).replace('.', ',')],
-        ['Dias com cadastro', dados.porDia.length + ' de ' + periodo],
-        ['Melhor dia', melhor.total ? dia(melhor.dia) + ' (' + melhor.total + ')' : '—'],
-        ['Parte do total', dados.total ? Math.round(novos / dados.total * 100) + '%' : '0%']
-      ]
-    };
-  }
 
   if (chave === 'cadastros') {
     return {
@@ -369,43 +278,6 @@ function detalhes(chave) {
     };
   }
 
-  if (chave === 'recentes') {
-    return {
-      titulo: 'Últimos cadastrados',
-      sub: 'As pessoas que entraram mais recentemente.',
-      cab: 'Nome e data',
-      linhas: dados.recentes.map((x) => [x.nome, x.data])
-    };
-  }
-
-  if (chave === 'g-meta') {
-    return {
-      titulo: 'Meta de cadastros',
-      sub: 'Quanto falta para chegar à meta de ' + META_CADASTROS + ' pessoas.',
-      cab: 'Como é calculado',
-      linhas: [['Cadastrados', String(dados.total)], ['Meta', String(META_CADASTROS)], ['Faltam', String(Math.max(META_CADASTROS - dados.total, 0))]]
-    };
-  }
-
-  if (chave === 'g-div') {
-    let presentes = dados.familias.map((f) => f.familia);
-    return {
-      titulo: 'Diversidade olfativa',
-      sub: presentes.length + ' das ' + TODAS.length + ' famílias aparecem nas coleções.',
-      cab: 'Famílias',
-      linhas: TODAS.map((f) => [f, presentes.includes(f) ? 'nas coleções' : 'ainda não aparece'])
-    };
-  }
-
-  if (chave === 'g-perfil') {
-    return {
-      titulo: 'Seu perfil olfativo',
-      sub: p.tenho ? 'Calculado com os ' + p.tenho + ' perfumes que você tem.' : 'Adicione perfumes à sua coleção para ver o seu perfil.',
-      cab: 'Suas famílias',
-      linhas: p.lista.map(([f, q]) => [f, q + (q === 1 ? ' perfume' : ' perfumes')])
-    };
-  }
-
   return null;
 }
 
@@ -429,10 +301,10 @@ function abrir(chave) {
   if (graficoModal) { graficoModal.destroy(); graficoModal = null; }
   if (temGrafico) {
     let c = document.getElementById('m-canvas');
-   let t = d.grafico.tipo;
-graficoModal = t === 'bar' ? criarBarras(c, d.grafico.rotulos, d.grafico.valores)
-  : t === 'line' ? criarLinha(c, d.grafico.rotulos, d.grafico.valores)
-  : criarRosca(c, d.grafico.rotulos, d.grafico.valores, 'right');
+    let t = d.grafico.tipo;
+    graficoModal = t === 'bar'
+      ? criarBarras(c, d.grafico.rotulos, d.grafico.valores)
+      : criarRosca(c, d.grafico.rotulos, d.grafico.valores, 'right');
   }
   document.getElementById('fechar').focus();
 }
@@ -464,7 +336,6 @@ document.querySelectorAll('.filtro button').forEach((botao) => {
       .then((porDia) => {
         dados.porDia = porDia;
         desenharCadastros();
-        desenharRecentes();
       })
       .catch((erro) => {
         console.error(erro);
@@ -475,17 +346,12 @@ document.querySelectorAll('.filtro button').forEach((botao) => {
 
 // ---------- Carrega tudo ----------
 Promise.all([
-  buscar('/usuarios/total'),
-  buscar('/usuarios/recentes'),
   buscar('/usuarios/por-dia?dias=' + periodo),
   buscar('/colecao/familias')
 ])
-  .then(([total, recentes, porDia, familias]) => {
-    dados.total = total.total;
-    dados.recentes = recentes;
+  .then(([porDia, familias]) => {
     dados.porDia = porDia;
     dados.familias = familias;
-    // o perfil não derruba o resto: se falhar, o mostrador fica em 0%
     return buscar('/colecao/' + sessionStorage.ID_USUARIO).catch(() => []);
   })
   .then((colecao) => {
