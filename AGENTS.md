@@ -362,6 +362,60 @@ Este projeto **NÃO é um e-commerce, startup ou produto comercial**. Trata-se d
 * **Usou:** o relatório da revisão: rotas do template (`/avisos`, `/medidas`, `/aquarios`, `/empresas`) com SQL montado por texto e abertas ao público; `statuss` no script SQL; `console.log` dos resultados das consultas, que mostrava e-mails e hashes no terminal; rotas sem autorização; `innerHTML` no `sessao.js`; "letruir" no `sobre.html`; arquivos do template sem uso; e registros duplicados neste diário.
 * **Mudou:** removi do `app.js` as 4 rotas do template (e, ao apagar os arquivos delas, o risco de SQL injection sai do projeto), tirei o `console.log(resultados)` do `config.js`, troquei `innerHTML` por `textContent` no `sessao.js`, corrigi o `sobre.html` (linha colada no lugar errado e "letruir"), devolvi a frase da coleção na trajetória e atualizei o README. Neste arquivo, uni os registros duplicados e renumerei (#020 a #035). [confirme o que você aplicou e se corrigiu o `statuss` no SQL]
 
+## 📝 Registro #043 — Refinamento da linha do tempo "Como o perfume nasceu"
+* **Data:** 26/11/2026
+
+* **Pediu:** melhorar o slide "Como o perfume nasceu" mantendo a estrutura alternada em cima e embaixo e, em seguida, refazer tudo com novo layout.
+
+* **Usou:** duas reformulações visuais do slide alternando os marcos acima e abaixo do eixo horizontal até o ano de 2021, destacando a transição para a história pessoal.
+
+* **Mudou:** na segunda tentativa, removi as bordas fechadas pesadas e adotei barras de acento conectadas ao eixo central com subtítulo e linha de síntese.
+
+## 📝 Registro #044 — Slide de demonstração ao vivo ("Bora ver o site funcionando?")
+* **Data:** 26/11/2026
+
+* **Pediu:** melhorar o slide de demonstração ao vivo com ALT + TAB, depois refazer com fundo verde-petróleo, sem os roteiros e com novo layout.
+
+* **Usou:** primeira versão com os quatro passos conectados e atalho ALT + TAB; segunda versão com fundo #06232c, layout em duas colunas e remoção dos cards de roteiro.
+
+* **Mudou:** substituí os quatro blocos de roteiro por um painel focado na troca rápida (ALT + TAB) para o sistema em produção e uma linha de fechamento na base.
+
+## 📝 Registro #045 — Cores oficiais da ONU no slide das ODS
+**Data:** 26/11/2026
+
+* **Pediu:** aplicar as cores oficiais das ODS no slide correspondente (4 vermelho, 9 laranja, 3 verde e 12 dourado) e corrigir a exibição quando o slide apareceu vazio.
+
+* **Usou:** paleta oficial da ONU em cada bloco (ODS 03 em verde #4c9f38, ODS 04 em vermelho #e5243b, ODS 09 em laranja #fd6925 e ODS 12 em dourado #bf8b2e) e nova renderização do slide.
+
+* **Mudou:** corrigi a renderização que havia deixado o slide azul sem conteúdo e apliquei os tons oficiais correspondentes a cada objetivo.
+
+## 📝 Registro #046 — Transições no Canva e slide de encerramento ("Obrigado!")
+* **Data:** 26/11/2026
+
+* **Pediu:** como alterar transições de tela no Canva, melhorar o slide dourado de agradecimento à família, professores e colegas, refazer tudo, abrir espaço para perguntas na base e sugerir textos de agradecimento e encerramento**.
+
+* **Usou:** guia passo a passo de transições no Canva; versões do slide dourado (#e8ba6b) com agradecimentos divididos por grupos e espaço para perguntas; ideias de agradecimento aos professores e variações da frase de encerramento ("da primeira fragrância ao sistema entregue").
+
+* **Mudou:** adicionei a faixa de abertura para perguntas na base do slide dourado e diversifiquei os textos de gratidão aos professores e de fechamento da apresentação.
+
+## 📝 Registro #047 — Slide do Backlog e texto do card "15+"
+* **Data:** 26/11/2026
+
+* **Pediu:** melhorar o slide do Backlog e refinar o texto e o subtítulo do card "15+" sobre a coleção de fragrâncias, sem focar no site.
+
+* **Usou:** recriação nativa do quadro Kanban (TO DO, DOING, DONE, REVISIONADOS) com totais e prioridades; opções de título e subtítulos focados na coleção pessoal e nas memórias das fragrâncias.
+
+* **Mudou:** substituí o print com barras de rolagem por colunas legíveis no visual do deck e removi referências ao site nos subtítulos sugeridos para o card da coleção.
+
+## 📝 Registro #048 — Limpeza e geração do PDF da documentação
+**Data:** 26/11/2026
+
+* **Pediu:** remover marcações entre colchetes, espaços reservados e links pendentes da documentação, incluir script SQL e referências completas e gerar um PDF completo.
+
+* **Usou:** revisão integral do documento com remoção de pendências, inclusão do script SQL das cinco tabelas, referências em formato ABNT e geração do arquivo documentacao_engenharia_perfumaria.pdf.
+
+* **Mudou:** eliminei todos os trechos de confirmação/inserção pendentes e consolidei o texto final em formato Markdown e PDF.
+
 ---
 
 ## 📅 CHECKLIST DE ROTINA & GESTÃO
