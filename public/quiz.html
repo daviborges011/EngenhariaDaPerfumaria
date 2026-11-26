@@ -48,6 +48,7 @@
           <span class="rotulo">Desafio olfativo</span>
           <h2>Quiz da Perfumaria</h2>
           <p>Cinco perguntas sobre marcas, cheiros, famílias olfativas e detalhes que fazem parte desse universo.</p>
+          <p class="mensagem" id="quiz-aviso-login" hidden>Você não está logado nesta aba. <a href="login.html">Faça login</a> para salvar seus acertos no banco e vê-los no Dashboard.</p>
         </div>
 
         <div class="quiz-caixa" id="tela-quiz">
@@ -89,7 +90,7 @@
 
           <div class="quiz-acoes">
             <button type="button" class="btn-principal" onclick="reiniciar()">Refazer quiz</button>
-            <a class="btn-secundario" href="glossario.html">Explorar glossário</a>
+            <a class="btn-secundario" href="dashboard.html">Ir para o Painel</a>
           </div>
         </div>
       </section>
@@ -339,6 +340,10 @@
         document.getElementById('tela-resultado').style.display = 'none';
         document.getElementById('tela-quiz').style.display = 'flex';
         mostrarPergunta();
+      }
+
+      if (!sessionStorage.getItem('ID_USUARIO')) {
+        document.getElementById('quiz-aviso-login').hidden = false;
       }
 
       mostrarPergunta();

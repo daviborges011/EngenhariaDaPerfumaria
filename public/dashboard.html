@@ -17,7 +17,7 @@
 <div class="app">
   <header>
     <div>
-      <h1>Dashboard</h1>
+      <h1>Painel Central</h1>
       <p>Dados direto do banco. Atualizado às <span id="hora">--:--</span>. Clique em qualquer quadro para ver mais.</p>
     </div>
     <div class="filtro" role="group" aria-label="Período dos cadastros">
@@ -124,15 +124,19 @@ function resumoColecao() {
   return { tenho, desejos, marcas };
 }
 
+// Famílias olfativas apenas do usuário logado (calculado a partir da coleção pessoal)
+function familiasDoUsuario() {
+  let tenho = dados.colecao.filter((i) => i.status === 'tenho');
+  let cont = {};
+  tenho.forEach((i) => { cont[i.familia] = (cont[i.familia] || 0) + 1; });
+  let lista = Object.entries(cont).sort((a, b) => b[1] - a[1]);
+  return lista; // [ ['Amadeirado', 3], ['Cítrico', 2], ... ]
+}
+
 function serieQuiz() {
-  let mapa = {};
-  dados.quizResumo.porAcertos.forEach((i) => { mapa[i.acertos] = i.total; });
-  let rotulos = [];
-  let valores = [];
-  for (let nota = 0; nota <= 5; nota++) {
-    rotulos.push(nota + (nota === 1 ? ' acerto' : ' acertos'));
-    valores.push(mapa[nota] || 0);
-  }
+  let tentativas = dados.quizMeu.slice(0, 10).reverse();
+  let rotulos = tentativas.map((q, idx) => (idx + 1) + 'ª (' + q.data.slice(0, 5) + ')');
+  let valores = tentativas.map((q) => q.acertos);
   return { rotulos, valores };
 }
 
@@ -140,14 +144,24 @@ function serieQuiz() {
 Chart.defaults.color = '#E2E8F0';
 Chart.defaults.font.family = "'Figtree', sans-serif";
 
-function criarBarras(canvas, rotulos, valores, legendaBarra) {
+function criarBarras(canvas, rotulos, valores, legendaBarra, maximoY) {
+  let eixoY = {
+    beginAtZero: true,
+    ticks: { precision: 0 },
+    grid: { color: 'rgba(197,160,89,.15)' }
+  };
+  if (maximoY !== undefined) {
+    eixoY.max = maximoY;
+    eixoY.ticks.stepSize = 1;
+  }
+
   return new Chart(canvas, {
     type: 'bar',
     data: { labels: rotulos, datasets: [{ label: legendaBarra || 'Total', data: valores, backgroundColor: '#C5A059', hoverBackgroundColor: '#D4AF37', borderRadius: 4 }] },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: 'rgba(197,160,89,.15)' } } }
+      scales: { x: { grid: { display: false } }, y: eixoY }
     }
   });
 }
@@ -220,16 +234,18 @@ function desenharCadastros() {
 }
 
 function desenharQuiz() {
-  let total = dados.quizResumo.tentativas;
-  let media = String(dados.quizResumo.media).replace('.', ',');
-  document.getElementById('legenda-quiz').textContent =
-    total + (total === 1 ? ' tentativa registrada' : ' tentativas registradas') + ' · média de ' + media + ' acertos';
+  let qtd = dados.quizMeu.length;
+  let mediaGeral = String(dados.quizResumo.media).replace('.', ',');
 
-  if (total > 0) {
+  if (qtd > 0) {
+    let melhor = dados.quizMeu.reduce((m, q) => (q.acertos > m ? q.acertos : m), 0);
+    document.getElementById('legenda-quiz').textContent =
+      qtd + (qtd === 1 ? ' tentativa sua' : ' tentativas suas') + ' · melhor nota: ' + melhor + '/5 (média geral: ' + mediaGeral + ')';
     let serie = serieQuiz();
-    criarBarras(document.getElementById('g-quiz'), serie.rotulos, serie.valores, 'Tentativas');
+    criarBarras(document.getElementById('g-quiz'), serie.rotulos, serie.valores, 'Acertos', 5);
   } else {
-    document.getElementById('g-quiz').parentElement.innerHTML = '<p class="vazio">Ainda não há tentativas no quiz.</p>';
+    document.getElementById('legenda-quiz').textContent = 'Você ainda não respondeu ao quiz, adicione perfumes à sua coleção.';
+    document.getElementById('g-quiz').parentElement.innerHTML = '<p class="vazio">Responda ao quiz para ver seus acertos aqui.</p>';
   }
 }
 
@@ -254,10 +270,11 @@ function desenhar() {
   // Gráficos
   desenharCadastros();
   desenharQuiz();
-  if (dados.familias.length) {
-    criarRosca(document.getElementById('g-familias'), dados.familias.map((i) => i.familia), dados.familias.map((i) => i.total), 'bottom');
+  let minhasFamilias = familiasDoUsuario();
+  if (minhasFamilias.length) {
+    criarRosca(document.getElementById('g-familias'), minhasFamilias.map((i) => i[0]), minhasFamilias.map((i) => i[1]), 'bottom');
   } else {
-    document.getElementById('g-familias').parentElement.innerHTML = '<p class="vazio">Ainda não há perfumes nas coleções.</p>';
+    document.getElementById('g-familias').parentElement.innerHTML = '<p class="vazio">Você ainda não tem perfumes na coleção com família definida. <br><br> Adicione perfumes à sua colecão para poder vizualizar.</p>';
   }
 
   document.getElementById('hora').textContent = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -267,7 +284,6 @@ function desenhar() {
 function detalhes(chave) {
   let p = perfil();
   let r = resumoColecao();
-  let totalPerfumes = soma(dados.familias);
   let serie = serieCompleta();
 
   if (chave === 'cadastros') {
@@ -285,7 +301,7 @@ function detalhes(chave) {
     return {
       titulo: 'Perfumes na sua coleção',
       sub: n ? 'Você tem ' + n + (n === 1 ? ' perfume, em ' : ' perfumes, em ') + p.lista.length + (p.lista.length === 1 ? ' família.' : ' famílias.')
-             : 'Você ainda não tem perfumes na coleção. Adicione o primeiro em "Minha Coleção".',
+             : 'Você ainda não tem perfumes na coleção.',
       grafico: { tipo: 'doughnut', rotulos: p.lista.map((l) => l[0]), valores: p.lista.map((l) => l[1]) },
       cab: 'Seus perfumes',
       linhas: r.tenho.map((i) => [i.nome, i.marca])
@@ -312,12 +328,16 @@ function detalhes(chave) {
   }
 
   if (chave === 'familias') {
+    let mf = familiasDoUsuario();
+    let totalMf = mf.reduce((s, i) => s + i[1], 0);
     return {
-      titulo: 'Famílias olfativas',
-      sub: totalPerfumes + ' perfumes nas coleções, em ' + dados.familias.length + ' famílias.',
-      grafico: { tipo: 'doughnut', rotulos: dados.familias.map((i) => i.familia), valores: dados.familias.map((i) => i.total) },
+      titulo: 'Suas famílias olfativas',
+      sub: totalMf
+        ? totalMf + (totalMf === 1 ? ' perfume' : ' perfumes') + ' em ' + mf.length + (mf.length === 1 ? ' família.' : ' famílias.')
+        : 'Você ainda não tem perfumes na coleção com família definida.',
+      grafico: mf.length ? { tipo: 'doughnut', rotulos: mf.map((i) => i[0]), valores: mf.map((i) => i[1]) } : null,
       cab: 'Perfumes por família',
-      linhas: dados.familias.map((f) => [f.familia, f.total + ' (' + Math.round(f.total / totalPerfumes * 100) + '%)'])
+      linhas: mf.map(([f, q]) => [f, q + (q === 1 ? ' perfume' : ' perfumes') + ' (' + Math.round(q / totalMf * 100) + '%)'])
     };
   }
 
@@ -326,20 +346,24 @@ function detalhes(chave) {
     let media = String(dados.quizResumo.media).replace('.', ',');
     return {
       titulo: 'Desempenho no Quiz',
-      sub: dados.quizResumo.tentativas + ' tentativas no quiz, com média geral de ' + media + ' acertos.',
-      grafico: dados.quizResumo.tentativas ? { tipo: 'bar', rotulos: sQuiz.rotulos, valores: sQuiz.valores } : null,
+      sub: dados.quizMeu.length
+        ? 'Seus acertos em cada tentativa (de 0 a 5). Média geral no site: ' + media + '.'
+        : 'Você ainda não respondeu ao quiz. Média geral no site: ' + media + '.',
+      grafico: dados.quizMeu.length ? { tipo: 'bar', rotulos: sQuiz.rotulos, valores: sQuiz.valores, legenda: 'Acertos', maximoY: 5 } : null,
       cab: 'Suas tentativas recentes',
       linhas: dados.quizMeu.map((q) => [q.acertos + '/' + q.totalPerguntas + ' acertos', q.data])
     };
   }
 
   if (chave === 'quiz-meu') {
+    let sQuiz = serieQuiz();
     let melhor = dados.quizMeu.reduce((m, q) => (q.acertos > m ? q.acertos : m), 0);
     return {
       titulo: 'Seu histórico no Quiz',
       sub: dados.quizMeu.length
         ? 'Você respondeu ao quiz ' + dados.quizMeu.length + (dados.quizMeu.length === 1 ? ' vez' : ' vezes') + '. Melhor nota: ' + melhor + '/5.'
         : 'Você ainda não respondeu ao quiz. Abra a aba Quiz para testar seus conhecimentos.',
+      grafico: dados.quizMeu.length ? { tipo: 'bar', rotulos: sQuiz.rotulos, valores: sQuiz.valores, legenda: 'Acertos', maximoY: 5 } : null,
       cab: 'Tentativas salvas',
       linhas: dados.quizMeu.map((q) => [q.acertos + '/' + q.totalPerguntas + ' acertos', q.data])
     };
@@ -370,7 +394,7 @@ function abrir(chave) {
     let c = document.getElementById('m-canvas');
     let t = d.grafico.tipo;
     graficoModal = t === 'bar'
-      ? criarBarras(c, d.grafico.rotulos, d.grafico.valores)
+      ? criarBarras(c, d.grafico.rotulos, d.grafico.valores, d.grafico.legenda, d.grafico.maximoY)
       : criarRosca(c, d.grafico.rotulos, d.grafico.valores, 'right');
   }
   document.getElementById('fechar').focus();

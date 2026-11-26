@@ -1,5 +1,10 @@
 /* quiz.css - tela de quiz sobre perfumes */
 
+#quiz-aviso-login a {
+    color: #C5A059;
+    font-weight: 600;
+}
+
 .quiz-caixa {
     width: 100%;
     max-width: 760px;
