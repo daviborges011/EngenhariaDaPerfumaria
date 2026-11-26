@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/extras.css">
-    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+    <link rel="icon" type="image/svg+xml" href="img/logo-selo.svg">
     <link rel="stylesheet" href="css/transicao.css">
 <script src="js/transicao.js" defer></script>
 </head>
@@ -82,7 +82,6 @@
 
     <script src="./js/menu.js"></script>
     <script>
-      // A conta do projeto: total de borrifadas = mL x borrifadas por mL
       function calcular(preco, volume, porMl, porDia) {
         let totalBorrifadas = volume * porMl;
         return {
@@ -96,20 +95,17 @@
         return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       }
 
-      // Projeção de um ano de uso
       function projecaoAno(preco, volume, porMl, porDia) {
         let totalBorrifadas = volume * porMl;
         let custoPorBorrifada = preco / totalBorrifadas;
         let custoPorDia = custoPorBorrifada * porDia;
         let custoPorMes = custoPorDia * 30;
 
-        // Vetor com o gasto acumulado em cada mês (laço for)
         let acumulado = [];
         for (let mes = 1; mes <= 12; mes++) {
           acumulado.push(custoPorMes * mes);
         }
 
-        // Quantos frascos preciso para 365 dias? (laço while)
         let diasPorFrasco = Math.floor(totalBorrifadas / porDia);
         let frascos = 0;
         if (diasPorFrasco >= 1) {
@@ -152,7 +148,6 @@
           </article>
         `).join('');
 
-        // Projeção do ano (lê os mesmos campos de novo)
         let projecao = projecaoAno(
           Number(document.getElementById('preco').value),
           Number(document.getElementById('volume').value),
@@ -160,7 +155,6 @@
           Number(document.getElementById('por-dia').value)
         );
 
-        // Data prevista para o frasco acabar (hoje + dias de duração)
         let fim = new Date();
         fim.setDate(fim.getDate() + resultado.dias);
 

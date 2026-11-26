@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/extras.css">
-    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+    <link rel="icon" type="image/svg+xml" href="img/logo-selo.svg">
     <link rel="stylesheet" href="css/transicao.css">
 <script src="js/transicao.js" defer></script>
 </head>
@@ -114,14 +114,12 @@
     <script>
       let FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
 
-      // O login guardou o id da pessoa no sessionStorage
       let idUsuario = sessionStorage.getItem('ID_USUARIO');
 
       let formulario = document.getElementById('form-perfume');
       let mensagem = document.getElementById('mensagem');
       let lista = document.getElementById('lista');
 
-      // Cria um elemento com texto (textContent evita código malicioso no que a pessoa digitou)
       function criar(tag, classe, texto) {
         let elemento = document.createElement(tag);
         if (classe) { elemento.className = classe; }
@@ -134,7 +132,6 @@
         mensagem.className = 'mensagem largo ' + tipo;
       }
 
-      // Desenha um cartão para cada perfume da coleção
       function desenharLista(itens) {
         lista.innerHTML = '';
 
@@ -167,7 +164,6 @@
         });
       }
 
-      // GET /colecao/:idUsuario
       function carregar() {
         fetch('/colecao/' + idUsuario, { cache: 'no-store' })
           .then((resposta) => {
@@ -181,7 +177,6 @@
           });
       }
 
-      // DELETE /colecao/:idUsuario/:idPerfume
       function remover(item) {
         if (!confirm('Remover "' + item.nome + '" da sua coleção?')) { return; }
 
@@ -193,7 +188,6 @@
           .catch(() => alert('Não foi possível falar com o servidor.'));
       }
 
-      // POST /colecao
       formulario.addEventListener('submit', (evento) => {
         evento.preventDefault();
         mostrar('', '');
@@ -231,7 +225,6 @@
           });
       });
 
-      // Começo da página: quem não está logado vê o aviso; quem está logado vê o formulário
       if (!idUsuario) {
         document.getElementById('aviso-login').hidden = false;
       } else {
@@ -244,7 +237,6 @@
         formulario.hidden = false;
         carregar();
       }
-      // a cada 30 segundos, recarrega se nenhum detalhe estiver aberto
 setInterval(() => { if (document.getElementById('modal').hidden) { location.reload(); } }, 30000);
     </script>
 </body>

@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/extras.css">
-    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+    <link rel="icon" type="image/svg+xml" href="img/logo-selo.svg">
     <link rel="stylesheet" href="css/transicao.css">
 <script src="js/transicao.js" defer></script>
 </head>
@@ -88,7 +88,6 @@
     <script>
       let FAMILIAS = ['Amadeirado', 'Cítrico', 'Floral', 'Oriental', 'Aromático', 'Gourmand', 'Fresco'];
 
-      // O login guardou o id da pessoa no sessionStorage
       let idUsuario = sessionStorage.getItem('ID_USUARIO');
 
       let formulario = document.getElementById('form-perfil');
@@ -99,7 +98,6 @@
         mensagem.className = 'mensagem largo ' + tipo;
       }
 
-      // POST /perfil: cria o perfil na primeira vez e atualiza nas próximas
       formulario.addEventListener('submit', (evento) => {
         evento.preventDefault();
         mostrar('', '');
@@ -133,7 +131,6 @@
       if (!idUsuario) {
         document.getElementById('aviso-login').hidden = false;
       } else {
-        // opção vazia + as famílias da lista
         let vazia = document.createElement('option');
         vazia.value = '';
         vazia.textContent = 'Prefiro não dizer';
@@ -148,7 +145,6 @@
 
         formulario.hidden = false;
 
-        // GET /perfil/:idUsuario: preenche o formulário com o que já foi salvo
         fetch('/perfil/' + idUsuario, { cache: 'no-store' })
           .then((resposta) => {
             if (!resposta.ok) { throw new Error('Erro ao carregar'); }

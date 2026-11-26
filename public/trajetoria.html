@@ -18,7 +18,7 @@
 <body>
   <header class="header">
   <div class="logo">
-          <img src="logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
+          <img src="img/logo-selo.svg" alt="Logo A Engenharia da Perfumaria">
         </div>
       <span class="nome-logo">A Engenharia <span>da Perfumaria</span></span>
           <li class="separador">|</li>
@@ -83,7 +83,6 @@
       </div>
     </section>
 
-<!-- Cada fase, um perfume -->
 <section class="fases">
   <div class="colecao-titulo">
     <span class="rotulo">Depois do Malbec</span>
@@ -117,7 +116,6 @@
   </div>
 </section>
 
-<!-- Na minha mão -->
 <section class="na-mao">
   <div class="colecao-titulo">
     <span class="rotulo">Na minha mão</span>
@@ -139,14 +137,12 @@
   </div>
 </section>
 
-    <!-- Coleção -->
     <section class="colecao">
       <div class="colecao-titulo">
         <span class="rotulo">A coleção hoje</span>
         <h2>Mais do que frascos,<br>capítulos de uma vida.</h2>
       </div>
 
-      <!-- Os números são desenhados pelo JavaScript (veja o script no final da página) -->
       <div class="estatisticas" id="estatisticas"></div>
 
          <div class="colecao-conteudo">
@@ -169,7 +165,6 @@
       </div>
     </section>
 
-    <!-- Capítulo anterior -->
     <div class="voltar">
       <a class="btn-capitulo" href="origem.html">
         <small>Capítulo anterior</small>
@@ -216,14 +211,12 @@
 
   <script src="./js/menu.js"></script>
   <script>
-    // Números da coleção
     let estatisticas = [
       { valor: '15', sufixo: '+', texto: 'fragrâncias na coleção' },
       { valor: '05', sufixo: '',  texto: 'anos de descobertas' },
       { valor: '01', sufixo: '',  texto: 'paixão que continua crescendo' }
     ];
 
-    // Desenha cada número dentro da div #estatisticas
     document.getElementById('estatisticas').innerHTML = estatisticas.map((item) => `
       <article class="estatistica">
         <strong>${item.valor}${item.sufixo ? `<span>${item.sufixo}</span>` : ''}</strong>

@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+<link rel="icon" type="image/svg+xml" href="img/logo-selo.svg">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <link rel="stylesheet" href="css/dashboard.css">
 <link rel="stylesheet" href="css/transicao.css">
@@ -73,10 +73,8 @@
 </div>
 
 <script>
-// ---------- Ajustes ----------
 let CORES = ['#C5A059', '#4F6D9A', '#D4AF37', '#7C8DB5', '#A67C52', '#5F9EA0', '#E2E8F0'];
 
-// ---------- Login ----------
 if (!sessionStorage.NOME_USUARIO) { window.location = 'login.html'; }
 document.getElementById('b_usuario').textContent = sessionStorage.NOME_USUARIO;
 document.getElementById('sair').addEventListener('click', (e) => {
@@ -85,7 +83,6 @@ document.getElementById('sair').addEventListener('click', (e) => {
   window.location = 'login.html';
 });
 
-// ---------- Dados ----------
 let dados = {
   porDia: [],
   familias: [],
@@ -94,8 +91,8 @@ let dados = {
   quizMeu: []
 };
 let graficoModal = null;
-let periodo = 30;            // período escolhido nos botões (7, 15, 30 ou 90 dias)
-let graficoCadastros = null;  // guardado para poder destruir e redesenhar ao trocar o período
+let periodo = 30;            
+let graficoCadastros = null; 
 
 function buscar(rota) {
   return fetch(rota, { cache: 'no-store' }).then((r) => {
@@ -106,7 +103,6 @@ function buscar(rota) {
 let dia = (d) => d.slice(8, 10) + '/' + d.slice(5, 7);   // 2026-10-28 -> 28/10
 let soma = (lista) => lista.reduce((s, i) => s + i.total, 0);
 
-// Perfil olfativo de quem está logado, calculado com a coleção
 function perfil() {
   let tenho = dados.colecao.filter((i) => i.status === 'tenho');
   let cont = {};
@@ -124,7 +120,6 @@ function resumoColecao() {
   return { tenho, desejos, marcas };
 }
 
-// Famílias olfativas apenas do usuário logado (calculado a partir da coleção pessoal)
 function familiasDoUsuario() {
   let tenho = dados.colecao.filter((i) => i.status === 'tenho');
   let cont = {};
@@ -140,7 +135,6 @@ function serieQuiz() {
   return { rotulos, valores };
 }
 
-// ---------- Gráficos ----------
 Chart.defaults.color = '#E2E8F0';
 Chart.defaults.font.family = "'Figtree', sans-serif";
 
@@ -177,7 +171,6 @@ function criarRosca(canvas, rotulos, valores, legenda) {
   });
 }
 
-// ---------- Peças da tela ----------
 function linha(a, b) {
   let li = document.createElement('li');
   let forte = document.createElement('strong');
@@ -206,8 +199,6 @@ function criarKpi(chave, valor, titulo) {
   return div;
 }
 
-// ---------- Cadastros por período (filtro) ----------
-// Gera um dia para cada data do período, com 0 nos dias sem cadastro
 function serieCompleta() {
   let mapa = {};
   dados.porDia.forEach((i) => { mapa[i.dia] = i.total; });
@@ -256,7 +247,6 @@ function desenhar() {
     ? dados.quizMeu[0].acertos + '/' + dados.quizMeu[0].totalPerguntas
     : '—';
 
-  // KPIs
   let kpis = document.getElementById('kpis');
   kpis.innerHTML = '';
   let cards = [
@@ -267,7 +257,6 @@ function desenhar() {
   ];
   cards.forEach(([k, v, t]) => kpis.appendChild(criarKpi(k, v, t)));
 
-  // Gráficos
   desenharCadastros();
   desenharQuiz();
   let minhasFamilias = familiasDoUsuario();
@@ -280,7 +269,6 @@ function desenhar() {
   document.getElementById('hora').textContent = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
 
-// ---------- Detalhe ampliado (ao clicar) ----------
 function detalhes(chave) {
   let p = perfil();
   let r = resumoColecao();
@@ -418,7 +406,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ---------- Botões de período ----------
 document.querySelectorAll('.filtro button').forEach((botao) => {
   botao.addEventListener('click', () => {
     periodo = Number(botao.dataset.dias);
@@ -435,7 +422,6 @@ document.querySelectorAll('.filtro button').forEach((botao) => {
   });
 });
 
-// ---------- Carrega tudo ----------
 Promise.all([
   buscar('/usuarios/por-dia?dias=' + periodo),
   buscar('/colecao/familias'),

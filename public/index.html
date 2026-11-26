@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/extras.css">
-    <link rel="icon" type="image/svg+xml" href="logo-selo.svg">
+    <link rel="icon" type="image/svg+xml" href="img/logo-selo.svg">
     <link rel="stylesheet" href="css/transicao.css">
 <script src="js/transicao.js" defer></script>
 </head>
@@ -110,7 +110,7 @@
         <!-- Minha estante (galeria de fotos) -->
     <section class="secao">
       <div class="titulo-secao">
-        <span class="rotulo">Minha estante</span>
+        <span class="rotulo">___</span>
         <h2>Cada frasco, uma lembrança</h2>
       </div>
 
@@ -239,7 +239,6 @@
     </div>
 
     <script>
-    // 1) Números da jornada
     let numeros = [
       { valor: '+15',   sufixo: '', texto: 'fragrâncias na coleção' },
       { valor: '2021', sufixo: '',  texto: 'o ano do primeiro perfume' },
@@ -253,8 +252,6 @@
       </article>
     `).join('');
 
-    // 2) Saudação: se a pessoa estiver logada, troca Login e Cadastro por "Olá, nome" e Sair
-    // [confirmar] o nome da chave que o seu login salva no sessionStorage
     let nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
     if (nomeUsuario) {
@@ -288,7 +285,6 @@ if (sessionStorage.getItem('NOME_USUARIO')) {
 }
     }
 
-    // 3) Total de pessoas cadastradas (vem da API)
     let ROTA_TOTAL_USUARIOS = '/usuarios/total';
 
     if (ROTA_TOTAL_USUARIOS) {

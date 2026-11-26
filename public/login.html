@@ -66,7 +66,6 @@ if (sessionStorage.getItem('NOME_USUARIO')) { window.location = 'index.html'; }
       mostrar('', '');
       botao.disabled = true;
 
-      // Envia e-mail e senha para a API (rota POST /usuarios/autenticar)
       fetch('/usuarios/autenticar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,7 +77,6 @@ if (sessionStorage.getItem('NOME_USUARIO')) { window.location = 'index.html'; }
         .then((resposta) => {
           if (resposta.ok) {
             resposta.json().then((dados) => {
-              // Guarda quem entrou (o index e o dashboard leem estes valores)
               sessionStorage.EMAIL_USUARIO = dados.email;
               sessionStorage.NOME_USUARIO = dados.nome;
               sessionStorage.ID_USUARIO = dados.id;
